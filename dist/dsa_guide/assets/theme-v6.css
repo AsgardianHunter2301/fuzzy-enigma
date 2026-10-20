@@ -1,0 +1,609 @@
+/* COMP2521 Tracer v6.3.0 presentation layer
+   Palette supplied by the user: white, black, orange and cream.
+   This file changes presentation only. */
+:root {
+  --bg:#FFFBF2;
+  --panel:#FFFFFF;
+  --panel2:#FFFBF2;
+  --rule:rgba(0,0,0,.22);
+  --rule-strong:#000000;
+  --ink:#000000;
+  --dim:rgba(0,0,0,.72);
+  --faint:rgba(0,0,0,.58);
+  --detail:#000000;
+  --live:#FFA500;
+  --wire:#000000;
+  --heap:#000000;
+  --gone:#000000;
+  --violet:#000000;
+  --focus:#FFA500;
+  --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;
+  --sans:Arial,Helvetica,sans-serif;
+  --r:8px;
+  --shadow:0 2px 8px rgba(0,0,0,.08);
+}
+* { scrollbar-color:rgba(0,0,0,.28) transparent; }
+html { background:var(--bg); }
+body { background:var(--bg); color:var(--ink); font-family:var(--sans); }
+a { color:var(--ink); text-decoration-color:var(--live); text-underline-offset:3px; }
+:focus-visible { outline:3px solid var(--live); outline-offset:2px; }
+button,select,input,textarea { color:var(--ink); }
+button:disabled { cursor:not-allowed; }
+
+/* Topic page shell */
+.shell { min-height:100dvh; background:var(--bg); }
+header.top {
+  min-height:64px;
+  padding:0 14px;
+  gap:14px;
+  background:var(--panel);
+  border-top:6px solid var(--live);
+  border-bottom:1px solid var(--rule);
+  box-shadow:var(--shadow);
+}
+.homelink { color:var(--ink); font-weight:700; gap:8px; }
+.homelink svg,.nav-ico,.pane-toggle svg,.canvas-tool svg,.tbtn svg { stroke:currentColor; fill:none; }
+.area-chip {
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+  margin:0;
+  padding:0 16px;
+  border-left:0;
+  border-bottom:4px solid var(--live);
+  font-size:18px;
+  background:var(--panel);
+}
+.crumb { color:var(--dim); font-size:13px; }
+.crumb-sep { color:var(--live); font-weight:700; }
+.crumb-n { color:var(--ink); font-weight:700; }
+.header-tools { gap:6px; }
+.header-tools .tag { display:none; }
+.btn,.canvas-tool,.pane-toggle,.tbtn,.drawer-close,.tour-close {
+  border:1px solid var(--rule-strong);
+  background:var(--panel);
+  color:var(--ink);
+  border-radius:8px;
+  box-shadow:none;
+  min-height:44px;
+  touch-action:manipulation;
+  font-weight:600;
+}
+.btn:hover:not(:disabled),.canvas-tool:hover:not(:disabled),.pane-toggle:hover:not(:disabled),.tbtn:hover:not(:disabled) {
+  background:var(--panel2);
+  border-color:var(--live);
+}
+.btn.go,.tbtn.play {
+  background:var(--live);
+  color:var(--ink);
+  border-color:var(--rule-strong);
+}
+.btn.go:hover:not(:disabled),.tbtn.play:hover:not(:disabled) { background:var(--live); filter:brightness(.98); }
+.text-scale { color:var(--dim); }
+.text-scale select,.spd select,select.sel,.field input,.field textarea,.field select,.module-search {
+  background:var(--panel);
+  color:var(--ink);
+  border:1px solid var(--rule);
+  border-radius:8px;
+}
+
+.toolbar {
+  background:var(--bg);
+  border-bottom:1px solid var(--rule);
+  padding:10px 14px;
+  min-height:68px;
+}
+.toolbar-lead { color:var(--ink); font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+.field { background:var(--panel); border:1px solid var(--rule); border-radius:9px; padding:6px 8px; }
+.field label,.field span { color:var(--ink); font-weight:600; }
+.field-help { color:var(--dim); }
+.toolbar-actions { gap:7px; }
+
+#panes {
+  background:var(--bg);
+  gap:8px;
+  padding:10px 10px 8px;
+}
+.pane {
+  border:1px solid var(--rule);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--panel);
+  box-shadow:var(--shadow);
+}
+.pane:last-child { border-right:1px solid var(--rule); }
+.pane>h2 {
+  min-height:48px;
+  padding:8px 12px;
+  background:var(--panel);
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-size:12px;
+  font-weight:800;
+}
+.pane>h2 em { color:var(--dim); font-weight:500; text-transform:none; letter-spacing:0; }
+.pane-title { color:var(--ink); }
+.pane-toggle { width:44px; height:44px; padding:0; }
+.splitter { background:transparent; width:4px; border:0; }
+.splitter::after { background:rgba(0,0,0,.18); }
+.rail { background:var(--panel); color:var(--ink); border:0; }
+.scroll { background:var(--panel); }
+.stage { padding:14px; gap:14px; background:var(--panel); }
+.note,.memory-summary,.render-warning,.gap,.memnotice,.external-boundary,.course-scope-chip {
+  background:var(--panel2);
+  color:var(--ink);
+  border:1px solid var(--rule);
+  border-left:4px solid var(--live);
+  border-radius:8px;
+}
+.note b,.note code,.memnotice b { color:var(--ink); }
+
+/* Source pane */
+.blockindex { background:var(--panel2); border-bottom:1px solid var(--rule); }
+.blockindex button,.block-chip { min-width:44px; min-height:44px; background:var(--panel); color:var(--ink); border-color:var(--rule); }
+.blockindex button.active,.block-chip.active { border-color:var(--rule-strong); background:var(--live); }
+.blockhdr,.source-block summary { color:var(--ink); background:var(--panel2); border-color:var(--rule); }
+.source-badge,.tag,.view-badge,.course-scope-chip { color:var(--ink); border-color:var(--rule); background:var(--panel); }
+.source-badge.lecture,.tag.lecture { border-color:var(--live); }
+.source-badge.memorise,.tag.memorise,.provenance.memorise { background:var(--live); color:var(--ink); border-color:var(--rule-strong); }
+.cline { color:var(--ink); }
+.cline .n { color:var(--faint); }
+.cline .t { color:var(--ink); border-left-color:transparent; }
+.cline.on .t { background:#FFEDC2; border-left-color:var(--live); }
+.cline.on .n { color:var(--ink); font-weight:700; }
+.kw,.fn { color:#B05A00; font-weight:700; }
+.ty,.num,.str { color:var(--ink); }
+.cm { color:var(--dim); font-style:italic; }
+.pseudo .cline .t { color:var(--ink); }
+
+/* Trace objects */
+.cell .v,.lnode,.kv,.var,.blk,table.grid td,table.grid th,.call,.frame,.trie-node,.heap-node,.edge-cell {
+  background:var(--panel);
+  color:var(--ink);
+  border-color:var(--rule-strong);
+}
+.cell .i,.slot .sn,.nullbox,.empty,.caption,.headlbl,.bf,.elbl { color:var(--dim); }
+.cell.cmp .v,.cell.mv .v,.cell.done .v,.cell.hit .v,.cell.pivot .v,.cell.rng .v {
+  border-color:var(--rule-strong);
+  background:#FFE7AD;
+  color:var(--ink);
+}
+.cell.mv .v,.cell.hit .v { box-shadow:0 0 0 3px var(--live); }
+.cell.done .v { background:var(--panel2); }
+.cell.hole .v { color:var(--dim); border-style:dashed; }
+.lnode { border-color:var(--rule-strong); }
+.lnode .lp { border-color:var(--rule); color:var(--dim); }
+.lnode.new,.kv.new,.blk.fresh { border-color:var(--live); box-shadow:0 0 0 3px rgba(255,165,0,.25); }
+.lnode.dead,.kv.dead,.blk.freed { border-color:var(--ink); opacity:.48; text-decoration:line-through; }
+.arrow,.headlbl,.ptrs .p { color:#B05A00; }
+svg text { fill:var(--ink); }
+.nd { fill:var(--panel); stroke:var(--ink); }
+.nd.act,.nd.hit,.nd.bad,.nd.fin { fill:#FFE7AD; stroke:var(--live); stroke-width:3; }
+.edge { stroke:rgba(0,0,0,.35); }
+.edge.act,.edge.tree { stroke:var(--live); stroke-width:3; }
+.edge.dim { stroke:rgba(0,0,0,.16); }
+table.grid { color:var(--ink); }
+table.grid th { background:var(--panel2); color:var(--ink); }
+table.grid td.t1,table.grid td.chg { color:var(--ink); background:#FFE7AD; }
+table.grid td.t0,table.grid td.inf { color:var(--dim); }
+.slot.on { background:#FFE7AD; }
+.slot.on .sn { color:var(--ink); font-weight:700; }
+
+/* State and mapping */
+.state { gap:18px; }
+.sect h3 { color:var(--ink); font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+.sect h3::after { background:var(--rule); }
+.var b,.memtally b { color:#B05A00; }
+.var.chg { border-color:var(--live); box-shadow:inset 4px 0 var(--live); }
+.blk { border-left-color:var(--ink); }
+.blk.fresh { border-left-color:var(--live); }
+.blk.freed { border-left-color:var(--ink); }
+.memtally,.memev,.map .why { color:var(--dim); }
+.memev .a,.memev .r,.memev .f,.memev .x { color:var(--ink); font-weight:700; }
+.map .ps,.map .cc { color:var(--ink); background:var(--panel2); border:1px solid var(--rule); }
+.map .to { color:#B05A00; font-size:12px; font-weight:800; text-transform:uppercase; }
+.provenance { color:var(--ink); border:1px solid var(--rule); background:var(--panel); }
+.compact-context { margin-top:8px; border:1px solid var(--rule); border-radius:8px; background:var(--panel2); }
+.compact-context summary { cursor:pointer; padding:8px 10px; font-weight:700; }
+.compact-context .why { padding:0 10px 10px; }
+
+/* Visual controls and legend */
+.canvas-tools { gap:5px; }
+.canvas-tool { min-width:44px; height:44px; background:var(--panel); }
+.canvas-tool.pan-lock[aria-pressed="false"] { background:var(--live); }
+.legend-panel { background:var(--panel); border-color:var(--rule); box-shadow:var(--shadow); }
+.legend-summary { color:var(--ink); background:var(--panel2); }
+.legend { border-color:var(--rule); }
+.lgi,.legend-note { color:var(--dim); }
+.lgi .sw { background:var(--panel); border-color:var(--ink); }
+.sw.cmp,.sw.mv,.sw.act,.sw.new,.sw.done,.sw.hit,.sw.fin,.sw.pivot,.sw.bad,.sw.dead { background:#FFE7AD; border-color:var(--live); }
+
+/* Bottom transport */
+.transport {
+  min-height:64px;
+  padding:8px 12px;
+  background:var(--panel);
+  border-top:3px solid var(--live);
+  box-shadow:0 -2px 8px rgba(0,0,0,.07);
+}
+.tbtn { width:44px; height:44px; padding:0; }
+.tbtn svg { width:20px; height:20px; }
+.scrub { accent-color:var(--live); }
+.scrub::-webkit-slider-thumb { background:var(--live); }
+.scrub-marks i { background:rgba(0,0,0,.32); }
+.tick,.module-status,.speed-status,.spd { color:var(--dim); }
+.module-status b { color:var(--ink); }
+.steps-button { background:var(--panel); }
+
+/* Drawers and sheets */
+dialog { color:var(--ink); }
+.drawer,.sheet,.tour { background:transparent; }
+.drawer::backdrop,.sheet::backdrop,.tour::backdrop { background:rgba(0,0,0,.32); }
+.drawer-inner,.tour-card,.study-card,.step-card {
+  background:var(--panel);
+  color:var(--ink);
+  border:1px solid var(--rule-strong);
+  border-top:6px solid var(--live);
+  border-radius:10px;
+  box-shadow:0 18px 50px rgba(0,0,0,.24);
+}
+.drawer-head,.drawer-areas,.study-section-head,.tour-actions { background:var(--panel); border-color:var(--rule); }
+.drawer-list,.recipe-list,.resource-list,.step-list { background:var(--panel); }
+.tgroup h3,.areas-lead,.tour-kicker,.study-section-head span { color:var(--dim); }
+.titem,.arealink,.recipe-card,.resource-card,.step-item { color:var(--ink); border-color:var(--rule); background:var(--panel); }
+.titem:hover,.titem[aria-selected="true"],.titem[aria-current="true"],.recipe-card:hover,.resource-card:hover,.step-item[aria-selected="true"] { background:var(--panel2); border-color:var(--live); }
+.titem[aria-current="true"] { box-shadow:inset 5px 0 var(--live); }
+.drawer-close,.tour-close { width:44px; height:44px; }
+.external-boundary { font-size:13px; }
+
+/* Home */
+body.home { min-height:100vh; background:var(--bg); }
+.home-wrap { max-width:1180px; margin:0 auto; padding:54px 30px 48px; }
+.home-head { border:0; text-align:center; margin:0 auto 36px; padding:0; }
+.home-brand {
+  display:inline-block;
+  padding:8px 14px;
+  background:var(--ink);
+  color:var(--panel);
+  border-radius:4px;
+  font:700 13px/1 var(--mono);
+  letter-spacing:.18em;
+}
+.home-head h1 { margin:18px 0 10px; font:800 clamp(48px,7vw,72px)/1 var(--sans); letter-spacing:-.05em; }
+.home-rule { width:72px; height:7px; margin:18px auto; background:var(--live); }
+.home-head p { max-width:720px; margin:0 auto; color:var(--dim); font-size:17px; line-height:1.55; }
+.home-head .tag { margin-top:16px; background:var(--panel); }
+.home-search { max-width:780px; margin:0 auto 44px; }
+.home-search label { display:block; font-weight:800; margin-bottom:8px; }
+.home-search-row { display:grid; grid-template-columns:1fr auto; }
+.home-search input { min-height:58px; padding:0 16px; font-size:16px; background:var(--panel); color:var(--ink); border:2px solid var(--ink); border-right:0; border-radius:9px 0 0 9px; }
+.home-search button { min-width:110px; border-radius:0 9px 9px 0; border:2px solid var(--ink); background:var(--live); font-weight:800; }
+.home-search-meta { color:var(--dim); margin-top:7px; }
+.home-results { position:absolute; left:0; right:0; z-index:20; margin-top:4px; background:var(--panel); border:2px solid var(--ink); border-radius:8px; box-shadow:var(--shadow); }
+.home-results a { color:var(--ink); border-color:var(--rule); }
+.home-results a:hover,.home-results a.cursor,.home-results a[aria-selected="true"] { background:var(--panel2); box-shadow:inset 5px 0 var(--live); }
+.home-results mark { background:#FFE7AD; color:var(--ink); }
+.areagrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.areacard { min-height:172px; padding:20px 18px; background:var(--panel); border:1px solid var(--rule); border-top:6px solid var(--live); border-radius:9px; box-shadow:var(--shadow); }
+.areacard h2 { margin:5px 0 10px; font-size:18px; }
+.areacard h2 a { color:var(--ink); }
+.areacard .ac-count { margin:0; color:var(--dim); font:12px/1.2 var(--mono); text-transform:uppercase; letter-spacing:.08em; }
+.areacard p { color:var(--dim); font-size:14px; }
+.areacard .ac-open { margin-top:18px; }
+.areacard .ac-open a { display:inline-block; padding:9px 13px; color:var(--ink); background:var(--live); border:1px solid var(--ink); border-radius:6px; font-weight:800; text-decoration:none; }
+.home-foot { max-width:560px; margin-top:34px; padding:18px 18px; border-top:4px solid var(--live); background:var(--panel); color:var(--dim); }
+.home-foot p { margin:.35rem 0; }
+.home-foot b { color:var(--ink); }
+
+.pan-tabs-label { color:var(--ink); }
+.panetabs { background:var(--panel); border-bottom-color:var(--rule); }
+.panetabs button { color:var(--dim); border-bottom-color:transparent; }
+.panetabs button[aria-selected="true"] { color:var(--ink); border-bottom:3px solid var(--live); background:#FFF2D5; }
+
+@media (max-width:1080px) {
+  #panes { display:block; padding:10px; }
+  .pane { border:1px solid var(--rule); border-radius:10px; }
+  .transport { position:sticky; bottom:0; z-index:25; flex-wrap:wrap; }
+  .panetabs { position:sticky; top:0; z-index:20; }
+  .header-tools .text-scale,.crumb { display:none; }
+}
+@media (max-width:900px) {
+  .areagrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:720px) {
+  header.top {
+    min-height:58px;
+    max-width:100vw;
+    padding:0 8px;
+    gap:7px;
+    flex-wrap:nowrap;
+    align-items:center;
+    overflow:hidden;
+  }
+  .homelink span { display:none; }
+  .area-chip {
+    flex:1 1 auto;
+    min-width:0;
+    max-width:100%;
+    padding:0 4px;
+    font-size:15px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .nav-btn span,.study-btn span { display:none; }
+  .header-tools {
+    width:auto;
+    min-width:0;
+    max-width:calc(100vw - 132px);
+    flex:0 1 auto;
+    margin-left:auto;
+    justify-content:flex-end;
+    flex-wrap:nowrap;
+    overflow:hidden;
+  }
+  .header-tools .btn { min-width:44px; padding:0 9px; font-size:12px; flex:0 0 auto; }
+  .header-tools #sourcesBtn { display:none; }
+  .toolbar { align-items:stretch; padding:10px; }
+  .toolbar-fields,.toolbar-actions { width:100%; }
+  .toolbar-actions { display:grid; grid-template-columns:1fr 1fr; }
+  .toolbar-actions .btn { width:100%; }
+  .field { flex:1 1 100%; display:block; }
+  .field label { display:block; margin-bottom:6px; }
+  .field input,.field textarea,.field select { width:100%; min-height:44px; }
+  .panetabs { display:grid; grid-template-columns:repeat(3,1fr); }
+  .panetabs button { min-height:44px; }
+  .transport { display:grid; grid-template-columns:repeat(6,44px) 1fr; gap:6px; padding:8px 10px; }
+  .scrub-wrap { grid-column:1/-1; grid-row:3; }
+  .tick { grid-column:1/3; grid-row:2; }
+  .spd { grid-column:4/-1; grid-row:2; justify-self:end; }
+  .module-status { grid-column:1/4; grid-row:4; }
+  .steps-button { grid-column:5/-1; grid-row:4; }
+  .canvas-tools { flex-wrap:wrap; }
+  .home-wrap { padding:34px 18px 40px; }
+  .home-head h1 { font-size:46px; }
+  .home-head p { font-size:15px; }
+  .home-search-row { grid-template-columns:1fr; }
+  .home-search input { border-right:2px solid var(--ink); border-radius:9px; }
+  .home-search button { margin-top:8px; min-height:48px; border-radius:9px; }
+  .areagrid { grid-template-columns:1fr; }
+}
+@media (max-width:430px) {
+  .header-tools #labBtn span,.header-tools #resetLayout,.header-tools #sourcesBtn { display:none; }
+  .transport { grid-template-columns:repeat(6,1fr); }
+  .tbtn { width:100%; min-width:0; }
+  .speed-status { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.001ms!important; transition-duration:.001ms!important; }
+}
+
+/* Provenance text must remain visible on every source class. */
+.map .provenance.manual,
+.map .provenance.lecture,
+.map .provenance.mixed {
+  color:var(--ink);
+  background:var(--panel2);
+  border-color:var(--rule-strong);
+}
+.map .provenance.memorise {
+  color:var(--ink);
+  background:var(--live);
+  border-color:var(--rule-strong);
+}
+
+/* ============================================================
+   v6.1.1 REMEDIATION
+   Orange (#FFA500) measures 1.91:1 on cream and 1.97:1 on white,
+   so it cannot carry text. Black on orange measures 10.63:1.
+   Every "current / active" affordance below is therefore inverted
+   to black-on-orange. The declared four-colour palette is unchanged.
+   Also repairs theme selectors that never matched the real markup.
+   ============================================================ */
+
+/* --- current topic in the topic list --- */
+.titem[aria-current="true"]{
+  color:var(--ink);
+  background:var(--live);
+  border-left-color:var(--rule-strong);
+  font-weight:700;
+}
+
+/* --- active source-block chip (markup uses [data-active], not .active) --- */
+.chip[data-active="1"],
+.blockindex button[data-active="1"]{
+  color:var(--ink);
+  background:var(--live);
+  border-color:var(--rule-strong);
+  font-weight:700;
+}
+
+/* --- current topic area in the drawer switcher --- */
+.arealink.here{
+  color:var(--ink);
+  background:var(--live);
+  border-color:var(--rule-strong);
+  font-weight:700;
+}
+
+/* --- MEMORISE gap notice: pedagogically important, must be readable --- */
+.map .gap.memorise-gap{
+  color:var(--ink);
+  background:#FFEDC2;
+  border-color:var(--rule-strong);
+}
+
+/* --- current step in the Steps dialog --- */
+.step-item[aria-current="step"] .step-n{
+  color:var(--ink);
+  background:var(--live);
+  border-color:var(--rule-strong);
+  font-weight:700;
+}
+
+/* --- current mark on the trace timeline --- */
+.scrub-marks span.current,
+.scrub-marks i.current{
+  background:var(--live);
+  outline:1px solid var(--rule-strong);
+}
+
+/* --- reference and representation headings --- */
+.refcard h4,
+.repbox h4,
+.replabel b,
+.recipe-values b{
+  color:var(--ink);
+  font-weight:700;
+}
+
+/* --- collapsed pane rail on hover --- */
+.rail:hover{
+  color:var(--ink);
+  background:var(--live);
+}
+
+/* --- pan lock: the unlocked state is the one that needs signalling --- */
+.canvas-tool.pan-lock[aria-pressed="true"]{
+  background:var(--live);
+  border-color:var(--rule-strong);
+  color:var(--ink);
+}
+
+/* ---- M-02: conceptual pseudocode values in the memory ledger ---- */
+.blk.conceptual{border-left-style:dashed}
+.blk .conceptual-tag{
+  grid-column:1/-1;justify-self:start;margin-top:.2rem;
+  border:1px dashed var(--rule-strong);color:var(--dim);background:transparent;
+}
+
+/* ============================================================
+   v6.1.4 CONTRAST CORRECTIONS
+   Measured against WCAG 2.1 AA on the rendered pages.
+   ============================================================ */
+
+/* The current timeline mark took an orange background in v6.1.2 while
+   tracer.css still coloured its text orange: 1:1, invisible.
+   Black on orange measures 10.63:1. */
+.scrub-marks span.current,
+.scrub-marks i.current{ color:var(--ink); font-weight:700; }
+
+/* Breadcrumb separator was orange on white at 1.97:1. */
+.crumb-sep{ color:var(--ink); }
+
+/* Keyword and function tokens sat at 4.21:1 against the active-line
+   highlight (#FFEDC2). #8A4600 measures 6.14:1 there and 7.11:1 on white. */
+.kw,.fn{ color:#8A4600; }
+
+/* Preprocessor directives (#define, #include, #ifdef). 7.11:1 on white. */
+.pp{ color:#005A5A; font-weight:700; }
+
+/* ============================================================
+   v6.1.6 P0-01  -  form controls
+   tracer.css sets --field-bg to the v4 dark navy (#0B1420) while v6 sets
+   --ink to black: black on #0B1420 measures 1.14:1 and the generated topic
+   inputs were unreadable. The token is retired to White for this theme.
+   ============================================================ */
+:root{ --field-bg:#FFFFFF; }
+.field input,.field textarea,.field select,
+#inputs input,#inputs textarea,#inputs select,
+.module-search,input[type="search"],input[type="text"],input[type="number"],select,textarea{
+  background:var(--field-bg);
+  color:var(--ink);
+  border:1px solid var(--rule-strong);
+}
+.field input::placeholder,.module-search::placeholder,input::placeholder,textarea::placeholder{
+  color:rgba(0,0,0,.62);
+}
+.field input:disabled,.field select:disabled,input:disabled,select:disabled,textarea:disabled{
+  background:var(--panel2); color:rgba(0,0,0,.62);
+}
+
+/* P1-01: concept and problem-statement lines are not memorisation targets. */
+.map .provenance.concept{ border-color:var(--rule-strong); color:var(--ink); background:var(--panel2); }
+.map .gap.concept-gap{ border:1px dashed var(--rule-strong); background:var(--panel); color:var(--ink); }
+
+/* P2-05: seven area cards in a three-column grid left one alone on the last
+   row. A four-then-three layout on wide screens balances it, and the footer
+   is aligned to the same content column. */
+@media (min-width:1100px){
+  .areagrid{ grid-template-columns:repeat(4,1fr); }
+  .areagrid .areacard:nth-child(5){ grid-column:1 / span 1; }
+  .areagrid .areacard:nth-child(n+5){ grid-row:2; }
+  .areagrid .areacard:nth-child(5){ grid-column-start:1; }
+}
+@media (min-width:1100px){
+  .areagrid{ grid-template-columns:repeat(12,1fr); }
+  .areagrid .areacard{ grid-column:span 3; }
+  .areagrid .areacard:nth-child(n+5){ grid-column:span 4; }
+}
+.home-foot{ max-width:none; }
+
+/* ============================================================
+   v6.1.6 P2-03 / P2-04  -  repetition and mobile density
+   ============================================================ */
+
+/* P2-03: a topic with 21 memorise blocks repeated the full warning 21 times.
+   The first block in a module keeps the full notice; the rest carry a compact
+   badge. Nothing is hidden: every block still declares its own provenance. */
+.cblock ~ .cblock .memnotice{
+  padding:.3rem .5rem; font-size:.75rem;
+}
+.cblock ~ .cblock .memnotice .memnotice-detail{ display:none; }
+
+/* P2-04: after a run, the inputs row collapses to a one-line summary on
+   narrow screens so the visualisation starts inside the first viewport. */
+@media (max-width:720px){
+  .toolbar[data-collapsed="1"] .toolbar-fields{ display:flex; }
+  .toolbar[data-collapsed="1"] #inputs,
+  .toolbar[data-collapsed="1"] #inputsLead{ display:none; }
+  .toolbar[data-collapsed="1"] .inputs-summary{ display:flex; }
+  .inputs-summary{
+    display:none; align-items:center; gap:.5rem; flex:1 1 auto; min-width:0;
+    font-size:.8125rem; color:var(--ink);
+  }
+  .inputs-summary .is-text{
+    flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    font-family:var(--mono);
+  }
+  .inputs-summary .is-edit{ flex:0 0 auto; }
+  .transport{ flex-wrap:wrap; row-gap:.35rem; }
+}
+
+/* ============================================================
+   v6.1.7 - secondary controls, touch targets, student-facing chrome
+   ============================================================ */
+.more-wrap{ position:relative; display:inline-flex; }
+.more-menu{
+  position:absolute; right:0; top:calc(100% + 4px); z-index:40;
+  display:flex; flex-direction:column; gap:2px; min-width:11rem;
+  background:var(--panel); border:1px solid var(--rule-strong); border-radius:var(--r);
+  box-shadow:var(--shadow); padding:4px;
+}
+.more-menu[hidden]{ display:none; }
+.more-menu .btn{ width:100%; justify-content:flex-start; text-align:left; border:0; min-height:44px; }
+.more-menu .btn:hover{ background:var(--panel2); }
+.more-btn[aria-expanded="true"]{ background:var(--live); border-color:var(--rule-strong); }
+
+/* Build metadata is not part of the learning surface. It stays in the Sources
+   sheet and the manifest. */
+#buildVersion, #homeBuild{ display:none; }
+
+/* 44 x 44 minimum for every control a student uses on a phone. */
+@media (max-width:720px){
+  .nav-btn, .more-btn, .study-btn, .steps-button, .tbtn, .btn.go, .btn{ min-height:44px; }
+  .nav-btn{ min-width:44px; padding-left:.7rem; padding-right:.7rem; }
+  .spd select, #speed{ min-height:44px; padding:.4rem .5rem; }
+  .scrub{ min-height:44px; }
+  input[type="range"].scrub{ height:44px; }
+  input[type="range"].scrub::-webkit-slider-thumb{ width:28px; height:28px; }
+  input[type="range"].scrub::-moz-range-thumb{ width:28px; height:28px; }
+}
+
+/* ---- study aids: completion ticks and the recent list ---- */
+.titem.done{ position:relative; }
+.titem .ti-done{ float:right; color:var(--ink); font-weight:700; margin-left:.5rem; }
+.tgroup.recent-group{ border-bottom:1px solid var(--rule-strong); }
+.tgroup.recent-group .tgroup-h{ color:var(--ink); }

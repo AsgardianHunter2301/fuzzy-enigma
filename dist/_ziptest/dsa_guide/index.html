@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COMP2521 Tracer | Data structures and algorithms</title>
+<link rel="canonical" href="https://asgardianhunter2301.github.io/dsa_guide/index.html">
+<meta name="description" content="AVL trees, hash tables, sorting and graph algorithms traced line by line, with the exact COMP2521 source beside every step.">
+<meta property="og:site_name" content="COMP2521 Tracer">
+<meta property="og:title" content="COMP2521 Tracer | Data structures and algorithms">
+<meta property="og:description" content="Step through AVL rotations, hash table probing, BST deletion and graph algorithms one line at a time, with the exact course source beside the trace, the call stack and the memory lifecycle.">
+<meta property="og:image" content="https://asgardianhunter2301.github.io/dsa_guide/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="COMP2521 Tracer: source, trace and state panes side by side">
+<meta property="og:url" content="https://asgardianhunter2301.github.io/dsa_guide/index.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_AU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="COMP2521 Tracer | Data structures and algorithms">
+<meta name="twitter:description" content="Step through AVL rotations, hash table probing, BST deletion and graph algorithms one line at a time, with the exact course source beside the trace, the call stack and the memory lifecycle.">
+<meta name="twitter:image" content="https://asgardianhunter2301.github.io/dsa_guide/assets/og-card.png">
+<meta name="theme-color" content="#FFA500">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%228%22 fill=%22%23FFFBF2%22/%3E%3Cpath d=%22M12 16h40M12 32h28M12 48h34%22 stroke=%22%23000000%22 stroke-width=%226%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%2248%22 cy=%2232%22 r=%227%22 fill=%22%23FFA500%22 stroke=%22%23000000%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<script src="assets/theme-toggle.js"></script>
+<link rel="stylesheet" href="assets/tracer.css">
+<link rel="stylesheet" href="assets/theme-v6.css">
+<link rel="stylesheet" href="assets/manual-boundary-v62.css">
+<link rel="stylesheet" href="assets/quality-v632.css">
+<link rel="stylesheet" href="assets/quality-v633.css">
+<link rel="stylesheet" href="assets/theme-dark.css">
+</head>
+<body class="home">
+<div class="home-wrap">
+<div class="home-theme" aria-label="Theme controls"><button class="btn" id="themeBtn" type="button" aria-pressed="false">Dark mode</button><button class="btn" id="themeSystemBtn" type="button">Use system theme</button></div>
+<header class="home-head">
+  <span class="home-brand">COMP2521</span>
+  <h1>COMP2521 Tracer</h1>
+  <div class="home-rule" aria-hidden="true"></div>
+  <p>Choose a topic, enter values, and follow each step through source, trace, variables, and memory.</p>
+  <span class="tag" id="homeBuild"></span>
+</header>
+<section class="home-search" aria-labelledby="searchLabel">
+  <label id="searchLabel" for="allSearch">What do you want to trace?</label>
+  <div class="home-search-row">
+    <input id="allSearch" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="allResults" aria-expanded="false" placeholder="Search 68 topics">
+    <button id="homeSearchBtn" type="button">Search</button>
+  </div>
+  <div class="home-search-meta" id="homeSearchMeta">68 topics available</div>
+  <div class="home-results" id="allResults" role="listbox" hidden></div>
+  <span class="sr-only" id="searchStatus" role="status" aria-live="polite"></span>
+</section>
+<main class="areagrid"><article class="areacard"><p class="ac-count">7 topics</p><h2><a href="foundations.html">Foundations</a></h2><p>Recursion, complexity, and the course map.</p><p class="ac-open"><a href="foundations.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">13 topics</p><h2><a href="searching-sorting.html">Searching and sorting</a></h2><p>Search, compare, move, merge, and partition.</p><p class="ac-open"><a href="searching-sorting.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">9 topics</p><h2><a href="adts.html">Abstract data types</a></h2><p>Stacks, queues, sets, heaps, and tries.</p><p class="ac-open"><a href="adts.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">12 topics</p><h2><a href="trees.html">Binary search trees</a></h2><p>BST operations, rotations, balance, and AVL.</p><p class="ac-open"><a href="trees.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">6 topics</p><h2><a href="hashing.html">Hash tables</a></h2><p>Chaining, probing, sets, counters, and applications.</p><p class="ac-open"><a href="hashing.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">11 topics</p><h2><a href="graphs.html">Graphs</a></h2><p>Representations, BFS, DFS, and paths.</p><p class="ac-open"><a href="graphs.html">Open</a></p></article>
+<article class="areacard"><p class="ac-count">10 topics</p><h2><a href="graph-algorithms.html">Graph algorithms</a></h2><p>Cycles, components, shortest paths, and MSTs.</p><p class="ac-open"><a href="graph-algorithms.html">Open</a></p></article></main>
+<footer class="home-foot">
+  <p><b>Source:</b> COMP2521 26T2 manual and supplied lectures. Extra links are optional and clearly labelled.</p>
+  <p><a href="THIRD_PARTY_NOTICES.md">Third party notices</a></p>
+</footer>
+</div>
+<script src="assets/build.js"></script>
+<script src="assets/topics.js"></script>
+<script src="assets/home.js"></script>
+<script src="assets/manual-boundary-data.js"></script>
+<script src="assets/manual-boundary-v62.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* v6.3.3 - MST total weight badge */
+.mst-total{ font-weight:700; color:var(--ink); white-space:nowrap; }
+
+/* ============================================================
+   Breadcrumb navigation
+   ============================================================ */
+nav.crumb{ display:flex; align-items:center; min-width:0; flex:1 1 auto; }
+.crumb-list{
+  display:flex; align-items:center; gap:.35rem;
+  list-style:none; margin:0; padding:0; min-width:0;
+  font-family:var(--mono); font-size:.75rem;
+}
+.crumb-item{ display:flex; align-items:center; min-width:0; }
+.crumb-item a{ color:var(--dim); text-decoration:none; white-space:nowrap; border-radius:2px; }
+.crumb-item a:hover,.crumb-item a:focus-visible{ color:var(--ink); text-decoration:underline; }
+/* Separators are decorative, drawn in CSS so they are not part of the link text. */
+.crumb-item + .crumb-item::before{
+  content:">"; margin-right:.35rem; color:var(--rule-strong); flex:0 0 auto;
+}
+.crumb-item .crumb-g{ color:var(--dim); white-space:nowrap; }
+.crumb-current .crumb-n{
+  color:var(--ink); font-weight:700;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+html[data-theme="dark"] .crumb-current .crumb-n{ color:var(--ink); }
+/* A breadcrumb should shed ancestors before it truncates the current page. */
+@media (max-width:1180px){ .crumb-item:nth-child(2){ display:none; } }
+@media (max-width:900px){ .crumb-item:nth-child(1),.crumb-item:nth-child(3){ display:none; }
+  .crumb-item + .crumb-item::before{ content:none; } }
+
+/* ============================================================
+   Wide content: horizontal scroll without breaking the viewport
+   ============================================================ */
+.codewrap,.cbody,.scroll,.state,.map,.ledger,
+table.grid,.viz,.stage,.memev,.tables,.recipe-values{
+  -webkit-overflow-scrolling:touch;      /* momentum on older iOS */
+  overscroll-behavior-x:contain;         /* stop the page rubber-banding */
+}
+.codewrap,table.grid,.tables{ max-width:100%; }
+table.grid{ display:block; overflow-x:auto; border-collapse:collapse; }
+.cline{ min-width:max-content; }         /* long source lines scroll, not wrap */
+.viz,.stage{ max-width:100%; overflow-x:auto; }
+@media (max-width:1080px){
+  .pane .scroll .codewrap,
+  .pane .scroll .viz,
+  .pane .scroll .state{ overflow-x:auto; max-width:100vw; }
+  html,body{ overflow-x:hidden; }        /* the page itself never scrolls sideways */
+}
+.codewrap::-webkit-scrollbar,.viz::-webkit-scrollbar,table.grid::-webkit-scrollbar{ height:10px; }
+.codewrap::-webkit-scrollbar-thumb,.viz::-webkit-scrollbar-thumb,
+table.grid::-webkit-scrollbar-thumb{ background:var(--rule-strong); border-radius:6px; }
+
+/* Dark-mode toggle button state */
+#themeBtn[aria-pressed="true"]::after,#themeBtn[aria-checked="true"]::after{ content:" on"; color:inherit; font-weight:700; }
+.home-theme{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin:0 0 18px;}
+.home-theme .btn{padding:8px 12px;}
+
+.mst-outcome{padding:10px 12px;border:1px solid var(--rule-strong);border-left:4px solid var(--live);background:var(--panel2);color:var(--ink);line-height:1.5;}

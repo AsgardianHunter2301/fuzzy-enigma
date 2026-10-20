@@ -1,0 +1,374 @@
+{
+  "baseline_commit": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+  "entities": [
+    {
+      "name": "Shell sort",
+      "entity_type": "sorting algorithm",
+      "declared_status": "named only",
+      "proposed_topic_weeks": [
+        2
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Key-indexed counting sort",
+      "entity_type": "sorting algorithm",
+      "declared_status": "named only",
+      "proposed_topic_weeks": [
+        2
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Kosaraju",
+      "entity_type": "strongly connected components algorithm",
+      "declared_status": "named only",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Tarjan",
+      "entity_type": "strongly connected components algorithm",
+      "declared_status": "named only",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Floyd-Warshall",
+      "entity_type": "shortest-path algorithm",
+      "declared_status": "curiosity only",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Bellman-Ford",
+      "entity_type": "shortest-path algorithm",
+      "declared_status": "curiosity only",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Boruvka",
+      "entity_type": "minimum-spanning-tree algorithm",
+      "declared_status": "other algorithms",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Karger-Klein-Tarjan",
+      "entity_type": "minimum-spanning-tree algorithm",
+      "declared_status": "other algorithms",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to the stated algorithm family as a named/reference item; required depth is not established by the high-level schedule.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Longest path",
+      "entity_type": "graph problem",
+      "declared_status": "tractability context",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to graph-problem/tractability context; a mention does not establish an implementation exercise.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Largest clique",
+      "entity_type": "graph problem",
+      "declared_status": "tractability context",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to graph-problem/tractability context; a mention does not establish an implementation exercise.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Three-colourability",
+      "entity_type": "graph problem",
+      "declared_status": "tractability context",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to graph-problem/tractability context; a mention does not establish an implementation exercise.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Graph isomorphism",
+      "entity_type": "graph problem",
+      "declared_status": "bonus problem",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant to graph-problem/tractability context; a mention does not establish an implementation exercise.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Python dictionaries",
+      "entity_type": "language feature used as context, not an app runtime dependency",
+      "declared_status": "bonus syntax",
+      "proposed_topic_weeks": [
+        8
+      ],
+      "present_in_destination_source": true,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": null,
+      "relevance_assessment": "Relevant as Week 8 comparative syntax/context; it is not a JavaScript package imported by this app.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Verify the named/context classification against the actual course source; supply a clear definition and relationship, and add executable teaching only where justified by course relevance.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": []
+    },
+    {
+      "name": "Union-find",
+      "entity_type": "disjoint-set data structure / Kruskal optimisation",
+      "declared_status": "coverage-row named claim; missing from destination",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "present_in_destination_source": false,
+      "source_block_id": "namedalgos:0",
+      "source_locator": [
+        {
+          "symbol": "NAMED_ONLY",
+          "path": "assets/corpus-hashing-heaps.js",
+          "line_start": 381,
+          "line_end": 394,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-hashing-heaps.js#L381"
+        }
+      ],
+      "coverage_locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 422
+      },
+      "relevance_assessment": "Relevant as a named Kruskal optimisation according to the coverage index, but its destination omits it.",
+      "week_mapping_evidence_level": "Repository item-family claim aligned to a named official lecture group; individual name/depth is not independently confirmed from lecture slides",
+      "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+      "required_action": "Add the missing context/destination and verify its actual teaching status; use a separate source-backed implementation if depth is warranted.",
+      "review_depth": "Every individual named entity extracted and classified; destination presence and course-family alignment checked; no independent algorithm implementation or per-slide inclusion proof",
+      "related_findings": [
+        "CUR-MOD-05"
+      ]
+    }
+  ]
+}

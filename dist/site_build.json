@@ -1,0 +1,334 @@
+{
+ "site": "/home/claude/work/successor/dist/dsa_guide",
+ "pages": 8,
+ "files": 60,
+ "bytes": 1644961,
+ "unreferenced": [
+  "assets/og-card.png"
+ ],
+ "problems": [],
+ "baseUrl": null,
+ "absoluteUrlsRewritten": 0,
+ "absoluteUrlsStillPointingAtOriginalOrigin": 32,
+ "originalOrigin": "https://asgardianhunter2301.github.io/dsa_guide",
+ "excluded": [
+  ".DS_Store",
+  ".git",
+  "MANIFEST.json",
+  "MANUAL_BOUNDARY_GUIDE.md",
+  "MEMORISE_GRAPH_C_GUIDE.md",
+  "OPEN_FIRST.md",
+  "README.md",
+  "RECOVERY.md",
+  "SHA256SUMS.txt",
+  "bridges_c",
+  "dist",
+  "docs",
+  "licences",
+  "memorise_graph_c",
+  "tests",
+  "tools"
+ ],
+ "shipped": [
+  {
+   "path": "THIRD_PARTY_NOTICES.md",
+   "bytes": 3782,
+   "sha256": "08de1708b733cad3752280602bb69f3e38995aca723a247d40f7b2fc1925c1d3"
+  },
+  {
+   "path": "adts.html",
+   "bytes": 20243,
+   "sha256": "6c5327d923ebf27dd519a061dbc784cb79f3cad9784701b7433aa17b5e4c0a2e"
+  },
+  {
+   "path": "assets/build.js",
+   "bytes": 1967,
+   "sha256": "03c0e1dc0ae8be31b2d264ac41523d4d6f41fdfcea19b4f70e9f7e5c56d820ec"
+  },
+  {
+   "path": "assets/corpus-adts.js",
+   "bytes": 3170,
+   "sha256": "8e8b606c9eb425a326e8f0b87f2c23b98539f5ffaf39d20bddc9a374ce12baf0"
+  },
+  {
+   "path": "assets/corpus-foundations.js",
+   "bytes": 16247,
+   "sha256": "79515c5eb8c846ab2c79b76f8bb8737da45dbeb688ec1f1406a274642ea77bc4"
+  },
+  {
+   "path": "assets/corpus-graphs.js",
+   "bytes": 80533,
+   "sha256": "617b728ab7aa0872fe177050fecbfe5ef3a5d23f129ef7c73f390decd5f3afd6"
+  },
+  {
+   "path": "assets/corpus-hashing-heaps.js",
+   "bytes": 37824,
+   "sha256": "93e01e609d43bb0d9f3c6553b19bb3b047fc691d3469466a871ee2bcf59ea237"
+  },
+  {
+   "path": "assets/corpus-named.js",
+   "bytes": 7258,
+   "sha256": "f55ea534719473378da676f3652060196ed0d03c6c29e9ca250fa0bb86625b11"
+  },
+  {
+   "path": "assets/corpus-shared.js",
+   "bytes": 33058,
+   "sha256": "b66a6bfb87f9898b91b7c036bd91692df5105bd19baa12cfa27f36e33a8d57a9"
+  },
+  {
+   "path": "assets/corpus-sorting.js",
+   "bytes": 26523,
+   "sha256": "2412450303b3ffaa8a82b11f3febc7bfdd0f8311483bea50bca5cc00ec216d07"
+  },
+  {
+   "path": "assets/corpus-source-data.js",
+   "bytes": 72292,
+   "sha256": "14e5e9ae9983dfd14eef3ad706698d115fcc3be496dc519517ea857e504ba39e"
+  },
+  {
+   "path": "assets/corpus-theory-adts.js",
+   "bytes": 95642,
+   "sha256": "8a483a28ba49fc2430a094e75344410dcf688064f9716f784c21c321dfaece74"
+  },
+  {
+   "path": "assets/corpus-theory-foundations.js",
+   "bytes": 108587,
+   "sha256": "5a15c658faad854f3c92202134d8a7317abcd549758ecda802b378e4f3865dbe"
+  },
+  {
+   "path": "assets/corpus-theory-graphs.js",
+   "bytes": 123509,
+   "sha256": "44c0803b11e2bf1c784d964b8a16c683cff9ee041cee41285d86daefe5374b77"
+  },
+  {
+   "path": "assets/corpus-theory-trees.js",
+   "bytes": 70459,
+   "sha256": "32c7e5a01cfa34d87b9648b5b8aa8b16b3ae650bfd27e4b183f1617626fe3f00"
+  },
+  {
+   "path": "assets/corpus-theory.js",
+   "bytes": 30561,
+   "sha256": "3c12c039ea551e508bd0c8db1d8da000530332e3505709d49672a91e5ba6fdbc"
+  },
+  {
+   "path": "assets/corpus-trees.js",
+   "bytes": 49082,
+   "sha256": "8252510c26f88868fb40a295ba870620cbf2a63e8006409f9c29714e657a044e"
+  },
+  {
+   "path": "assets/course-enhancements.js",
+   "bytes": 91104,
+   "sha256": "2bc5f2adc3125434df3c8ef4e05d37f989a0bd0c6b194c995993d320d43e0f59"
+  },
+  {
+   "path": "assets/course-resource-data.js",
+   "bytes": 9579,
+   "sha256": "8ee5314ef3f0ba2056012297f1d8dc908bc7cd1d5738a2cd292b9466b5ed0d91"
+  },
+  {
+   "path": "assets/home.js",
+   "bytes": 4482,
+   "sha256": "8ce9953ae0d2f42def67a26a1087040ccc6fc3a3c836cdfebaf0200b3ff03115"
+  },
+  {
+   "path": "assets/manual-boundary-data.js",
+   "bytes": 33108,
+   "sha256": "d1d7b0586fd481cafca8f8364c69d10e8ce4e6a9f753df1f9520dbe406e631a4"
+  },
+  {
+   "path": "assets/manual-boundary-v62.css",
+   "bytes": 1613,
+   "sha256": "f65936e3b619337d2a3e2e5ba665274026a5d85046282f1be7a5d3b0d100a886"
+  },
+  {
+   "path": "assets/manual-boundary-v62.js",
+   "bytes": 10177,
+   "sha256": "7b56527f3d5ec3acbd1b8b66bdbdaad1af336d60e67c886a251d49f11f709731"
+  },
+  {
+   "path": "assets/modules-adts.js",
+   "bytes": 17951,
+   "sha256": "816f5c133429c4390640cbd56945878d24dbba1a00f3d4a2456b1f8912bed383"
+  },
+  {
+   "path": "assets/modules-graphs.js",
+   "bytes": 39240,
+   "sha256": "ae9649b798005dcfd019d43599234fccb9127b7e830fa9e57803a50ea1fe9130"
+  },
+  {
+   "path": "assets/modules-hashing.js",
+   "bytes": 25004,
+   "sha256": "4296a7d720f04a49acfbc455e190d36df13ca43847fedf4bd82e82c4ecf6dfd4"
+  },
+  {
+   "path": "assets/modules-heaps-tries.js",
+   "bytes": 19851,
+   "sha256": "984c5e65b669a8785ba99d4b3be5168d7087d415f114461aa85974f1aa6ab4ef"
+  },
+  {
+   "path": "assets/modules-registry.js",
+   "bytes": 13172,
+   "sha256": "98a5be4b4bc54cbd499d74ff309cd072f543e45893c7cd0402960832d86b68de"
+  },
+  {
+   "path": "assets/modules-searching.js",
+   "bytes": 4612,
+   "sha256": "0ec30551176824f061f8389eca6a6436f876164df8883188dd2fb7b241633ef4"
+  },
+  {
+   "path": "assets/modules-sorting.js",
+   "bytes": 27826,
+   "sha256": "1ca8d073d1220d090958a7af94738791c6769b8444e6f4239f9a03d60488f460"
+  },
+  {
+   "path": "assets/modules-trees.js",
+   "bytes": 36739,
+   "sha256": "18fd5cbd183fb33e69a3a62168fd60f4cc8484357752c105294ca02a4ab52973"
+  },
+  {
+   "path": "assets/og-card.png",
+   "bytes": 67702,
+   "sha256": "00c5aaad0c793dcf4141444ae0232ca08fc866b419bcbfc23fcd5dba5a39330c"
+  },
+  {
+   "path": "assets/page-adts.js",
+   "bytes": 164,
+   "sha256": "75ab165c8d61649728f5bbced120183e45b8aec34b3154a8c8d912ba9403198f"
+  },
+  {
+   "path": "assets/page-foundations.js",
+   "bytes": 150,
+   "sha256": "27692a406761bf7b3db148385eab86526a9e294df3bf16fd08776acde5562bea"
+  },
+  {
+   "path": "assets/page-graph-algorithms.js",
+   "bytes": 188,
+   "sha256": "044f997544a5b813973ca28a2e261d490534bc803a3f64fb9c4b8909c5ce4cb1"
+  },
+  {
+   "path": "assets/page-graphs.js",
+   "bytes": 155,
+   "sha256": "1295ea56c8b32c43c489cbf42c3f794f32932e77683779623c6c0e29b63b546e"
+  },
+  {
+   "path": "assets/page-hashing.js",
+   "bytes": 140,
+   "sha256": "5f0ef57f1ec8e2d468a94d98e9ec6a16c18df4051e37fef8edd7a29d8a66b0e3"
+  },
+  {
+   "path": "assets/page-searching-sorting.js",
+   "bytes": 158,
+   "sha256": "538a38d10844af1c120c2d17e96a86e42300eb9bdd7eb14ea186630d9ffb797c"
+  },
+  {
+   "path": "assets/page-trees.js",
+   "bytes": 160,
+   "sha256": "cbd7aaedebfccb2eb78f089240841aecf82fbae24bd53146852c247a6fb311d2"
+  },
+  {
+   "path": "assets/quality-v632.css",
+   "bytes": 3802,
+   "sha256": "9de173186dfed17d372305c3579e7eed5805d4f1a1d579d812d6ae9d7d07e2e3"
+  },
+  {
+   "path": "assets/quality-v632.js",
+   "bytes": 21569,
+   "sha256": "7837caba9ffdb5629466986f5125ce8662a33aaa744fc958c05c135ffa61313d"
+  },
+  {
+   "path": "assets/quality-v633.css",
+   "bytes": 3133,
+   "sha256": "47a351d88bf2d96658413824235f9d5f4504776587f6397fc0cb54d8113301f8"
+  },
+  {
+   "path": "assets/quality-v633.js",
+   "bytes": 4238,
+   "sha256": "f5cd43af442c053bbf0454d100b29db4f04b5506a3078aea0cf5f3edccec1d41"
+  },
+  {
+   "path": "assets/theme-dark.css",
+   "bytes": 6962,
+   "sha256": "334c62247cd714856e3a6bb81de1e76c8c084ecea22abe9e6108ed1a650ca01f"
+  },
+  {
+   "path": "assets/theme-toggle.js",
+   "bytes": 3541,
+   "sha256": "ee5d851106b1cc0a80c612b866ff0e49bbb3f3565dea41d3a221ade205b6d90b"
+  },
+  {
+   "path": "assets/theme-v6.css",
+   "bytes": 25266,
+   "sha256": "321a6d5bd4929b7109c3906229c6d52cb89f70e3629756aed42918a8d7a58a43"
+  },
+  {
+   "path": "assets/theory-panel.js",
+   "bytes": 12581,
+   "sha256": "06164b171e4a46b1f17987f67b954a698fb01ecdbc10d3fc23557b1020ea1488"
+  },
+  {
+   "path": "assets/topics.js",
+   "bytes": 21516,
+   "sha256": "66616bd2e4a57d680ed50906edbb798e855d1d04c8d24caef9c8fba1dc3e1d38"
+  },
+  {
+   "path": "assets/tracer-core.js",
+   "bytes": 23942,
+   "sha256": "241674127eac1d899fe270d4dc1c6797bcfbf34ad54afb03e7839604346850d3"
+  },
+  {
+   "path": "assets/tracer-renderers.js",
+   "bytes": 18132,
+   "sha256": "2dd523f3fbe2b9b646940ef463e5348ff464caaad79ce29f9467900e947c550c"
+  },
+  {
+   "path": "assets/tracer-ui.js",
+   "bytes": 119011,
+   "sha256": "68d8c258b68d7170ba5a0bbebc22dc459417ade0fda09448ad6cd8070e020d8d"
+  },
+  {
+   "path": "assets/tracer.css",
+   "bytes": 57650,
+   "sha256": "15dd804f3b6b24a35192ced1c586fd6344b9510d2dbf5c537450378326ba5281"
+  },
+  {
+   "path": "assets/ui-v6.js",
+   "bytes": 12042,
+   "sha256": "3d615e01f690cb11b6b125c744f415750e11f4593fccf43f61f22ad11960ec2a"
+  },
+  {
+   "path": "foundations.html",
+   "bytes": 20174,
+   "sha256": "ec6fb5e198fe174738fcac05572a42e1404ae80f8f86bb139b3a4f92f1aa8af1"
+  },
+  {
+   "path": "graph-algorithms.html",
+   "bytes": 20255,
+   "sha256": "fc3f1a959d3ca0f40d495737a0571ebdf0b0db7d186b87f8022b33e14d963e16"
+  },
+  {
+   "path": "graphs.html",
+   "bytes": 20220,
+   "sha256": "2deb9faa2639dac449c5feb84f8b538225699620554f1103fdab5db9ffd249f4"
+  },
+  {
+   "path": "hashing.html",
+   "bytes": 20173,
+   "sha256": "12307378e06efb637faf821188c95b690a36bf25950464e4a28d69c16d8ef834"
+  },
+  {
+   "path": "index.html",
+   "bytes": 6214,
+   "sha256": "25440d8008f6d6125a03c21fbf5e1a16f35f5ce04d27446a9cc7d52356a86389"
+  },
+  {
+   "path": "searching-sorting.html",
+   "bytes": 20344,
+   "sha256": "67c1ed430413f8b88b55aee09b54fa5b77ff74dfdd068d70ca611e54c984e4bd"
+  },
+  {
+   "path": "trees.html",
+   "bytes": 20184,
+   "sha256": "9252dbc1e471aba06b6ae8275609b1dc963e9bc58468e934444770e4f2d82934"
+  }
+ ]
+}

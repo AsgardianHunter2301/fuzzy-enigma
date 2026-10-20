@@ -1,0 +1,38 @@
+{
+  "seed": "0x37ada323",
+  "checks": 2920,
+  "passed": 2920,
+  "failed": [],
+  "groups": {
+    "sorting": {
+      "checks": 630,
+      "passed": 630,
+      "failed": 0
+    },
+    "binary_search": {
+      "checks": 240,
+      "passed": 240,
+      "failed": 0
+    },
+    "heapify": {
+      "checks": 300,
+      "passed": 300,
+      "failed": 0
+    },
+    "trees": {
+      "checks": 910,
+      "passed": 910,
+      "failed": 0
+    },
+    "graphs": {
+      "checks": 640,
+      "passed": 640,
+      "failed": 0
+    },
+    "hash_applications": {
+      "checks": 200,
+      "passed": 200,
+      "failed": 0
+    }
+  }
+}

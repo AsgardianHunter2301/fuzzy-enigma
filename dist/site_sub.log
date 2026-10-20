@@ -1,0 +1,65 @@
+  PASS  [AUD-08] complexity notation keeps its exponent in the normalised regions
+  PASS  [AUD-08] the flattened form O(n2) appears nowhere in those regions
+  PASS  [AUD-08] the "More context" pane the audit named renders the corrected notation
+  PASS  [AUD-08] the .viz complexity tables retain true superscript notation
+  PASS  [AUD-03] typing in a field triggers ZERO full trace generations
+  PASS  [AUD-03] one explicit Run triggers exactly one generation
+  PASS  [AUD-03] a malformed value is reported on its own field without running
+  PASS  [AUD-02] a rejected target never yields a successful search result in the UI
+  PASS  [AUD-06] the bare "t" shortcut still opens Topics when not typing
+  PASS  [AUD-06] typing "tree" into the search field is not swallowed
+  PASS  [AUD-06] typing "stack" into the search field is not swallowed
+  PASS  [AUD-06] typing "shortest path" into the search field is not swallowed
+  PASS  [AUD-06] slash and question mark reach the field while a dialog is open
+  PASS  [AUD-06] Enter on the focused Close button closes the drawer
+  PASS  [AUD-06] Escape closes the drawer and returns focus to a real control
+  PASS  [AUD-06] Ctrl+K still opens Topics from inside an input
+  PASS  [AUD-06] ArrowDown moves the topic cursor from the search field
+  PASS  [AUD-10] the tree structure is present in the real accessibility tree
+  PASS  [AUD-10] the required bstrotate topology is exposed to assistive technology
+  PASS  [AUD-10] the decorative canvas is hidden from assistive technology
+  PASS  [AUD-10] the structural table exists, is not a live region, and has a row per node
+  PASS  [AUD-07] a fresh load restores the fields carried in the fragment
+  PASS  [AUD-07] same-module navigation restores the new values (the audited early return skipped this)
+  PASS  [AUD-07] cross-module navigation restores values before running
+  PASS  [AUD-07] malformed fragments raise no uncaught page error
+  PASS  [AUD-07] browser Back returns to the previous scenario without error
+  PASS  [AUD-07] browser Forward replays the later scenario
+  PASS  [AUD-09] two real tabs opened before either write keep BOTH completions
+  PASS  [AUD-09] a recent-topic write preserves completions from the other tab
+  PASS  [AUD-09] a third page opened later reads the union
+  PASS  [UI] the narrow layout has no horizontal page scroll
+  PASS  [UI] the visualisation pane renders on a narrow viewport
+  PASS  [NEW-16] dfspath starts with dest beyond a 3-vertex graph
+  PASS  [NEW-16] a committed nV edit lowers dest to the highest vertex
+  PASS  [NEW-16] src was already in range and was not moved
+  PASS  [NEW-16] the edge list the student typed is left intact, not pruned
+  PASS  [NEW-16] the now-stale edge list is reported against the edges field
+  PASS  [NEW-16] with the edges corrected the smaller graph traces normally
+  PASS  [NEW-16] raising nV leaves the chosen dest alone
+  PASS  [A11Y-2.5.3] zoomLock accessible name contains its visible text
+  PASS  [A11Y-2.5.3] zoomReset accessible name contains its visible text
+  PASS  [A11Y-2.5.3] zoomFit accessible name contains its visible text
+  PASS  [A11Y-2.1.1] the bridge code panes are focusable and named
+  PASS  [A11Y-2.1.1] the trace stepper still owns arrow keys outside a pane
+  PASS  [A11Y-2.1.1] a focused code pane scrolls by keyboard instead of stepping
+  PASS  [A11Y-2.1.1] leaving the pane restores the trace stepper
+  PASS  [THEORY] the theory panel renders for a topic that has an entry
+  PASS  [THEORY] the core invariant is the block the reader lands on
+  PASS  [THEORY] every entry carries its tracer-authored provenance line
+  PASS  [THEORY] the panel is not a live region
+  PASS  [THEORY] a theory block opens from the keyboard
+  PASS  [THEORY] cross-topic suggestions carry a page, not a bare fragment
+  PASS  [THEORY] a topic with no entry hides the section instead of showing an empty heading
+  PASS  [UI] index.html loads with no page error or failed request
+  PASS  [UI] foundations.html loads with no page error or failed request
+  PASS  [UI] searching-sorting.html loads with no page error or failed request
+  PASS  [UI] adts.html loads with no page error or failed request
+  PASS  [UI] trees.html loads with no page error or failed request
+  PASS  [UI] graphs.html loads with no page error or failed request
+  PASS  [UI] graph-algorithms.html loads with no page error or failed request
+  PASS  [UI] hashing.html loads with no page error or failed request
+  PASS  [UI] no console errors across the whole run
+
+  REAL-BROWSER acceptance: passed=62 failed=0 skipped=0
+  evidence: /home/claude/work/artifacts/browser

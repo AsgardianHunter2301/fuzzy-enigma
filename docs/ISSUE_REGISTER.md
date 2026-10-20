@@ -1,0 +1,465 @@
+# Issue disposition — the 29-item audit register
+
+## AUD-01 — Earlier trace frames display later state
+
+**Priority:** HIGH
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced: graphadt nV=2 "insert 0 1" showed initialEdge=true; warshall nV=3 showed initialTransitiveEdge=true; audited observer reported 146 of 1906 frame views changed across graphadt 32/41, dfs 23/54, warshall 46/73, dfspath 20/25, components 19/24, hashprobe 6/34.
+
+**Cause:** Trace.step stored the caller's `view` object BY REFERENCE and shallow-copied vars/map. Generators legitimately mutate the live structure being traced, so every stored frame observed the final state. decorateGraphTrace cloned after generation, which is too late: it duplicated the finished state.
+
+**Change:** assets/tracer-core.js: snapshotTraceData() takes an independent deep copy of view, vars and map AT capture time; preserves Infinity/-Infinity/NaN (no JSON round-trip), Date/Map/Set/typed arrays, and is cycle-safe. corpus-shared.js cloneTraceData now delegates to it.
+
+**Tests:** tools/assert_no_frame_mutation.cjs (gates the audited observer); reproduce_findings A1-graphadt-snapshot, A1-warshall-snapshot
+
+**Result:** changed frame views 146 -> 0 on 68 modules / 1924 frames. Same gate on the baseline still reports 146 across the same 6 modules, so it discriminates. Cost measured: 30.34 -> 90.86 ms for all 68 traces, RSS 62.3 -> 62.4 MB.
+
+## AUD-02 — Malformed numeric targets produce false results
+
+**Priority:** HIGH
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced all three named cases (bin a="1 2 3" val="abc" returned a match at index 1; bstsearch returned true; avldel removed simulated root 2). An exhaustive sweep of all 134 fields across 68 modules then found the class affects SIX modules, not three: lin.val, bin.val, bstsearch.val, bstdel.val, avldel.val and twosum.S, each with 5 malformed forms producing NaN-contaminated traces.
+
+**Cause:** Scalar integer fields were read with Number(), so "abc" became NaN. NaN fails both < and >, falling through to the equality branch and reporting a match.
+
+**Change:** assets/tracer-core.js: parseIntScalar() enforces one complete-integer grammar /^[+-]?\d+$/ plus the safe-integer range, identical to the grammar parseInts already applied to lists. modules-registry.js normalises every field descriptor to a declared domain and wraps every module run() so the contract cannot be bypassed.
+
+**Tests:** reproduce_findings A2-invalid-target-{bin,bstsearch,avldel}; browser acceptance "a rejected target never yields a successful search result in the UI"; field sweep across all 6 modules x 11 malformed forms
+
+**Result:** All 66 malformed scalar inputs now rejected with InputValidationError carrying the field key. Valid boundaries preserved: negative targets, signed "+23", empty and singleton lists.
+
+## AUD-03 — Input validation runs full, insufficiently bounded traces
+
+**Priority:** HIGH
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed validateNow() called module.run() - a full trace generation - debounced 450 ms on input and with NO debounce on change. Reproduced the audit figure exactly: hamilton nV=8 K7+isolated = 41,102 frames (audit: 41,102), here 931.6 ms and RSS 272.8 MB. Discovery beyond the register: SEVEN graph modules (graphadt, bfs, dfs, warshall, dijkstra, kruskal, prim) had NO declared nV maximum at all, and on eleven more that DID declare one, "1e3" and "0x10" passed Number.isInteger and bypassed it, giving nV=1000; four modules hung the sweep at that size.
+
+**Cause:** HTML min/max were emitted as attributes only - UI hints a browser does not enforce for typed or programmatic values - and no entry path checked them.
+
+**Change:** Declared min/max now enforced in the shared validator for every entry path; parseGraph parses nV with the complete-integer grammar and a ceiling; the seven unbounded modules were given nV max 12, matching their sibling modules and measured at 1,797 frames / 9.6 ms worst case (warshall nV=12). Live validation calls the pure validator instead of run(). A 25,000-frame budget backstops Trace.step. Limits justified by measurement in docs/REMEDIATION_LIMITS.md.
+
+**Tests:** browser acceptance (real keystrokes): "typing in a field triggers ZERO full trace generations" and "one explicit Run triggers exactly one generation"; bound-enforcement probes across 11 modules
+
+**Result:** Typing = 0 generations, one Run = exactly 1. hamilton nV=8 and every 1e3/0x10/999/500 escape rejected before allocation on every path including programmatic. Accepted exhaustive nV=7 negative still works at 5,873 frames.
+
+## AUD-04 — Hash insertion ignores an available tombstone
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced for both probing methods: after filling 11 slots, deleting key 0 and inserting 11:99, numItems stayed 10 and get 11 reported not found.
+
+**Cause:** Insertion only stored a key on reaching a slot that was still EMPTY. With no empty slot left, the probe sequence ran to completion and reported "no available slot" although a DEL slot had been recorded in firstDel.
+
+**Change:** corpus-hashing-heaps.js: walk the probe sequence remembering the first DEL slot, stop early at an EMPTY slot, and if the sequence is exhausted without finding the key, reuse the remembered tombstone. Only a path with neither EMPTY nor DEL is genuinely full. A frame now shows the tombstone being remembered.
+
+**Tests:** reproduce_findings A3-tombstone-linear probing, A3-tombstone-double hashing
+
+**Result:** value 99 retrieved, numItems 11, both methods. Table size 11 is prime and the double-hashing increment is 1..5, so every increment is coprime and one pass visits every slot.
+
+## AUD-05 — BFS queue cleanup highlights graph cleanup source
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced: the QueueFree(Q) step highlighted block 1 line 44, "free(g);" in the Graph adjacency-matrix source. A static audit of all 502 step sites across 66 modules and 60 line tables found this to be the ONLY instance of the class.
+
+**Cause:** The step used block index 1 while its line number came from LQU, a table built over SRC_QUEUE (block 2). A line-number range check cannot catch this because 44 is valid in both sources; only comparing source identity can.
+
+**Change:** tracer-core.js: lines() now tags each table with the exact source text it resolved against, and records unresolved names instead of silently yielding line 0. New srcLine(blocks, table, key) derives the block index BY SOURCE IDENTITY and refuses an unresolved pair. bfs uses it.
+
+**Tests:** reproduce_findings A4-bfs-queue-free-source; tools/audit_source_mapping.py as a permanent gate over all 503 step sites
+
+**Result:** Now block 2, line 44, "free(q);" in the Queue implementation. Source-mapping audit: 503 sites, 0 problems.
+
+## AUD-06 — Keyboard handlers override typing and focused controls
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Two distinct defects confirmed. (1) With a dialog open, the bare keys t, T, / and ? were preventDefault()ed even while typing in a field inside it, because the open-dialog branch ran BEFORE the in-a-field test. (2) Enter was claimed by the topic cursor for the whole drawer, so Enter on the focused Close button activated the cursor instead of closing.
+
+**Cause:** Handler ordering, and a cursor shortcut scoped to the dialog rather than to its search/options context.
+
+**Change:** tracer-ui.js: the in-a-field test now runs first and only an explicit request for ANOTHER dialog is intercepted; Cmd/Ctrl+K is still honoured from a field. defaultPrevented and IME composition are skipped. The drawer cursor is restricted to the search field and the options list, so every other focused control keeps native behaviour.
+
+**Tests:** REAL BROWSER with genuine key events, not programmatic value assignment: typing "tree", "stack", "shortest path", "a/b?c"; Tab-to-Close then Enter; Escape and focus restoration; Ctrl+K from inside an input; ArrowDown cursor movement
+
+**Result:** 9 of 9 real-browser keyboard assertions pass; 0 hijacked keys. The audit stated stub replay could not close this finding, so it was closed in Chromium.
+
+## AUD-07 — Fragment routing can fail or restore the wrong scenario
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed "#%", "#%E0%A4%A" and "#bin%ZZ?a=1" each raised an uncaught URIError, and that with bin already active "#bin?a=9&val=9" produced NO calls at all - the values were not restored. Also found the hashchange handler never applied fragment values even for a different module.
+
+**Cause:** decodeURIComponent was guarded for query parameters but NOT for the module-id part. The handler also returned early when the module was already current, and startup and hashchange had separate, divergent dispatch.
+
+**Change:** tracer-ui.js: safeDecodeURIComponent returns a structured error instead of throwing; hash length and value length are capped; module ids and field names are allowlisted against the live registry; route values pass through the SHARED validator so a link cannot inject a value Run would reject; one dispatchRoute path serves both startup and hashchange, and a fragment carrying values re-runs even when the module is already selected.
+
+**Tests:** REAL BROWSER: fresh load with values, same-module navigation, cross-module navigation, three malformed fragments, Back and Forward
+
+**Result:** 6 of 6 real-browser routing assertions pass, no uncaught page error, and same-module navigation now restores values - the case the early return skipped.
+
+## AUD-08 — Typography cleanup changes mathematical notation
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed O(n²)->O(n2), O(2ⁿ)->O(2n), n³->n3. Established WHY the map entries for ² and ³ were dead: normalize("NFKD") ran first and compatibility-decomposed them to plain digits before any replacement.
+
+**Cause:** Destructive normalisation preceded the mathematical substitutions, so the substitutions were unreachable code.
+
+**Change:** ui-v6.js: superscript and subscript RUNS are translated to explicit ASCII (^, _ with bracketing for multi-character runs) BEFORE normalisation, so n^(i+1) cannot collapse to n^i+1. Learning content (note, vars, map, tally) now uses a non-destructive mode that keeps an unmapped symbol instead of replacing it with "?"; navigation chrome keeps the strict treatment.
+
+**Tests:** 14 notation cases; REAL BROWSER inspection of bstpartition and its "More context" pane, which the audit named as the reachable path
+
+**Result:** O(n^2), O(2^n), n^3 in the normalised regions; 0 flattened forms. The .viz complexity tables are outside the adapter and were confirmed to still carry true superscript characters - the audit cautioned against claiming they were affected, and they were not.
+
+## AUD-09 — Concurrent study tabs lose completed-topic progress
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced: tab A completing bstins then tab B completing bfs left only bfs stored.
+
+**Cause:** Progress was read once at page load and the whole in-memory object was written back on every change, so a tab opened before another's write replaced it - a classic lost update.
+
+**Change:** tracer-ui.js: completion is now an independent monotonic fact. completedAt maps topic -> first-completion time and is the single source of truth; every write re-reads and MERGES (union, earliest wins) so concurrent completions commute; recent-topic writes merge the same way and cannot overwrite a completion; v1 data migrates non-destructively with the original preserved under a backup key; a storage event reconciles; every access is guarded so denied storage degrades to an in-memory session.
+
+**Tests:** tests/study_progress.test.cjs (9 assertions incl. migration, corrupt value, storage denied); REAL BROWSER with two pages in one context plus a third opened later
+
+**Result:** 9 of 9 Node assertions and 3 of 3 real-browser assertions pass. Both bstins and bfs retained. No real user progress is cleared to demonstrate success.
+
+## AUD-10 — Tree diagrams lack equivalent structural text
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed both RENDER.tree and RENDER.trie emitted ONLY <svg aria-hidden="true" focusable="false"> with no title, desc or any text alternative, so the whole structure was unavailable to assistive technology.
+
+**Cause:** The decorative canvas was correctly hidden, but the canvas WAS the information and nothing replaced it.
+
+**Change:** tracer-renderers.js: each renderer emits a screen-reader table beside the diagram carrying stable node identity (a pre-order index, deliberately SEPARATE from the value because AVL deletion can transiently produce duplicate values), displayed value, root indication, which child slot each node occupies, current highlight, AVL balance factors, and for a trie the accumulated prefix, child characters and the complete-word flag. aria-live is explicitly "off" so playback cannot flood a screen reader.
+
+**Tests:** tests/render_structure.test.cjs (21 assertions, every rotation frame and every trie frame, duplicate values, empty tree and trie, post-deletion); REAL BROWSER accessibility-tree snapshot
+
+**Result:** 21 of 21 Node assertions and 4 of 4 real accessibility-tree assertions pass. The required bstrotate topology (root 4; children 1 and 7; 7's children 5 and 9) is present in Chromium's accessibility tree. Residual: no screen-reader (VoiceOver/NVDA) run was possible here - see the open items.
+
+## AUD-11 — The supplied checksum verification cannot pass
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed .gitignore is declared in both MANIFEST.json (71 entries) and SHA256SUMS.txt (71 lines) but is not a tracked file, so sha256sum -c reports one unreadable payload however correct the rest are.
+
+**Cause:** The manifest and checksum list described an intended payload that did not match the tree, and nothing regenerated them.
+
+**Change:** tools/build_release.cjs builds from an EXPLICIT allowlist with a recorded exclusion policy (.gitignore is version-control configuration, .DS_Store is workstation debris; neither is invented to match a historical digest). Non-recursive order: payload -> manifest over payload only -> checksum file covering payload+manifest but never itself -> archive -> DETACHED receipt outside it. Unclassified, duplicate, absolute, traversing and symlinked paths stop the build, and a binary safety net refuses to package compiled output. Two distributions are produced: app and assurance.
+
+**Tests:** tools/verify_release.cjs extracts each archive into a previously unused directory and checks the detached digest, every declared path/size/digest, unexpected members, self-reference, and sha256sum -c
+
+**Result:** 24 of 24 verification assertions pass for both archives from a fresh extraction. app payload 73 files, assurance 139. A first run of my own builder packaged 124 build artefacts including ELF binaries because the exclusion pattern matched "build/" but the directory was "_build/"; that was caught by the binary safety net and fixed.
+
+## AUD-12 — Published regression claims lack a reproducible repository gate
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the historical 812 checks / 152 cases belonged to a separate assurance package with no runnable repository route, so the claim could not be re-executed from the repository.
+
+**Cause:** The assurance suite lived outside the distribution.
+
+**Change:** tools/release_gate.sh runs 17 gates from this repository, records pinned tool versions with the results, and REFUSES to package if any gate fails. A skip is recorded as a skip and never counted as a pass.
+
+**Tests:** Full gate run; plus a DELIBERATE negative test in an isolated copy with the AUD-01 capture-time snapshot reverted
+
+**Result:** 17 of 17 gates pass, then packaging and release verification run. In the negative test, defect_expectations and snapshot_immutability both caught the injected defect, the gate refused, and no release directory was produced; the baseline and successor were untouched.
+
+## AUD-13 — Original-code licence and course-excerpt boundaries are unclear
+
+**Priority:** MEDIUM
+
+**Disposition:** open - external input required
+
+**Independently observed:** Confirmed there is NO licence file, copyright notice or terms anywhere in the repository, so the default position is all rights reserved. Confirmed the structs.sh MIT grant is already correctly scoped in THIRD_PARTY_NOTICES.md to three examined files and three reimplemented methods, and that Tactile-DS has no repository-wide licence at the pinned commit with nothing copied from it.
+
+**Cause:** Three separate questions were conflated: the project's own missing licence, a third-party notice at risk of being read as the project licence, and unresolved permission for quoted course material.
+
+**Change:** docs/provenance_matrix.csv (8 rows, PV-01..PV-08) and docs/PROVENANCE_AND_LICENCE.md record issuer, term/version, locator, permission evidence and status per category, with draft NOTICE wording and five neutrally described licence options. artifacts/source_block_provenance.json carries per-block provenance and digests for 127 occurrences / 86 unique hashes.
+
+**Tests:** n/a - this is an owner decision, not a testable property
+
+**Result:** NOT CLOSED, and deliberately so. No licence was chosen, created or implied; no permission or receipt was invented; the structs.sh MIT notice was not promoted into a project licence; no infringement was alleged. The exact inputs needed are listed in section 5 of that document. All unrelated engineering continued regardless.
+
+## AUD-14 — Graph C documentation overgeneralises representation contracts
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the guide's blanket claim that undirected representations store edges in both directions is FALSE for the edge arrays, which store ONE record per logical edge (graph_edge_array compares both endpoint orders at query time; weighted_undirected_edge_array canonicalises to v<=w), and also false for self-loops in the undirected list and matrix variants. Independently reproduced the 2-ignore / 9-accept self-loop split and the undocumented nE split (directed variants count arcs, undirected count logical edges).
+
+**Cause:** One generic contract table was applied to eleven implementations with materially different contracts.
+
+**Change:** MEMORISE_GRAPH_C_GUIDE.md rewritten (45 -> 334 lines) with nine corrections, per-variant columns for self-loops, duplicate inserts and undirected storage, the nE semantics, complexity derived from each actual representation (including that edge-array capacity is never released, so space follows peak E), and an exact build/selection route. docs/C_LIBRARY_MATRIX.md (972 lines) carries the per-variant matrix with a review-depth field per row. Displayed C was then RESYNCED to the compiled C.
+
+**Tests:** tests/displayed_c_parity.test.cjs (live both sides); audited audit_c.py; strict compile with and without -DNDEBUG; LeakSanitizer with a verified positive control
+
+**Result:** 16 of 16 parity assertions pass; 11 of 11 displayed implementations are token-identical to the compiled files. The same gate scores 15/16 on the baseline, failing only the assert check, so it discriminates. Documentation corrected rather than implementations standardised, per the commission.
+
+## AUD-15 — Singleton Kruskal input is presented as having no MST
+
+**Priority:** LOW
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced: nV=1 with an empty edge list made Kruskal report "no mst". Prim already handled nV=1 correctly, so only Kruskal was wrong.
+
+**Cause:** A spanning tree of V vertices has exactly V-1 edges, so a single vertex is already spanned by zero edges - but the completion test ran only after an edge was added, and with no edges the loop body never executed.
+
+**Change:** modules-graphs.js: the V-1 condition is tested up front, so V=1 returns one vertex, zero edges and total weight 0. Both algorithms now distinguish three explicit outcomes - complete spanning tree, singleton, and no spanning tree - and a partial result is named a FOREST, never an MST. Total weight is reported.
+
+**Tests:** reproduce_findings A5-singleton-mst; 14 independent MST assertions covering singleton, one edge, triangle, disconnected, zero, fractional and negative weights
+
+**Result:** The input is NOT rejected and the example is NOT hidden. 13 of 14 assertions passed first time; the 14th revealed that Prim returns 1 edge on a disconnected graph where Kruskal returns 2. That is correct for each algorithm - Prim grows from one source, Kruskal builds a global forest - so it is recorded as a legitimate contract difference and documented, not standardised away. My test expectation was wrong, not the code.
+
+## CUR-MOD-01 — Group-level week labels misdate mixed graph content
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed a single group -> week map, with the graphweighted study matrix inheriting a flat Week 4 although it mixes basic, directed and weighted material from Weeks 4, 5 and 7.
+
+**Cause:** One scalar week per GROUP cannot express introduction, later application, revision, prerequisites, source provenance and assessment.
+
+**Change:** course-enhancements.js: one reviewed register (CURRICULUM_SOURCES, OFFICIAL_WEEKS, GROUP_CURRICULUM, TOPIC_CURRICULUM) with six separate axes plus a relevance class and a labelled-inference flag; COURSE_SCOPE and EXCLUDED_SCOPE are now views of it, and chips, tooltips and the test API all derive from it. tools/extract_curriculum_register.cjs dumps the live register from a real page load.
+
+**Tests:** tests/curriculum_register.test.cjs (29 assertions)
+
+**Result:** 29 of 29 pass. 68/68 modules resolve; no Week 0 invented; "Extra" carried with numbered:false; nothing introduced in Flex Week 6; graphweighted reads Week 4 intro with Week 5 and 7 application and the per-block allocation labelled an inference; heaps and tries keep Week 9 with the 6 August notice scoped to the 26T2 PROGRAMMING section only and theory retained. A mirror-image fault not in the register was also found and fixed: Directed graphs carried a flat Week 7, placing directed terminology in Week 7 although it is introduced in Week 5.
+
+## CUR-MOD-02 — Supplemental graph code is made an unsupported universal memorisation prerequisite
+
+**Priority:** HIGH
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the requirement appeared in the source-badge label, two separate in-app notices, the compact adapter rewrite, module names, 20 block titles, four module notes, a checklist heading, per-step notes, a provenance label and 11 header comments inside the displayed source itself - and that the graph study matrix alone carries 17 blocks and 2,168 displayed lines.
+
+**Cause:** Accurate provenance ("not in the manual or lecture") had been fused with an unsupported instruction ("must be learnt and memorised before use") for which no authoritative course source exists.
+
+**Change:** Provenance kept everywhere; the requirement removed everywhere. Labels now read "supplemental C - not manual or lecture source". Notices explain what the learner actually needs: the representation the algorithm uses, the API operations and invariants it relies on, and which alternatives are useful comparisons. The checklist became "What to understand in these implementations". MEMORISE_GRAPH_C_GUIDE.md gained an evidence-based five-step learning path and states plainly that no source establishing a memorisation requirement was found.
+
+**Tests:** Repository-wide sweep for prescriptive phrasing; tools/sync_topic_index.cjs to keep the generated search index consistent with the changed titles
+
+**Result:** 0 prescriptive statements remain across assets/*.js. No implementation was deleted. Filenames keep the historical word, which the guide now explains is an artefact rather than an instruction.
+
+## CUR-MOD-03 — Advertised Dijkstra path reconstruction is missing
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed coverage row "Shortest-path reconstruction from pred" routes to dijkstra, whose trace ended at the dist[]/pred[] tables - output, not the reconstruction process the index advertises.
+
+**Cause:** The lesson was never written; the promise had no content behind it.
+
+**Change:** The missing lesson was ADDED, not the claim deleted: a dest field, a new supplemental pseudocode block clearly labelled "Shortest-path reconstruction from pred - supplemental" (not a course quotation), and a trace that walks pred links one step at a time, reports the vertex sequence and total cost, handles source=destination and unreachable destinations without inventing a path, detects a malformed pred chain defensively, and states the tie-breaking rule rather than implying a unique path. src/dest/weight validation moved to the shared parser with field keys.
+
+**Tests:** tests/dijkstra_path.test.cjs (15 assertions) with a PROPERTY-based oracle: the reported sequence must be a real walk whose summed weight equals an independently computed shortest distance - not one fixed path
+
+**Result:** 15 of 15 pass. The oracle matters: on the default graph dist[4]=11 is achieved by both 0->2->4 and 0->1->3->4, so asserting one exact sequence would have made an arbitrary tie-break the only passing answer.
+
+## CUR-MOD-04 — Broad coverage rows conflate implemented and missing capabilities
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed; records split, all 14 capability gaps subsequently closed and verified
+
+**Independently observed:** Confirmed single rows bundled multiple capabilities whose destinations do not all implement them.
+
+**Cause:** Coverage was recorded at a granularity coarser than the capabilities it promised.
+
+**Change:** 93 rows -> 181 single-capability records in COVERAGE_CAPABILITIES, with COVERAGE_ROWS derived from it so the existing renderer, headers and filter keep working. Categories are inherited, never downgraded. docs/COVERAGE_CAPABILITIES.csv records destination_verified, delivery_mode, completeness, evidence, required_action and review_depth per capability.
+
+**Tests:** All 195 destination id references resolved against the live registry; destinations executed and inspected rather than assumed
+
+**Result:** 93 rows -> 181 single-capability records. The register now reads 124 executable / 46 conceptual-reference / 11 named-only; 181 complete / 0 partial / 0 missing. The 14 capabilities that this finding recorded as open gaps have since been given working destinations and independently re-verified (see NEW-13); none was closed by relabelling or by weakening a promise, and delivery mode is still recorded honestly per row, so complete reference sections remain conceptual-reference. Two mis-linked destinations were corrected. tests/coverage_register_parity.test.cjs now keeps the in-app table and docs/COVERAGE_CAPABILITIES.csv in agreement (1,450 checks).
+
+## CUR-MOD-05 — The named-context destination omits union-find
+
+**Priority:** LOW
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the W7 MST coverage row names "Union-find optimisation" and routes to namedalgos, whose source-status table listed eight items and did not mention union-find anywhere.
+
+**Cause:** The promise had no content at its destination.
+
+**Change:** corpus-named.js: a status-table row plus a conceptual explanation at the granularity the row claims - how find/union replaces the per-edge connectivity search in Kruskal, union by size/rank and path compression, the amortised O(alpha(V)) consequence and why the edge sort then dominates - with a working cross-page link to the Kruskal lesson and an explicit statement that the lecture names the optimisation without supplying code, so this explanation is tracer-authored.
+
+**Tests:** 8 assertions on the rendered lesson
+
+**Result:** 8 of 8 pass. No course implementation was invented and no executable claim was made for a conceptual capability.
+
+## CUR-MOD-06 — Quicksort threshold prose is off by one
+
+**Priority:** LOW
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the displayed source is #define THRESHOLD 5 with if (hi - lo < THRESHOLD) on INCLUSIVE bounds, so a partition of hi-lo+1 items is handed to insertion sort when size <= 5. The prose said "partitions smaller than THRESHOLD = 5", excluding five.
+
+**Cause:** The description was written against exclusive bounds.
+
+**Change:** corpus-sorting.js: corrected wording ("five items or fewer - five is included, not excluded") plus a boundary table for 4, 5 and 6 items showing hi-lo, the guard value and which path handles it.
+
+**Tests:** Truth table recomputed from the displayed source; rendered lesson checked for the corrected and the removed wording
+
+**Result:** Verified against the actual source condition: sizes 3,4,5 -> insertion sort; 6,7 -> partition and recurse.
+
+## RES-01 — The factorial preset understates stack depth
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the displayed source base case is if (n == 0) return 1, so factorial(5) descends to factorial(0): SIX active calls at peak, five recursive transitions, result 120. The preset objective said "Track five stack frames".
+
+**Cause:** Recursive transitions were counted as stack frames.
+
+**Change:** course-enhancements.js: the objective now states the two counts separately. The module note and call-stack view were independently checked and were already correct - the view holds six frames - so no cross-file mismatch existed.
+
+**Tests:** Measured at n=0, 1 and 5; every other numeric preset claim re-derived (7-node min-height BST, 3-component graph, Eulerian two-odd-degree preset, single-unreachable Dijkstra vertex, AVL rotation cases)
+
+**Result:** RES-01 was the only numeric preset defect among those checked.
+
+## RES-02 — A shared reverse-sort objective is wrong for linked-list insertion
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed and found materially broader than reported
+
+**Independently observed:** One recipe set with the objective "Expose the high-work ordering for comparison-based methods" was attached to EIGHT modules. Comparison-count oracles transcribed line by line from the displayed source (counted operation: one evaluation of le/ge/lt/gt, short-circuit modelled, every output asserted sorted) give, for sorted/reverse/duplicates: sel 15/15/15, bub 5/15/14, ins 5/15/11, ms 9/7/10, bottomup 9/7/10, qs 19/17/15, q3 18/19/24, listsorts 15/5/11. The shared objective is therefore accurate only for bub and ins - wrong for SIX of eight, and fully inverted for merge sort, bottom-up merge sort and the linked-list variant, where reverse is the CHEAPEST input.
+
+**Cause:** One objective was applied to eight algorithms with different adaptivity.
+
+**Change:** course-enhancements.js: a SORT_WORK register from which all 24 objectives are generated, so each measured number is written once. Every objective names the counted operation before any best/worst claim.
+
+**Tests:** Two independent methods agreed: an oracle transcribed from the displayed source, and counting the modules' own comparison frames
+
+**Result:** A disagreement was resolved in favour of the source: my first oracle was generic rather than transcribed and had merge sort's split transposed (the source uses mid=(lo+hi)/2, giving left 2 of 3, not length>>1). It also wrongly reported qs sorted/reverse as tied. The shipped figures are the source-derived ones.
+
+## BRG-01 — BFS conversion and trace use different root-predecessor conventions
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed by compiling the audited fixture: bfs_predecessor came back [-1,-1], so the C root predecessor stayed -1 while the active trace marks the source as its own predecessor.
+
+**Cause:** Two defensible conventions were used in one lesson without either being declared.
+
+**Change:** manual-boundary-data.js: one declared convention - the root is its own predecessor, -1 means never reached and nothing else, and predecessor[] is the sole reached-marker. The path-reconstruction consumer reads -1 the same way and returns a length, 0 for unreachable, or -1 for malformed input, never an invented path.
+
+**Tests:** bridges_c test_bfs, 42 assertions against two backends, with BFS layer distances as an independent oracle
+
+**Result:** Convention declared in the bridge comment and matched by its consumer. Dijkstra deliberately keeps pred[src] = -1 because dist decides reachability there; that difference from BFS is declared rather than left silent.
+
+## BRG-02 — Warshall conversion and trace disagree on reflexive reachability
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed: the fixture returned [[1,0],[0,1]] - a reflexive diagonal - while the trace initialises tc as a plain copy of A, i.e. positive-length reachability.
+
+**Cause:** Two valid conventions taught and executed in one lesson.
+
+**Change:** Positive-length reachability declared and implemented, matching the printed pseudocode ("a copy of A") and the trace. The reflexive closure is retained separately and by name as warshallReflexive(), differing only on the diagonal, with warshallFree().
+
+**Tests:** bridges_c test_warshall, 81 assertions including the diagonal, an unreachable pair and a self-reachable pair, against a from-scratch reachability closure over all 64 arc sets on three vertices
+
+**Result:** Code, comment, trace and consumers agree on one declared convention; the alternative remains available under its own name.
+
+## BRG-03 — Supplemental Kruskal returns a partial graph without explicit failure
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed: on a 3-vertex graph the fixture returned kruskal_edges=1, kruskal_vertices=3 - a partial forest with no failure signal a caller could test.
+
+**Cause:** The result type could not express "no spanning tree exists".
+
+**Change:** An explicit MstResult { status, tree, nVertices, nEdges, nComponents, totalWeight } with MST_SPANNING_TREE / MST_NO_SPANNING_TREE, status derived from a recomputed component count rather than asserted. A partial result is named a FOREST. MstResultFree is the single owner; the input graph is untouched. V=1 succeeds with 0 edges and weight 0.0; V=0 is reported as no spanning tree by declaration.
+
+**Tests:** bridges_c test_mst, 248 assertions, with brute-force minimum spanning cost over all edge subsets of 64 generated graphs as the oracle
+
+**Result:** Success and failure are now distinguishable by a caller, and the singleton case succeeds rather than being rejected.
+
+## BRG-04 — Supplemental Prim returns a partial graph without explicit failure
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed the same shape: "if (best == -1) break;  // graph is disconnected" then return mst.
+
+**Cause:** Same result-contract gap as BRG-03.
+
+**Change:** Same MstResult contract. The two forests are documented as legitimately different: Kruskal yields a minimum spanning forest of every component, Prim a tree of vertex 0's component only. A latent out-of-bounds write (usedV[0] before any nV==0 check) was also fixed.
+
+**Tests:** Shared with BRG-03
+
+**Result:** Both algorithms report explicit outcomes; the behavioural difference is documented rather than standardised away.
+
+## BRG-05 — Supplemental examples lack complete compatible library dependencies
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Confirmed deleteRoot is defined nowhere, and that WeightedGraph, Weight, Edge, WGRAPH_NO_EDGE, WGraph* and GraphHasPath do not exist. Confirmed the incompatibility: the Dijkstra bridge used int distances with INT_MAX while the six bundled weighted ADTs use double and accept zero and fractional weights.
+
+**Cause:** Bridges were written against an API that was never supplied.
+
+**Change:** bridges_c supplies deleteRoot with an AVL-aware removeMin that preserves stored heights and rebalances the internal removal path, a Queue ADT, and the whole weighted API. CRITICALLY, the fractional-weight domain was PRESERVED: Weight is double, the accepted domain is finite non-negative doubles including zero and fractions, and one sentinel provably outside that domain is used, so a 0.0 edge is still an edge. The bridge was adapted to double rather than the ADTs narrowed to int.
+
+**Tests:** bridges_c test_avl (345) and test_dijkstra (1,309) assertions, with Bellman-Ford over 64 arc subsets x 4 sources as the oracle and every finite distance re-walked edge by edge. A deliberately non-rebalancing deleteRoot defined inside the test FAILS the same invariant the real helper passes, proving the test discriminates.
+
+**Result:** 40 target runs across 4 configurations, 8,452 assertions, 0 failures, build exit 0. Independently re-verified by rebuilding from scratch.
+
+## BRG-06 — The undirected-cycle bridge misses an accepted Graph self-loop
+
+**Priority:** MEDIUM
+
+**Disposition:** confirmed, fixed locally, verified by the named checks
+
+**Independently observed:** Reproduced the audited composition exactly: {"nE":1,"selfAdjacent":true,"hasCycle":false}. The root DFS was started with prev equal to the root itself, and the loop body skips w == prev, so a self-loop at the root is skipped.
+
+**Cause:** The root-parent sentinel collided with a real vertex id.
+
+**Change:** NO_PARENT = -1 at each root, and w == v recognised as a self-loop BEFORE the parent test. The Graph contract was not narrowed.
+
+**Tests:** bridges_c test_cycle against two backends, asserting hasCycle == GraphIsAdjacent(g,v,v) so one source is correct on either Graph contract
+
+**Result:** Directly comparable before/after on the same composition: hasCycle false -> TRUE. Against the adjacency list, which rejects loops, it correctly reports {"nE":0,...,"hasCycle":false}. Scoped as a C-composition defect: the browser parser separately rejects self-loops, and that is stated rather than misreported as a UI input defect.

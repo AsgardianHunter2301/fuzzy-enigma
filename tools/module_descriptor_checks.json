@@ -1,0 +1,625 @@
+{
+  "baseline_commit": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+  "checks": [
+    {
+      "id": "sel",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bub",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "ins",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "ms",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "qs",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "q3",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "radix",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "lin",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bin",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "stack",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "queue",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstins",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstsearch",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstdel",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstfree",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "avlins",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "avldel",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "hash",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "pq",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "trie",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphadt",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bfs",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "dfs",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "warshall",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "dijkstra",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "kruskal",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "prim",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "coursemap",
+      "descriptor_name_matches": false,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "recpyramid",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "recfactorial",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "reclistsum",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "reclistappend",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "analysis",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "sortprops",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bottomup",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "listsorts",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "quickvariants",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "adtarch",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "setadt",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bsttrav",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstrotate",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstpartition",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstrebalance",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bstlocal",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "avlheight",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphfund",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphreps",
+      "descriptor_name_matches": false,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphlist",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphedges",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphweighted",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "bfspath",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "dfspath",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "dfsiter",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "cycleu",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "components",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "hamilton",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "euler",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "cycled",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "webcrawl",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "hashprobe",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "hashsetcounter",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "twosum",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "oddocc",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "anagram",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "pqcompare",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "heapify",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "heapsort",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "namedalgos",
+      "descriptor_name_matches": true,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    }
+  ],
+  "page_descriptors": [
+    {
+      "id": "adts",
+      "file": "adts.html",
+      "title": "Abstract data types",
+      "groups": [
+        "Abstract data types",
+        "Priority queues & heaps",
+        "Tries"
+      ],
+      "descriptor_path": "assets/page-adts.js"
+    },
+    {
+      "id": "foundations",
+      "file": "foundations.html",
+      "title": "Foundations",
+      "groups": [
+        "Course map",
+        "Recursion",
+        "Analysis"
+      ],
+      "descriptor_path": "assets/page-foundations.js"
+    },
+    {
+      "id": "graph-algorithms",
+      "file": "graph-algorithms.html",
+      "title": "Graph algorithms",
+      "groups": [
+        "Graph problems",
+        "Directed graphs",
+        "Shortest paths & MSTs"
+      ],
+      "descriptor_path": "assets/page-graph-algorithms.js"
+    },
+    {
+      "id": "graphs",
+      "file": "graphs.html",
+      "title": "Graphs and traversal",
+      "groups": [
+        "Graph representations",
+        "Graph traversal"
+      ],
+      "descriptor_path": "assets/page-graphs.js"
+    },
+    {
+      "id": "hashing",
+      "file": "hashing.html",
+      "title": "Hash tables",
+      "groups": [
+        "Hash tables",
+        "Hash applications"
+      ],
+      "descriptor_path": "assets/page-hashing.js"
+    },
+    {
+      "id": "searching-sorting",
+      "file": "searching-sorting.html",
+      "title": "Searching and sorting",
+      "groups": [
+        "Searching",
+        "Sorting"
+      ],
+      "descriptor_path": "assets/page-searching-sorting.js"
+    },
+    {
+      "id": "trees",
+      "file": "trees.html",
+      "title": "Binary search trees",
+      "groups": [
+        "Binary search trees",
+        "Balanced BSTs",
+        "AVL trees"
+      ],
+      "descriptor_path": "assets/page-trees.js"
+    }
+  ]
+}

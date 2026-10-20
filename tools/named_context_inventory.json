@@ -1,0 +1,203 @@
+{
+  "baseline_commit": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+  "rows": [
+    {
+      "named_row": 1,
+      "item_group": "Union-find (disjoint-set) optimisation",
+      "displayed_status": "contextual - explained below, no course C supplied",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as contextual - explained below, no course C supplied within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 2,
+      "item_group": "Shell sort",
+      "displayed_status": "named only",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        52
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        2
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as named only within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 3,
+      "item_group": "Key-indexed counting sort",
+      "displayed_status": "named only",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        53
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        2
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as named only within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 4,
+      "item_group": "Kosaraju / Tarjan",
+      "displayed_status": "named only",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        134,
+        135,
+        148
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as named only within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 5,
+      "item_group": "Floyd-Warshall / Bellman-Ford",
+      "displayed_status": "curiosity only",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        140,
+        141
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as curiosity only within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 6,
+      "item_group": "Boruvka / Karger-Klein-Tarjan",
+      "displayed_status": "other algorithms",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        147,
+        148
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        7
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as other algorithms within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 7,
+      "item_group": "Longest path / largest clique / three-colourability",
+      "displayed_status": "tractability context",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        126
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as tractability context within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 8,
+      "item_group": "Graph isomorphism",
+      "displayed_status": "bonus problem",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        127
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        5
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as bonus problem within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    },
+    {
+      "named_row": 9,
+      "item_group": "Python dictionaries",
+      "displayed_status": "bonus hash-table syntax",
+      "module_id": "namedalgos",
+      "module_week_label": null,
+      "matching_coverage_rows": [
+        165
+      ],
+      "locator": {
+        "path": "assets/corpus-named.js",
+        "line": 1
+      },
+      "relevance_status": "Declared by repository as named/contextual, not independently established as a required implementable syllabus algorithm",
+      "proposed_topic_weeks": [
+        8
+      ],
+      "week_mapping_evidence_level": "Repository context table and coverage link cross-check; named official lecture group only",
+      "relevance_assessment": "Relevant as bonus hash-table syntax within the matched topic family. This grouped table is not an executable lesson for every name.",
+      "required_action": "Check every individual name against individual_named_context_inventory.json and the authoritative lecture; repair missing context or incorrect required-depth claims.",
+      "review_depth": "Entire eight-row status table inspected and cross-linked; individual algorithm semantics and official assessment depth not certified"
+    }
+  ]
+}

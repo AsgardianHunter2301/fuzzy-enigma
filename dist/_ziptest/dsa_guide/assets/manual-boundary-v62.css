@@ -1,0 +1,82 @@
+
+.manual-boundary-panel {
+    background: #FFFBF2;
+    border: 1px solid #000000;
+    border-left: 5px solid #FFA500;
+    border-radius: 4px;
+    color: #000000;
+    margin: 0 0 14px;
+    padding: 12px;
+}
+.manual-boundary-panel > h3 {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+.manual-provenance {
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+}
+.manual-pair {
+    border-top: 1px solid #000000;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+.manual-pair > h4 {
+    font-size: 13px;
+    margin: 0 0 8px;
+}
+.manual-columns {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.manual-columns h5 {
+    background: #FFA500;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 12px;
+    margin: 0;
+    padding: 6px 8px;
+}
+.manual-columns pre {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-top: 0;
+    color: #000000;
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin: 0;
+    max-height: 360px;
+    overflow: auto;
+    padding: 10px;
+    white-space: pre;
+}
+.manual-assumption,
+.manual-warning {
+    font-size: 12px;
+    line-height: 1.45;
+    margin: 8px 0 0;
+}
+.manual-warning {
+    font-weight: 700;
+}
+.exam-manual-note {
+    background: #FFFBF2;
+    border: 1px solid #000000;
+    border-left: 5px solid #FFA500;
+    margin-top: 14px;
+    padding: 12px;
+}
+.exam-manual-note h3 {
+    margin: 0 0 6px;
+}
+.exam-manual-note p {
+    margin: 0;
+}
+@media (max-width: 780px) {
+    .manual-columns { grid-template-columns: 1fr; }
+    .manual-columns pre { max-height: 300px; }
+}

@@ -1,0 +1,463 @@
+{
+  "product": "COMP2521 Tracer",
+  "distribution": "classroom",
+  "version": "6.4.2",
+  "status": "CLASSROOM CANDIDATE",
+  "generatedDate": "2026-10-20",
+  "predecessor": {
+    "version": "6.4.0",
+    "filename": "COMP2521_Tracer_v6_4_0_CLASSROOM.zip",
+    "sha256": "24df39b5a7f633914e39dae7ec46c70d6e0fff66fad36b32b7d8f91fd899c9c2",
+    "size": 331696,
+    "custody": "uploaded original preserved unchanged"
+  },
+  "scope": {
+    "registeredTopics": 68,
+    "controlledCases": 152,
+    "controlledFrames": 3746,
+    "paintedDefaultFrames": 1987,
+    "supplementalGraphCFiles": 11
+  },
+  "quality": {
+    "technicalValidation": "LOCAL AUTOMATED CHECKS PASSED",
+    "humanScreenReaderUat": "pending",
+    "githubWorkflow": "prepared; not executed",
+    "statusNote": "Full checks are in the separate assurance package. No approval, canonical promotion or deployment is implied.",
+    "browserMode": "injected",
+    "checksPassed": 812,
+    "checksFailed": 0,
+    "controlledCases": 152,
+    "sourceTraceFramesMatched": 3746,
+    "limitations": [
+      "Human screen-reader UAT not performed.",
+      "GitHub-hosted workflow has not been executed by this local run.",
+      "Injected DOM harness: CSP enforcement, resource loading, file:// and real origin storage/navigation were not exercised."
+    ],
+    "auditNote": "Contrast re-verified 0/2291 in light and dark under real Chromium at file://. Prim disconnected-graph outcome notice previously coexisted with a stale MST total-weight badge implying a spanning tree existed; the badge is now suppressed whenever the notice fires.",
+    "contentBaseline": {
+      "status": "PRINCIPAL APPROVED",
+      "approvedBy": "Dhruba P Bhandari, Principal, Elite Business Consultants",
+      "approvedDate": "2026-09-06",
+      "priorBaselineSha256": "7270ff621e208edaead07f9570b6bb5c7e94ccc3d973d184a8d6c0df16f343e2",
+      "priorBaselineVersion": "v5.3.0 through v6.4.0",
+      "newBaselineSha256": "afeba2bb994941e8b86f56601202ffee7b2325e1e50749188c25b659af79c15b",
+      "newBaselineIntroducedInVersion": "6.4.1",
+      "natureOfChange": "ASCII normalisation of curly quotes, en-dashes and one middle dot in authored module titles, notes and page-range strings only. Verified field-by-field across all 68 topics: zero changes to any block src or source field. No C, pseudocode, field option value, or trace payload was altered.",
+      "verificationMethod": "Independent module-inventory diff (Node/JSDOM) between v6.4.1 and the prior verified build, comparing every block field individually.",
+      "outstandingAction": "The assurance package's source_parity control (tests/common.py or equivalent) still carries the prior baseline constant and will report this as a difference until its EXPECTED_BASELINE value is updated to newBaselineSha256 above. Not corrected here because the assurance tree is not part of this classroom distribution; update it the next time the assurance package is built or audited."
+    },
+    "deliveryEnvironmentNote": "One binary asset, assets/og-card.png (a generated Open Graph social-preview image, not referenced or loaded by the running application), was found to differ in byte content from the working-tree version between an earlier delivery and this one, despite no edit to it in this session. The cause is believed to be image re-encoding performed by the delivery sandbox itself, outside this audit's control. This manifest and SHA256SUMS.txt were regenerated from the file as it exists in the delivered package, not from the working tree, so they are internally consistent with what ships. The Principal should independently verify checksums after download, since a sandboxed delivery environment can re-encode binary media between build and download in ways outside this audit's visibility."
+  },
+  "offlineRuntime": {
+    "core": "assets/tracer-core.js",
+    "externalRuntimeDependencies": 0,
+    "internetRequired": false,
+    "optionalCommunityLinksRequireInternetWhenOpened": true
+  },
+  "sourcePolicy": "The 26T2 manual controls exact C and pseudocode. Supplied lectures are labelled separately. Supplemental C is labelled Memorise and not source.",
+  "distributionBoundary": "Application, study material and classroom System check only. Full tests, audit evidence and screenshots are held separately.",
+  "files": [
+    {
+      "path": "DEPLOY.md",
+      "size": 717,
+      "sha256": "9d3306e565b42943919e7d3e698768907469b3c9967d682438aca4f3fc44b505"
+    },
+    {
+      "path": "MANUAL_BOUNDARY_GUIDE.md",
+      "size": 616,
+      "sha256": "59c97efee0d4fe31a50db32b9a5293da43bb56b4944614b386d3ea44983ea15f"
+    },
+    {
+      "path": "MEMORISE_GRAPH_C_GUIDE.md",
+      "size": 21202,
+      "sha256": "d83ca5e8bf5ca4028b664a5c995322ca4c5582b62187333be69d3427805f7174"
+    },
+    {
+      "path": "OPEN_FIRST.md",
+      "size": 8810,
+      "sha256": "dc9d122edc2bba441a51d4a6481c632df5e6acbe169cf01884eaf83a89d617b9"
+    },
+    {
+      "path": "PUSH_THIS.md",
+      "size": 3435,
+      "sha256": "5fd995c9bd7c32aec16dc2b711b39cea2c53e1f9822ecbb97ccb3ae519c0f718"
+    },
+    {
+      "path": "README.md",
+      "size": 1203,
+      "sha256": "826cf818ca1a0e7023121f6949d002ab87744f07de1263bb6b7d5b1228f1d805"
+    },
+    {
+      "path": "RECOVERY.md",
+      "size": 2830,
+      "sha256": "f2cc1b4965626acac456504f1a8d3ba6d7ddd7f1bed6cd79db18e69047b6cae3"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size": 3782,
+      "sha256": "08de1708b733cad3752280602bb69f3e38995aca723a247d40f7b2fc1925c1d3"
+    },
+    {
+      "path": "adts.html",
+      "size": 20243,
+      "sha256": "6c5327d923ebf27dd519a061dbc784cb79f3cad9784701b7433aa17b5e4c0a2e"
+    },
+    {
+      "path": "assets/build.js",
+      "size": 1967,
+      "sha256": "03c0e1dc0ae8be31b2d264ac41523d4d6f41fdfcea19b4f70e9f7e5c56d820ec"
+    },
+    {
+      "path": "assets/corpus-adts.js",
+      "size": 3170,
+      "sha256": "8e8b606c9eb425a326e8f0b87f2c23b98539f5ffaf39d20bddc9a374ce12baf0"
+    },
+    {
+      "path": "assets/corpus-foundations.js",
+      "size": 16247,
+      "sha256": "79515c5eb8c846ab2c79b76f8bb8737da45dbeb688ec1f1406a274642ea77bc4"
+    },
+    {
+      "path": "assets/corpus-graphs.js",
+      "size": 80533,
+      "sha256": "617b728ab7aa0872fe177050fecbfe5ef3a5d23f129ef7c73f390decd5f3afd6"
+    },
+    {
+      "path": "assets/corpus-hashing-heaps.js",
+      "size": 37824,
+      "sha256": "93e01e609d43bb0d9f3c6553b19bb3b047fc691d3469466a871ee2bcf59ea237"
+    },
+    {
+      "path": "assets/corpus-named.js",
+      "size": 7258,
+      "sha256": "f55ea534719473378da676f3652060196ed0d03c6c29e9ca250fa0bb86625b11"
+    },
+    {
+      "path": "assets/corpus-shared.js",
+      "size": 33058,
+      "sha256": "b66a6bfb87f9898b91b7c036bd91692df5105bd19baa12cfa27f36e33a8d57a9"
+    },
+    {
+      "path": "assets/corpus-sorting.js",
+      "size": 26523,
+      "sha256": "2412450303b3ffaa8a82b11f3febc7bfdd0f8311483bea50bca5cc00ec216d07"
+    },
+    {
+      "path": "assets/corpus-source-data.js",
+      "size": 72292,
+      "sha256": "14e5e9ae9983dfd14eef3ad706698d115fcc3be496dc519517ea857e504ba39e"
+    },
+    {
+      "path": "assets/corpus-theory-adts.js",
+      "size": 95642,
+      "sha256": "8a483a28ba49fc2430a094e75344410dcf688064f9716f784c21c321dfaece74"
+    },
+    {
+      "path": "assets/corpus-theory-foundations.js",
+      "size": 108587,
+      "sha256": "5a15c658faad854f3c92202134d8a7317abcd549758ecda802b378e4f3865dbe"
+    },
+    {
+      "path": "assets/corpus-theory-graphs.js",
+      "size": 123509,
+      "sha256": "44c0803b11e2bf1c784d964b8a16c683cff9ee041cee41285d86daefe5374b77"
+    },
+    {
+      "path": "assets/corpus-theory-trees.js",
+      "size": 70459,
+      "sha256": "32c7e5a01cfa34d87b9648b5b8aa8b16b3ae650bfd27e4b183f1617626fe3f00"
+    },
+    {
+      "path": "assets/corpus-theory.js",
+      "size": 30561,
+      "sha256": "3c12c039ea551e508bd0c8db1d8da000530332e3505709d49672a91e5ba6fdbc"
+    },
+    {
+      "path": "assets/corpus-trees.js",
+      "size": 49082,
+      "sha256": "8252510c26f88868fb40a295ba870620cbf2a63e8006409f9c29714e657a044e"
+    },
+    {
+      "path": "assets/course-enhancements.js",
+      "size": 91104,
+      "sha256": "2bc5f2adc3125434df3c8ef4e05d37f989a0bd0c6b194c995993d320d43e0f59"
+    },
+    {
+      "path": "assets/course-resource-data.js",
+      "size": 9579,
+      "sha256": "8ee5314ef3f0ba2056012297f1d8dc908bc7cd1d5738a2cd292b9466b5ed0d91"
+    },
+    {
+      "path": "assets/home.js",
+      "size": 4482,
+      "sha256": "8ce9953ae0d2f42def67a26a1087040ccc6fc3a3c836cdfebaf0200b3ff03115"
+    },
+    {
+      "path": "assets/manual-boundary-data.js",
+      "size": 33108,
+      "sha256": "d1d7b0586fd481cafca8f8364c69d10e8ce4e6a9f753df1f9520dbe406e631a4"
+    },
+    {
+      "path": "assets/manual-boundary-v62.css",
+      "size": 1613,
+      "sha256": "f65936e3b619337d2a3e2e5ba665274026a5d85046282f1be7a5d3b0d100a886"
+    },
+    {
+      "path": "assets/manual-boundary-v62.js",
+      "size": 10177,
+      "sha256": "7b56527f3d5ec3acbd1b8b66bdbdaad1af336d60e67c886a251d49f11f709731"
+    },
+    {
+      "path": "assets/modules-adts.js",
+      "size": 17951,
+      "sha256": "816f5c133429c4390640cbd56945878d24dbba1a00f3d4a2456b1f8912bed383"
+    },
+    {
+      "path": "assets/modules-graphs.js",
+      "size": 39240,
+      "sha256": "ae9649b798005dcfd019d43599234fccb9127b7e830fa9e57803a50ea1fe9130"
+    },
+    {
+      "path": "assets/modules-hashing.js",
+      "size": 25004,
+      "sha256": "4296a7d720f04a49acfbc455e190d36df13ca43847fedf4bd82e82c4ecf6dfd4"
+    },
+    {
+      "path": "assets/modules-heaps-tries.js",
+      "size": 19851,
+      "sha256": "984c5e65b669a8785ba99d4b3be5168d7087d415f114461aa85974f1aa6ab4ef"
+    },
+    {
+      "path": "assets/modules-registry.js",
+      "size": 13172,
+      "sha256": "98a5be4b4bc54cbd499d74ff309cd072f543e45893c7cd0402960832d86b68de"
+    },
+    {
+      "path": "assets/modules-searching.js",
+      "size": 4612,
+      "sha256": "0ec30551176824f061f8389eca6a6436f876164df8883188dd2fb7b241633ef4"
+    },
+    {
+      "path": "assets/modules-sorting.js",
+      "size": 27826,
+      "sha256": "1ca8d073d1220d090958a7af94738791c6769b8444e6f4239f9a03d60488f460"
+    },
+    {
+      "path": "assets/modules-trees.js",
+      "size": 36739,
+      "sha256": "18fd5cbd183fb33e69a3a62168fd60f4cc8484357752c105294ca02a4ab52973"
+    },
+    {
+      "path": "assets/og-card.png",
+      "size": 67702,
+      "sha256": "00c5aaad0c793dcf4141444ae0232ca08fc866b419bcbfc23fcd5dba5a39330c"
+    },
+    {
+      "path": "assets/page-adts.js",
+      "size": 164,
+      "sha256": "75ab165c8d61649728f5bbced120183e45b8aec34b3154a8c8d912ba9403198f"
+    },
+    {
+      "path": "assets/page-foundations.js",
+      "size": 150,
+      "sha256": "27692a406761bf7b3db148385eab86526a9e294df3bf16fd08776acde5562bea"
+    },
+    {
+      "path": "assets/page-graph-algorithms.js",
+      "size": 188,
+      "sha256": "044f997544a5b813973ca28a2e261d490534bc803a3f64fb9c4b8909c5ce4cb1"
+    },
+    {
+      "path": "assets/page-graphs.js",
+      "size": 155,
+      "sha256": "1295ea56c8b32c43c489cbf42c3f794f32932e77683779623c6c0e29b63b546e"
+    },
+    {
+      "path": "assets/page-hashing.js",
+      "size": 140,
+      "sha256": "5f0ef57f1ec8e2d468a94d98e9ec6a16c18df4051e37fef8edd7a29d8a66b0e3"
+    },
+    {
+      "path": "assets/page-searching-sorting.js",
+      "size": 158,
+      "sha256": "538a38d10844af1c120c2d17e96a86e42300eb9bdd7eb14ea186630d9ffb797c"
+    },
+    {
+      "path": "assets/page-trees.js",
+      "size": 160,
+      "sha256": "cbd7aaedebfccb2eb78f089240841aecf82fbae24bd53146852c247a6fb311d2"
+    },
+    {
+      "path": "assets/quality-v632.css",
+      "size": 3802,
+      "sha256": "9de173186dfed17d372305c3579e7eed5805d4f1a1d579d812d6ae9d7d07e2e3"
+    },
+    {
+      "path": "assets/quality-v632.js",
+      "size": 21569,
+      "sha256": "7837caba9ffdb5629466986f5125ce8662a33aaa744fc958c05c135ffa61313d"
+    },
+    {
+      "path": "assets/quality-v633.css",
+      "size": 3133,
+      "sha256": "47a351d88bf2d96658413824235f9d5f4504776587f6397fc0cb54d8113301f8"
+    },
+    {
+      "path": "assets/quality-v633.js",
+      "size": 4238,
+      "sha256": "f5cd43af442c053bbf0454d100b29db4f04b5506a3078aea0cf5f3edccec1d41"
+    },
+    {
+      "path": "assets/theme-dark.css",
+      "size": 6962,
+      "sha256": "334c62247cd714856e3a6bb81de1e76c8c084ecea22abe9e6108ed1a650ca01f"
+    },
+    {
+      "path": "assets/theme-toggle.js",
+      "size": 3541,
+      "sha256": "ee5d851106b1cc0a80c612b866ff0e49bbb3f3565dea41d3a221ade205b6d90b"
+    },
+    {
+      "path": "assets/theme-v6.css",
+      "size": 25266,
+      "sha256": "321a6d5bd4929b7109c3906229c6d52cb89f70e3629756aed42918a8d7a58a43"
+    },
+    {
+      "path": "assets/theory-panel.js",
+      "size": 12581,
+      "sha256": "06164b171e4a46b1f17987f67b954a698fb01ecdbc10d3fc23557b1020ea1488"
+    },
+    {
+      "path": "assets/topics.js",
+      "size": 21516,
+      "sha256": "66616bd2e4a57d680ed50906edbb798e855d1d04c8d24caef9c8fba1dc3e1d38"
+    },
+    {
+      "path": "assets/tracer-core.js",
+      "size": 23942,
+      "sha256": "241674127eac1d899fe270d4dc1c6797bcfbf34ad54afb03e7839604346850d3"
+    },
+    {
+      "path": "assets/tracer-renderers.js",
+      "size": 18132,
+      "sha256": "2dd523f3fbe2b9b646940ef463e5348ff464caaad79ce29f9467900e947c550c"
+    },
+    {
+      "path": "assets/tracer-ui.js",
+      "size": 119011,
+      "sha256": "68d8c258b68d7170ba5a0bbebc22dc459417ade0fda09448ad6cd8070e020d8d"
+    },
+    {
+      "path": "assets/tracer.css",
+      "size": 57650,
+      "sha256": "15dd804f3b6b24a35192ced1c586fd6344b9510d2dbf5c537450378326ba5281"
+    },
+    {
+      "path": "assets/ui-v6.js",
+      "size": 12042,
+      "sha256": "3d615e01f690cb11b6b125c744f415750e11f4593fccf43f61f22ad11960ec2a"
+    },
+    {
+      "path": "foundations.html",
+      "size": 20174,
+      "sha256": "ec6fb5e198fe174738fcac05572a42e1404ae80f8f86bb139b3a4f92f1aa8af1"
+    },
+    {
+      "path": "graph-algorithms.html",
+      "size": 20255,
+      "sha256": "fc3f1a959d3ca0f40d495737a0571ebdf0b0db7d186b87f8022b33e14d963e16"
+    },
+    {
+      "path": "graphs.html",
+      "size": 20220,
+      "sha256": "2deb9faa2639dac449c5feb84f8b538225699620554f1103fdab5db9ffd249f4"
+    },
+    {
+      "path": "hashing.html",
+      "size": 20173,
+      "sha256": "12307378e06efb637faf821188c95b690a36bf25950464e4a28d69c16d8ef834"
+    },
+    {
+      "path": "index.html",
+      "size": 6214,
+      "sha256": "25440d8008f6d6125a03c21fbf5e1a16f35f5ce04d27446a9cc7d52356a86389"
+    },
+    {
+      "path": "licences/structs-sh-MIT-LICENSE.txt",
+      "size": 1067,
+      "sha256": "840adcd662e0f1f1ce0791c75c1c451cad42dca737ec276dd2b466fd77a68e06"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_graph_adjacency_list.c",
+      "size": 5451,
+      "sha256": "228c928d7a3162eb99d18d85e383f8ca1f244b82d96e673c11531601bfc5b418"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_graph_edge_array.c",
+      "size": 4440,
+      "sha256": "3bfc1ced0b5ec12b70e5a717d72b092013c557b120be18195fc8d8fce11a17a8"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_unweighted_directed_adjacency_list.c",
+      "size": 5369,
+      "sha256": "af4739e998c3a5c53281d6812c77161d4230a7ed71e20fcc76d85ebc26e6a340"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_unweighted_directed_adjacency_matrix.c",
+      "size": 3728,
+      "sha256": "5ead65b0f4299cd815ff10403602829f00aac95f4b91fee7379632683848c95b"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_unweighted_directed_edge_array.c",
+      "size": 4246,
+      "sha256": "f38808448a1f6b18f18e8ccd0fa80a19a238ee10ebd2de9c5f4dd6f8be4c62f5"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c",
+      "size": 6443,
+      "sha256": "8f0c7ab927ee36c290cbb2076c05f99d753e0656a185696151178c4763e06dd6"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_matrix.c",
+      "size": 4787,
+      "sha256": "3e472a8bbf973786b7245661c662cb50a9e6235ec33b25dc312359ad4bedb3ba"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_directed_edge_array.c",
+      "size": 5234,
+      "sha256": "d540b22cd6c358390b22eb66bc568ade139366c8c810d5e596910093dbc4ce3f"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c",
+      "size": 6953,
+      "sha256": "efa251bcb8143de4004935b218201773af9c1b99b8705788a2f19b3635186d45"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_matrix.c",
+      "size": 4863,
+      "sha256": "9596ce32e374e7edd9634e1a7e1fcc599dfbed8c5c47af60b51b16ece603a825"
+    },
+    {
+      "path": "memorise_graph_c/COMP2521_memorise_weighted_undirected_edge_array.c",
+      "size": 5486,
+      "sha256": "19cb0270b1cfd629c5436425d1c94a612d99d3c064c918187860ac86fa9e9912"
+    },
+    {
+      "path": "searching-sorting.html",
+      "size": 20344,
+      "sha256": "67c1ed430413f8b88b55aee09b54fa5b77ff74dfdd068d70ca611e54c984e4bd"
+    },
+    {
+      "path": "trees.html",
+      "size": 20184,
+      "sha256": "9252dbc1e471aba06b6ae8275609b1dc963e9bc58468e934444770e4f2d82934"
+    }
+  ],
+  "remediation": {
+    "note": "The CONTENT of this tree is the remediated successor, not the distribution named by `version` and `status` above. Those two fields, and the decision to publish, are the owner's and have deliberately not been changed by the remediation.",
+    "branch": "remediation/full-2026-10-20",
+    "baselinePreservedAt": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+    "fileFactsRefreshed": "2026-10-20",
+    "refreshedBy": "tools/refresh_manifest.cjs"
+  }
+}

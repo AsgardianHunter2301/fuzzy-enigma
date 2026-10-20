@@ -1,0 +1,635 @@
+bridges_c build and test record
+generated: 2026-10-20T08:44:07Z UTC
+gcc: gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+host: Linux 6.18.44-fc-v139 x86_64
+
+sha256 of the read-only supplied Graph ADTs this run compiled against:
+  228c928d7a3162eb99d18d85e383f8ca1f244b82d96e673c11531601bfc5b418  ../memorise_graph_c/COMP2521_memorise_graph_adjacency_list.c
+  5ead65b0f4299cd815ff10403602829f00aac95f4b91fee7379632683848c95b  ../memorise_graph_c/COMP2521_memorise_unweighted_directed_adjacency_matrix.c
+  efa251bcb8143de4004935b218201773af9c1b99b8705788a2f19b3635186d45  ../memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+  8f0c7ab927ee36c290cbb2076c05f99d753e0656a185696151178c4763e06dd6  ../memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+  696f83f52dad0ddb4dd66e630cc82b69986977d4b2a3d5936d4e24a4f09e2da3  ../../baseline_pristine/memorise_graph_c/COMP2521_memorise_graph_adjacency_list.c
+  5463a0559bf75472d8fba76519e62610e1bbf7e165337526b3e499b64ae3ae88  ../../baseline_pristine/memorise_graph_c/COMP2521_memorise_unweighted_directed_adjacency_matrix.c
+  bd23dabd030fca2b339b1396871f704dd3b10a2b093d06809050b81d1167ebba  ../../baseline_pristine/memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+  e1bd8411c898f7f6d0f2c724399da8fd300e98ec7853c1af440a3bef8ca076c2  ../../baseline_pristine/memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+
+==============================================================
+PARITY: the bridge text the app displays, compiled as C
+==============================================================
+parity of the displayed excerpt against the compiled source:
+  bfs                    bridges_graph.c + bridges_graph.h  same
+  dfs                    bridges_graph.c + bridges_graph.h  same
+  undirected-cycle       bridges_graph.c + bridges_graph.h  same
+  components             bridges_graph.c + bridges_graph.h  same
+  hamiltonian-path       bridges_graph.c + bridges_graph.h  same
+  hamiltonian-circuit    bridges_graph.c + bridges_graph.h  same
+  warshall               bridges_graph.c + bridges_graph.h  same
+  avl-insert-rebalance   avl.c + avl.h                      same
+  avl-search             avl.c + avl.h                      same
+  avl-delete             avl.c + avl.h                      same
+  dijkstra               bridges_weighted.c + bridges_weighted.h same
+  kruskal                bridges_weighted.c + bridges_weighted.h same
+  prim                   bridges_weighted.c + bridges_weighted.h same
+  radix-sort             radix_sort.c + radix_sort.h        same
+bridges whose displayed text differs from the compiled text: 0
+compile displayed group_avl.c: exit 0
+compile displayed group_graph.c: exit 0
+compile displayed group_radix.c: exit 0
+compile displayed group_weighted.c: exit 0
+displayed-excerpt parity check: exit 0
+displayed-excerpt compile:      exit 0
+verify_displayed_bridges.sh: exit 0
+
+==============================================================
+MODE strict   ADT COPY product (../memorise_graph_c)
+FLAGS gcc -std=c11 -Wall -Wextra -Wpedantic -Werror
+==============================================================
+compile test_bfs_adjlist: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend REJECTS self-loops; nE = 0
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_adjlist: exit 0 (expected 0)
+RESULT test_bfs_adjlist: PASS
+compile test_bfs_matrix: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_matrix: exit 0 (expected 0)
+RESULT test_bfs_matrix: PASS
+compile test_cycle_adjlist: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":0,"selfAdjacent":false,"hasCycle":false}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend REJECTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_adjlist: exit 0 (expected 0)
+RESULT test_cycle_adjlist: PASS
+compile test_cycle_matrix: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":1,"selfAdjacent":true,"hasCycle":true}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend ACCEPTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_matrix: exit 0 (expected 0)
+RESULT test_cycle_matrix: PASS
+compile test_warshall: exit 0
+    -- the audited case: empty two-vertex graph
+    -- an unreachable pair and a reachable pair
+    -- self-reachability through a cycle
+    -- self-reachability through a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- single vertex and no vertices
+    -- a bank of deterministic graphs against the oracle
+    test_warshall: 81 checks, 0 failures
+run test_warshall: exit 0 (expected 0)
+RESULT test_warshall: PASS
+compile test_unchanged: exit 0
+    -- dfs reaches exactly the component of its source
+    -- components numbers every vertex exactly once
+    -- Hamiltonian path and circuit, accepted and rejected cases
+    -- radix sort orders fixed-width keys and preserves the multiset
+    test_unchanged: 22 checks, 0 failures
+run test_unchanged: exit 0 (expected 0)
+RESULT test_unchanged: PASS
+compile test_dfspath_adjlist: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_adjlist: exit 0 (expected 0)
+RESULT test_dfspath_adjlist: PASS
+compile test_dfspath_matrix: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_matrix: exit 0 (expected 0)
+RESULT test_dfspath_matrix: PASS
+compile test_dfspath_directed: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 26263 checks, 0 failures
+run test_dfspath_directed: exit 0 (expected 0)
+RESULT test_dfspath_directed: PASS
+compile test_avl: exit 0
+    -- deleteRoot: no children, one child, two children
+    -- deleteRoot rebalances the internal removal path
+    -- a plain BST helper would fail this test
+    -- avlDelete: missing key, leaf, one child, two children, root
+    -- deterministic stress: insert, delete, invariant after every step
+    test_avl: 345 checks, 0 failures
+run test_avl: exit 0 (expected 0)
+RESULT test_avl: PASS
+compile test_mst: exit 0
+    test_mst (BRG-03, BRG-04) backend: memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+    -- connected, with zero and fractional weights
+       kruskal                  status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       prim                     status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       (connected, fractional and zero weights)
+    -- connected with tied weights: cost is fixed, the tree is not
+       kruskal                  status=spanning tree              nV=4 nE=3 components=1 total=3
+       prim                     status=spanning tree              nV=4 nE=3 components=1 total=3
+       (four equal-cost spanning trees, same total)
+    -- the audited disconnected case: three vertices, one edge
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+       prim                     status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+    -- disconnected with the edge away from vertex 0
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=4
+       prim                     status=no spanning tree (forest)  nV=3 nE=0 components=3 total=0
+    -- singleton: one vertex is a spanning tree with no edges
+       kruskal                  status=spanning tree              nV=1 nE=0 components=1 total=0
+       prim                     status=spanning tree              nV=1 nE=0 components=1 total=0
+    -- singleton with a self-loop: still a zero-edge spanning tree
+    -- a self-loop beside real edges is ignored
+    -- no vertices: reported as no spanning tree, not a vacuous success
+    -- a bank of generated graphs against the oracle
+    test_mst: 248 checks, 0 failures
+run test_mst: exit 0 (expected 0)
+RESULT test_mst: PASS
+compile test_dijkstra: exit 0
+    test_dijkstra (BRG-05) backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    -- the missing-edge contract never collides with a real weight
+    -- fractional weights decide the shortest path
+    -- the consumer refuses a malformed dist/pred pair
+    -- a single vertex, and a vertex with only a self-loop
+    -- a bank of generated digraphs against the oracle
+    test_dijkstra: 1309 checks, 0 failures
+run test_dijkstra: exit 0 (expected 0)
+RESULT test_dijkstra: PASS
+compile test_mst_backend_guard: exit 0
+    error: kruskalMst needs an undirected weighted backend; this program linked memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c (undirected = no)
+run test_mst_backend_guard: exit 1 (expected nonzero)
+RESULT test_mst_backend_guard: PASS
+
+==============================================================
+MODE sanitize   ADT COPY product (../memorise_graph_c)
+FLAGS gcc -std=c11 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Wall -Wextra -Wpedantic -Werror
+==============================================================
+compile test_bfs_adjlist: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend REJECTS self-loops; nE = 0
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_adjlist: exit 0 (expected 0)
+RESULT test_bfs_adjlist: PASS
+compile test_bfs_matrix: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_matrix: exit 0 (expected 0)
+RESULT test_bfs_matrix: PASS
+compile test_cycle_adjlist: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":0,"selfAdjacent":false,"hasCycle":false}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend REJECTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_adjlist: exit 0 (expected 0)
+RESULT test_cycle_adjlist: PASS
+compile test_cycle_matrix: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":1,"selfAdjacent":true,"hasCycle":true}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend ACCEPTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_matrix: exit 0 (expected 0)
+RESULT test_cycle_matrix: PASS
+compile test_warshall: exit 0
+    -- the audited case: empty two-vertex graph
+    -- an unreachable pair and a reachable pair
+    -- self-reachability through a cycle
+    -- self-reachability through a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- single vertex and no vertices
+    -- a bank of deterministic graphs against the oracle
+    test_warshall: 81 checks, 0 failures
+run test_warshall: exit 0 (expected 0)
+RESULT test_warshall: PASS
+compile test_unchanged: exit 0
+    -- dfs reaches exactly the component of its source
+    -- components numbers every vertex exactly once
+    -- Hamiltonian path and circuit, accepted and rejected cases
+    -- radix sort orders fixed-width keys and preserves the multiset
+    test_unchanged: 22 checks, 0 failures
+run test_unchanged: exit 0 (expected 0)
+RESULT test_unchanged: PASS
+compile test_dfspath_adjlist: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_adjlist: exit 0 (expected 0)
+RESULT test_dfspath_adjlist: PASS
+compile test_dfspath_matrix: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_matrix: exit 0 (expected 0)
+RESULT test_dfspath_matrix: PASS
+compile test_dfspath_directed: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 26263 checks, 0 failures
+run test_dfspath_directed: exit 0 (expected 0)
+RESULT test_dfspath_directed: PASS
+compile test_avl: exit 0
+    -- deleteRoot: no children, one child, two children
+    -- deleteRoot rebalances the internal removal path
+    -- a plain BST helper would fail this test
+    -- avlDelete: missing key, leaf, one child, two children, root
+    -- deterministic stress: insert, delete, invariant after every step
+    test_avl: 345 checks, 0 failures
+run test_avl: exit 0 (expected 0)
+RESULT test_avl: PASS
+compile test_mst: exit 0
+    test_mst (BRG-03, BRG-04) backend: memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+    -- connected, with zero and fractional weights
+       kruskal                  status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       prim                     status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       (connected, fractional and zero weights)
+    -- connected with tied weights: cost is fixed, the tree is not
+       kruskal                  status=spanning tree              nV=4 nE=3 components=1 total=3
+       prim                     status=spanning tree              nV=4 nE=3 components=1 total=3
+       (four equal-cost spanning trees, same total)
+    -- the audited disconnected case: three vertices, one edge
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+       prim                     status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+    -- disconnected with the edge away from vertex 0
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=4
+       prim                     status=no spanning tree (forest)  nV=3 nE=0 components=3 total=0
+    -- singleton: one vertex is a spanning tree with no edges
+       kruskal                  status=spanning tree              nV=1 nE=0 components=1 total=0
+       prim                     status=spanning tree              nV=1 nE=0 components=1 total=0
+    -- singleton with a self-loop: still a zero-edge spanning tree
+    -- a self-loop beside real edges is ignored
+    -- no vertices: reported as no spanning tree, not a vacuous success
+    -- a bank of generated graphs against the oracle
+    test_mst: 248 checks, 0 failures
+run test_mst: exit 0 (expected 0)
+RESULT test_mst: PASS
+compile test_dijkstra: exit 0
+    test_dijkstra (BRG-05) backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    -- the missing-edge contract never collides with a real weight
+    -- fractional weights decide the shortest path
+    -- the consumer refuses a malformed dist/pred pair
+    -- a single vertex, and a vertex with only a self-loop
+    -- a bank of generated digraphs against the oracle
+    test_dijkstra: 1309 checks, 0 failures
+run test_dijkstra: exit 0 (expected 0)
+RESULT test_dijkstra: PASS
+compile test_mst_backend_guard: exit 0
+    error: kruskalMst needs an undirected weighted backend; this program linked memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c (undirected = no)
+run test_mst_backend_guard: exit 1 (expected nonzero)
+RESULT test_mst_backend_guard: PASS
+
+==============================================================
+MODE strict   ADT COPY pinned (../../baseline_pristine/memorise_graph_c)
+FLAGS gcc -std=c11 -Wall -Wextra -Wpedantic -Werror
+==============================================================
+compile test_bfs_adjlist: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend REJECTS self-loops; nE = 0
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_adjlist: exit 0 (expected 0)
+RESULT test_bfs_adjlist: PASS
+compile test_bfs_matrix: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_matrix: exit 0 (expected 0)
+RESULT test_bfs_matrix: PASS
+compile test_cycle_adjlist: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":0,"selfAdjacent":false,"hasCycle":false}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend REJECTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_adjlist: exit 0 (expected 0)
+RESULT test_cycle_adjlist: PASS
+compile test_cycle_matrix: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":1,"selfAdjacent":true,"hasCycle":true}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend ACCEPTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_matrix: exit 0 (expected 0)
+RESULT test_cycle_matrix: PASS
+compile test_warshall: exit 0
+    -- the audited case: empty two-vertex graph
+    -- an unreachable pair and a reachable pair
+    -- self-reachability through a cycle
+    -- self-reachability through a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- single vertex and no vertices
+    -- a bank of deterministic graphs against the oracle
+    test_warshall: 81 checks, 0 failures
+run test_warshall: exit 0 (expected 0)
+RESULT test_warshall: PASS
+compile test_unchanged: exit 0
+    -- dfs reaches exactly the component of its source
+    -- components numbers every vertex exactly once
+    -- Hamiltonian path and circuit, accepted and rejected cases
+    -- radix sort orders fixed-width keys and preserves the multiset
+    test_unchanged: 22 checks, 0 failures
+run test_unchanged: exit 0 (expected 0)
+RESULT test_unchanged: PASS
+compile test_dfspath_adjlist: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_adjlist: exit 0 (expected 0)
+RESULT test_dfspath_adjlist: PASS
+compile test_dfspath_matrix: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_matrix: exit 0 (expected 0)
+RESULT test_dfspath_matrix: PASS
+compile test_dfspath_directed: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 26263 checks, 0 failures
+run test_dfspath_directed: exit 0 (expected 0)
+RESULT test_dfspath_directed: PASS
+compile test_avl: exit 0
+    -- deleteRoot: no children, one child, two children
+    -- deleteRoot rebalances the internal removal path
+    -- a plain BST helper would fail this test
+    -- avlDelete: missing key, leaf, one child, two children, root
+    -- deterministic stress: insert, delete, invariant after every step
+    test_avl: 345 checks, 0 failures
+run test_avl: exit 0 (expected 0)
+RESULT test_avl: PASS
+compile test_mst: exit 0
+    test_mst (BRG-03, BRG-04) backend: memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+    -- connected, with zero and fractional weights
+       kruskal                  status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       prim                     status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       (connected, fractional and zero weights)
+    -- connected with tied weights: cost is fixed, the tree is not
+       kruskal                  status=spanning tree              nV=4 nE=3 components=1 total=3
+       prim                     status=spanning tree              nV=4 nE=3 components=1 total=3
+       (four equal-cost spanning trees, same total)
+    -- the audited disconnected case: three vertices, one edge
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+       prim                     status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+    -- disconnected with the edge away from vertex 0
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=4
+       prim                     status=no spanning tree (forest)  nV=3 nE=0 components=3 total=0
+    -- singleton: one vertex is a spanning tree with no edges
+       kruskal                  status=spanning tree              nV=1 nE=0 components=1 total=0
+       prim                     status=spanning tree              nV=1 nE=0 components=1 total=0
+    -- singleton with a self-loop: still a zero-edge spanning tree
+    -- a self-loop beside real edges is ignored
+    -- no vertices: reported as no spanning tree, not a vacuous success
+    -- a bank of generated graphs against the oracle
+    test_mst: 248 checks, 0 failures
+run test_mst: exit 0 (expected 0)
+RESULT test_mst: PASS
+compile test_dijkstra: exit 0
+    test_dijkstra (BRG-05) backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    -- the missing-edge contract never collides with a real weight
+    -- fractional weights decide the shortest path
+    -- the consumer refuses a malformed dist/pred pair
+    -- a single vertex, and a vertex with only a self-loop
+    -- a bank of generated digraphs against the oracle
+    test_dijkstra: 1309 checks, 0 failures
+run test_dijkstra: exit 0 (expected 0)
+RESULT test_dijkstra: PASS
+compile test_mst_backend_guard: exit 0
+    error: kruskalMst needs an undirected weighted backend; this program linked memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c (undirected = no)
+run test_mst_backend_guard: exit 1 (expected nonzero)
+RESULT test_mst_backend_guard: PASS
+
+==============================================================
+MODE sanitize   ADT COPY pinned (../../baseline_pristine/memorise_graph_c)
+FLAGS gcc -std=c11 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Wall -Wextra -Wpedantic -Werror
+==============================================================
+compile test_bfs_adjlist: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend REJECTS self-loops; nE = 0
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_adjlist: exit 0 (expected 0)
+RESULT test_bfs_adjlist: PASS
+compile test_bfs_matrix: exit 0
+    test_bfs (BRG-01) backend nE/loop behaviour probed at run time
+    -- the audited case: empty two-vertex graph, source 0
+    -- reachable vertices agree with an independent layer oracle
+    -- self-reachability: a vertex the backend may give a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- the consumer refuses a malformed predecessor array
+    test_bfs: 42 checks, 0 failures
+run test_bfs_matrix: exit 0 (expected 0)
+RESULT test_bfs_matrix: PASS
+compile test_cycle_adjlist: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":0,"selfAdjacent":false,"hasCycle":false}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend REJECTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_adjlist: exit 0 (expected 0)
+RESULT test_cycle_adjlist: PASS
+compile test_cycle_matrix: exit 0
+    -- the audited composition: one vertex, edge (0,0)
+    {"nE":1,"selfAdjacent":true,"hasCycle":true}
+    -- one vertex, no edges
+    -- zero vertices
+    -- ordinary acyclic graphs are unchanged
+    -- ordinary cyclic graphs are unchanged
+    -- a self-loop beside ordinary edges, where the backend allows it
+       backend ACCEPTS self-loops
+    test_cycle: 12 checks, 0 failures
+run test_cycle_matrix: exit 0 (expected 0)
+RESULT test_cycle_matrix: PASS
+compile test_warshall: exit 0
+    -- the audited case: empty two-vertex graph
+    -- an unreachable pair and a reachable pair
+    -- self-reachability through a cycle
+    -- self-reachability through a self-loop
+       backend ACCEPTS self-loops; nE = 1
+    -- single vertex and no vertices
+    -- a bank of deterministic graphs against the oracle
+    test_warshall: 81 checks, 0 failures
+run test_warshall: exit 0 (expected 0)
+RESULT test_warshall: PASS
+compile test_unchanged: exit 0
+    -- dfs reaches exactly the component of its source
+    -- components numbers every vertex exactly once
+    -- Hamiltonian path and circuit, accepted and rejected cases
+    -- radix sort orders fixed-width keys and preserves the multiset
+    test_unchanged: 22 checks, 0 failures
+run test_unchanged: exit 0 (expected 0)
+RESULT test_unchanged: PASS
+compile test_dfspath_adjlist: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_adjlist: exit 0 (expected 0)
+RESULT test_dfspath_adjlist: PASS
+compile test_dfspath_matrix: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 27918 checks, 0 failures
+run test_dfspath_matrix: exit 0 (expected 0)
+RESULT test_dfspath_matrix: PASS
+compile test_dfspath_directed: exit 0
+    -- a path that exists, and one that does not
+    -- src == dest, on an isolated vertex and on a connected one
+    -- out-of-range vertices are rejected, not crashed on
+    -- a single vertex, and a vertex carrying only a self-loop
+    -- a cycle: the first path found need not be the shortest
+    -- a bank of generated graphs, every pair against the oracle
+    test_dfspath: 26263 checks, 0 failures
+run test_dfspath_directed: exit 0 (expected 0)
+RESULT test_dfspath_directed: PASS
+compile test_avl: exit 0
+    -- deleteRoot: no children, one child, two children
+    -- deleteRoot rebalances the internal removal path
+    -- a plain BST helper would fail this test
+    -- avlDelete: missing key, leaf, one child, two children, root
+    -- deterministic stress: insert, delete, invariant after every step
+    test_avl: 345 checks, 0 failures
+run test_avl: exit 0 (expected 0)
+RESULT test_avl: PASS
+compile test_mst: exit 0
+    test_mst (BRG-03, BRG-04) backend: memorise_graph_c/COMP2521_memorise_weighted_undirected_adjacency_list.c
+    -- connected, with zero and fractional weights
+       kruskal                  status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       prim                     status=spanning tree              nV=5 nE=4 components=1 total=2.25
+       (connected, fractional and zero weights)
+    -- connected with tied weights: cost is fixed, the tree is not
+       kruskal                  status=spanning tree              nV=4 nE=3 components=1 total=3
+       prim                     status=spanning tree              nV=4 nE=3 components=1 total=3
+       (four equal-cost spanning trees, same total)
+    -- the audited disconnected case: three vertices, one edge
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+       prim                     status=no spanning tree (forest)  nV=3 nE=1 components=2 total=1
+    -- disconnected with the edge away from vertex 0
+       kruskal                  status=no spanning tree (forest)  nV=3 nE=1 components=2 total=4
+       prim                     status=no spanning tree (forest)  nV=3 nE=0 components=3 total=0
+    -- singleton: one vertex is a spanning tree with no edges
+       kruskal                  status=spanning tree              nV=1 nE=0 components=1 total=0
+       prim                     status=spanning tree              nV=1 nE=0 components=1 total=0
+    -- singleton with a self-loop: still a zero-edge spanning tree
+    -- a self-loop beside real edges is ignored
+    -- no vertices: reported as no spanning tree, not a vacuous success
+    -- a bank of generated graphs against the oracle
+    test_mst: 248 checks, 0 failures
+run test_mst: exit 0 (expected 0)
+RESULT test_mst: PASS
+compile test_dijkstra: exit 0
+    test_dijkstra (BRG-05) backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    -- the missing-edge contract never collides with a real weight
+    -- fractional weights decide the shortest path
+    -- the consumer refuses a malformed dist/pred pair
+    -- a single vertex, and a vertex with only a self-loop
+    -- a bank of generated digraphs against the oracle
+    test_dijkstra: 1309 checks, 0 failures
+run test_dijkstra: exit 0 (expected 0)
+RESULT test_dijkstra: PASS
+compile test_mst_backend_guard: exit 0
+    error: kruskalMst needs an undirected weighted backend; this program linked memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c
+    backend: memorise_graph_c/COMP2521_memorise_weighted_directed_adjacency_list.c (undirected = no)
+run test_mst_backend_guard: exit 1 (expected nonzero)
+RESULT test_mst_backend_guard: PASS
+
+OVERALL: every target compiled and met its expected exit status

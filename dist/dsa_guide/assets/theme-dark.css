@@ -1,0 +1,145 @@
+/* ============================================================
+   COMP2521 Tracer - dark theme
+   Loaded after theme-v6.css. The light palette is the default and is
+   untouched: everything here is scoped to html[data-theme="dark"], which
+   theme-toggle.js sets before first paint.
+
+   The four-colour discipline is preserved. Cream becomes near-black, white
+   becomes a raised surface, black becomes near-white, and orange is lightened
+   to #FFB733 so that black-on-orange still clears 4.5:1 on the dark surface.
+   ============================================================ */
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#12100D;            /* the cream counterpart */
+  --panel:#1B1815;         /* the white counterpart: raised surface */
+  --panel2:#232019;
+  --ink:#F5F0E6;           /* the black counterpart */
+  --detail:#F5F0E6;
+  --dim:rgba(245,240,230,.78);
+  --faint:rgba(245,240,230,.62);
+  --rule:rgba(245,240,230,.24);
+  --rule-strong:#F5F0E6;
+  --live:#FFB733;          /* lightened orange, still readable on dark */
+  --focus:#FFB733;
+  --wire:#F5F0E6;
+  --heap:#F5F0E6;
+  --gone:#F5F0E6;
+  --violet:#F5F0E6;
+  --field-bg:#1B1815;
+  --shadow:0 2px 10px rgba(0,0,0,.55);
+}
+
+/* Elements whose colours were hard-coded for the light theme. */
+html[data-theme="dark"] .kw,
+html[data-theme="dark"] .fn{ color:#FFC46B; }
+html[data-theme="dark"] .cm{ color:rgba(245,240,230,.62); }
+html[data-theme="dark"] .cline.on{ background:rgba(255,183,51,.16); }
+html[data-theme="dark"] .map .gap.memorise-gap{ background:#3A2A08; color:var(--ink); }
+html[data-theme="dark"] .pp{ color:#7FD8D8; }
+
+/* "You are here" stays black-on-orange, which measures 9.6:1 against #FFB733. */
+html[data-theme="dark"] .titem[aria-current="true"],
+html[data-theme="dark"] .chip[data-active="1"],
+html[data-theme="dark"] .arealink.here,
+html[data-theme="dark"] .step-item[aria-current="step"] .step-n,
+html[data-theme="dark"] .scrub-marks span.current{
+  color:#000; background:var(--live); border-color:var(--live);
+}
+
+html[data-theme="dark"] img{ opacity:.94; }
+
+@media (prefers-reduced-motion:no-preference){
+  html[data-theme="dark"]{ transition:background-color .15s ease; }
+}
+
+/* ------------------------------------------------------------
+   Highlight surfaces.
+   theme-v6.css paints "attention" states with fixed light ambers
+   (#FFEDC2, #FFE7AD, #FFF2D5) and assumes black text. In dark mode --ink is
+   near-white, so those surfaces would render near-white on light amber - the
+   1.02:1 that the contrast pass caught. The ambers are kept, because the
+   highlight has to stay the loudest thing on screen; the text on them is
+   pinned to black instead, which measures 12.4:1 against #FFE7AD.
+   ------------------------------------------------------------ */
+html[data-theme="dark"] .cline.on .t,
+html[data-theme="dark"] .cell.cmp .v, html[data-theme="dark"] .cell.mv .v,
+html[data-theme="dark"] .cell.done .v, html[data-theme="dark"] .cell.hit .v,
+html[data-theme="dark"] .cell.pivot .v, html[data-theme="dark"] .cell.rng .v,
+html[data-theme="dark"] table.grid td.t1, html[data-theme="dark"] table.grid td.chg,
+html[data-theme="dark"] .slot.on,
+html[data-theme="dark"] .sw.cmp, html[data-theme="dark"] .sw.mv, html[data-theme="dark"] .sw.act,
+html[data-theme="dark"] .sw.new, html[data-theme="dark"] .sw.done, html[data-theme="dark"] .sw.hit,
+html[data-theme="dark"] .sw.fin, html[data-theme="dark"] .sw.pivot, html[data-theme="dark"] .sw.bad,
+html[data-theme="dark"] .sw.dead,
+html[data-theme="dark"] .home-results mark{
+  color:#000;
+}
+html[data-theme="dark"] .cline.on .t *,
+html[data-theme="dark"] .cline.on .t .kw,
+html[data-theme="dark"] .cline.on .t .fn,
+html[data-theme="dark"] .cline.on .t .cm,
+html[data-theme="dark"] .cline.on .t .pp{ color:#000; }
+
+/* Any control that fills with the accent keeps black text on it. */
+html[data-theme="dark"] .btn.go,
+html[data-theme="dark"] .btn.go:hover,
+html[data-theme="dark"] .tbtn[data-on="1"],
+html[data-theme="dark"] .more-btn[aria-expanded="true"]{
+  background:var(--live); border-color:var(--live); color:#000; --on-accent:#000;
+}
+
+/* Canvas tools that latch on fill with the accent, so they need black text
+   for the same reason .btn.go does. */
+html[data-theme="dark"] .canvas-tool.pan-lock,
+html[data-theme="dark"] .canvas-tool[aria-pressed="true"],
+html[data-theme="dark"] .canvas-tool[data-on="1"]{ color:#000; }
+
+/* Diagram nodes. Labels are drawn as SVG text, so they take fill rather than
+   colour and are not reached by the rules above. Resting nodes sit on the
+   panel surface; active nodes keep the amber highlight and take black text. */
+html[data-theme="dark"] svg.canvas text{ fill:var(--ink); }
+html[data-theme="dark"] .nd{ fill:var(--panel); stroke:var(--rule-strong); }
+html[data-theme="dark"] .nd.act, html[data-theme="dark"] .nd.hit,
+html[data-theme="dark"] .nd.bad, html[data-theme="dark"] .nd.fin{ fill:#FFE7AD; stroke:var(--live); }
+html[data-theme="dark"] .nd.act + text, html[data-theme="dark"] .nd.hit + text,
+html[data-theme="dark"] .nd.bad + text, html[data-theme="dark"] .nd.fin + text,
+html[data-theme="dark"] g.on text, html[data-theme="dark"] g.act text{ fill:#000; }
+html[data-theme="dark"] svg.canvas .edge{ stroke:var(--rule-strong); }
+html[data-theme="dark"] svg.canvas .edge.act,
+html[data-theme="dark"] svg.canvas .edge.tree{ stroke:var(--live); }
+html[data-theme="dark"] svg.canvas .edge.dim{ stroke:var(--dim); }
+
+
+/* theme-v6.css uses #B05A00 (a dark orange chosen for cream) for keywords and
+   emphasised values. On the dark panel that measures 3.63:1, so the same roles
+   take the lightened accent instead, which measures 9.6:1. */
+html[data-theme="dark"] .kw,
+html[data-theme="dark"] .fn,
+html[data-theme="dark"] .arrow,
+html[data-theme="dark"] .headlbl,
+html[data-theme="dark"] .ptrs .p,
+html[data-theme="dark"] .var b,
+html[data-theme="dark"] .memtally b,
+html[data-theme="dark"] .map .to,
+html[data-theme="dark"] .kw,
+html[data-theme="dark"] .fn{ color:#FFC46B; }
+
+/* The memorise provenance chip fills with the accent, so its text follows the
+   same black-on-accent rule as every other filled control. */
+html[data-theme="dark"] .provenance.memorise,
+html[data-theme="dark"] .provenance.memorise *{ color:#000; }
+
+/* v6.4.1: preserve legibility on final, active and home surfaces. */
+html[data-theme="dark"] .cell.done .v{color:var(--ink);background:var(--panel2);}
+html[data-theme="dark"] .panetabs button[aria-selected="true"],
+html[data-theme="dark"] .blockindex button[data-active="1"],
+html[data-theme="dark"] .blockindex button.active,
+html[data-theme="dark"] .rail:hover,
+html[data-theme="dark"] .home-search button,
+html[data-theme="dark"] .areacard .ac-open a{color:#000;background:var(--live);}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder{color:var(--dim);}
+html[data-theme="dark"] *{scrollbar-color:rgba(245,240,230,.55) transparent;}
+
+html[data-theme="dark"] .tbtn.play{color:#000;}

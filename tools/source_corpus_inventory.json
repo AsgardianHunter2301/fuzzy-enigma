@@ -1,0 +1,871 @@
+{
+  "baseline_commit": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+  "sources": [
+    {
+      "source_row": 1,
+      "declared_label": "26T2 manual",
+      "declared_filename": "COMP2521 26T2 - Data Structures and Algorithms Manual.pdf",
+      "declared_topic": "Exact manual C and pseudocode across the main structures and algorithms",
+      "declared_weeks": [],
+      "declared_term": "26T2",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 401,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L401"
+      },
+      "proposed_topic_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ],
+      "relevance_assessment": "The same-term manual is the stated baseline for shared algorithms and ADTs across the course. Its original bytes are absent, so exact quotation assertions cannot be verified from this repository alone.",
+      "week_mapping_evidence_level": "Cross-week source; individual manual blocks use topic-level inference",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "COMP2521 26T2 - Data Structures and Algorithms Manual.pdf",
+        "declared_label": "26T2 manual",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 401,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L401"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 2,
+      "declared_label": "W1 lecture",
+      "declared_filename": "week01lec01-recursion.docx",
+      "declared_topic": "Recursion",
+      "declared_weeks": [
+        1
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 402,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L402"
+      },
+      "proposed_topic_weeks": [
+        1
+      ],
+      "relevance_assessment": "The declared Recursion source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week01lec01-recursion.docx",
+        "declared_label": "W1 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 402,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L402"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 3,
+      "declared_label": "W1 lecture",
+      "declared_filename": "week01lec02-analysis.docx",
+      "declared_topic": "Analysis of algorithms",
+      "declared_weeks": [
+        1
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 403,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L403"
+      },
+      "proposed_topic_weeks": [
+        1
+      ],
+      "relevance_assessment": "The declared Analysis of algorithms source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week01lec02-analysis.docx",
+        "declared_label": "W1 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 403,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L403"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 4,
+      "declared_label": "W2 lecture",
+      "declared_filename": "week02lec01-sorting-intro.docx",
+      "declared_topic": "Sorting foundations and properties",
+      "declared_weeks": [
+        2
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 404,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L404"
+      },
+      "proposed_topic_weeks": [
+        2
+      ],
+      "relevance_assessment": "The declared Sorting foundations and properties source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week02lec01-sorting-intro.docx",
+        "declared_label": "W2 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 404,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L404"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 5,
+      "declared_label": "W2 lecture",
+      "declared_filename": "week02lec01-elementary-sorts.docx",
+      "declared_topic": "Selection, bubble and insertion sort",
+      "declared_weeks": [
+        2
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 405,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L405"
+      },
+      "proposed_topic_weeks": [
+        2
+      ],
+      "relevance_assessment": "The declared Selection, bubble and insertion sort source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week02lec01-elementary-sorts.docx",
+        "declared_label": "W2 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 405,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L405"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 6,
+      "declared_label": "W2 lecture",
+      "declared_filename": "week02lec01-divide-and-conquer-sorts.docx",
+      "declared_topic": "Merge sort and quick sort",
+      "declared_weeks": [
+        2
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 406,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L406"
+      },
+      "proposed_topic_weeks": [
+        2
+      ],
+      "relevance_assessment": "The declared Merge sort and quick sort source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week02lec01-divide-and-conquer-sorts.docx",
+        "declared_label": "W2 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 406,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L406"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 7,
+      "declared_label": "W2 lecture",
+      "declared_filename": "week02lec02-non-comparison-sorts.docx",
+      "declared_topic": "Lower bound and radix sort",
+      "declared_weeks": [
+        2
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 407,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L407"
+      },
+      "proposed_topic_weeks": [
+        2
+      ],
+      "relevance_assessment": "The declared Lower bound and radix sort source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week02lec02-non-comparison-sorts.docx",
+        "declared_label": "W2 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 407,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L407"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 8,
+      "declared_label": "W3 lecture",
+      "declared_filename": "week03lec01-adts.docx",
+      "declared_topic": "ADTs, stacks, queues and sets",
+      "declared_weeks": [
+        3
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 408,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L408"
+      },
+      "proposed_topic_weeks": [
+        3
+      ],
+      "relevance_assessment": "The declared ADTs, stacks, queues and sets source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week03lec01-adts.docx",
+        "declared_label": "W3 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 408,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L408"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 9,
+      "declared_label": "W3 lecture",
+      "declared_filename": "week03lec02-bsts.docx",
+      "declared_topic": "Binary search trees",
+      "declared_weeks": [
+        3
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 409,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L409"
+      },
+      "proposed_topic_weeks": [
+        3
+      ],
+      "relevance_assessment": "The declared Binary search trees source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week03lec02-bsts.docx",
+        "declared_label": "W3 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 409,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L409"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 10,
+      "declared_label": "W4 lecture",
+      "declared_filename": "week04lec01-balancing-bsts.docx",
+      "declared_topic": "BST balancing operations and methods",
+      "declared_weeks": [
+        4
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 410,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L410"
+      },
+      "proposed_topic_weeks": [
+        4
+      ],
+      "relevance_assessment": "The declared BST balancing operations and methods source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week04lec01-balancing-bsts.docx",
+        "declared_label": "W4 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 410,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L410"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 11,
+      "declared_label": "W4 lecture",
+      "declared_filename": "week04lec01-avl-trees.docx",
+      "declared_topic": "AVL trees",
+      "declared_weeks": [
+        4
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 411,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L411"
+      },
+      "proposed_topic_weeks": [
+        4
+      ],
+      "relevance_assessment": "The declared AVL trees source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week04lec01-avl-trees.docx",
+        "declared_label": "W4 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 411,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L411"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 12,
+      "declared_label": "W4 lecture",
+      "declared_filename": "week04lec02-graphs-intro.docx",
+      "declared_topic": "Graph ADT and three representations",
+      "declared_weeks": [
+        4
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 412,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L412"
+      },
+      "proposed_topic_weeks": [
+        4
+      ],
+      "relevance_assessment": "The declared Graph ADT and three representations source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week04lec02-graphs-intro.docx",
+        "declared_label": "W4 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 412,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L412"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 13,
+      "declared_label": "W5 lecture",
+      "declared_filename": "week05lec01-graph-traversal.docx",
+      "declared_topic": "BFS, DFS and path work",
+      "declared_weeks": [
+        5
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 413,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L413"
+      },
+      "proposed_topic_weeks": [
+        5
+      ],
+      "relevance_assessment": "The declared BFS, DFS and path work source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week05lec01-graph-traversal.docx",
+        "declared_label": "W5 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 413,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L413"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 14,
+      "declared_label": "W5 lecture",
+      "declared_filename": "week05lec02-directed-weighted-graphs.docx",
+      "declared_topic": "Directed and weighted graph representations",
+      "declared_weeks": [
+        5
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 414,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L414"
+      },
+      "proposed_topic_weeks": [
+        5
+      ],
+      "relevance_assessment": "The declared Directed and weighted graph representations source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week05lec02-directed-weighted-graphs.docx",
+        "declared_label": "W5 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 414,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L414"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 15,
+      "declared_label": "W5 lecture",
+      "declared_filename": "week05lec02-graph-problems.docx",
+      "declared_topic": "Cycle, components, Hamiltonian and Eulerian problems",
+      "declared_weeks": [
+        5
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 415,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L415"
+      },
+      "proposed_topic_weeks": [
+        5
+      ],
+      "relevance_assessment": "The declared Cycle, components, Hamiltonian and Eulerian problems source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week05lec02-graph-problems.docx",
+        "declared_label": "W5 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 415,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L415"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 16,
+      "declared_label": "W7 lecture",
+      "declared_filename": "week07lec01-digraph-algorithms.docx",
+      "declared_topic": "Digraph traversal, cycles and transitive closure",
+      "declared_weeks": [
+        7
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 416,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L416"
+      },
+      "proposed_topic_weeks": [
+        7
+      ],
+      "relevance_assessment": "The declared Digraph traversal, cycles and transitive closure source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week07lec01-digraph-algorithms.docx",
+        "declared_label": "W7 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 416,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L416"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 17,
+      "declared_label": "W7 lecture",
+      "declared_filename": "week07lec01-dijkstras-algorithm.docx",
+      "declared_topic": "Dijkstra and edge relaxation",
+      "declared_weeks": [
+        7
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 417,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L417"
+      },
+      "proposed_topic_weeks": [
+        7
+      ],
+      "relevance_assessment": "The declared Dijkstra and edge relaxation source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week07lec01-dijkstras-algorithm.docx",
+        "declared_label": "W7 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 417,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L417"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 18,
+      "declared_label": "W7 lecture",
+      "declared_filename": "week07lec02-msts.docx",
+      "declared_topic": "Minimum spanning trees",
+      "declared_weeks": [
+        7
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 418,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L418"
+      },
+      "proposed_topic_weeks": [
+        7
+      ],
+      "relevance_assessment": "The declared Minimum spanning trees source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week07lec02-msts.docx",
+        "declared_label": "W7 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 418,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L418"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 19,
+      "declared_label": "W8 lecture",
+      "declared_filename": "week08lec01-hash-tables.docx",
+      "declared_topic": "Hash tables and collision resolution",
+      "declared_weeks": [
+        8
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 419,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L419"
+      },
+      "proposed_topic_weeks": [
+        8
+      ],
+      "relevance_assessment": "The declared Hash tables and collision resolution source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week08lec01-hash-tables.docx",
+        "declared_label": "W8 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 419,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L419"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 20,
+      "declared_label": "W8 lecture",
+      "declared_filename": "week08lec02-hash-table-applications.docx",
+      "declared_topic": "Set, Counter and hash applications",
+      "declared_weeks": [
+        8
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 420,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L420"
+      },
+      "proposed_topic_weeks": [
+        8
+      ],
+      "relevance_assessment": "The declared Set, Counter and hash applications source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week08lec02-hash-table-applications.docx",
+        "declared_label": "W8 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 420,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L420"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    },
+    {
+      "source_row": 21,
+      "declared_label": "W9 lecture",
+      "declared_filename": "week09lec01-priority-queues.docx",
+      "declared_topic": "Priority queues, heaps and heap sort",
+      "declared_weeks": [
+        9
+      ],
+      "declared_term": "25T3 (corpus header and coursemap narrative)",
+      "original_file_present_in_repository": false,
+      "authority_status": "Repository assertion; original supplied PDF/DOCX has not been independently compared in this audit",
+      "locator": {
+        "path": "assets/corpus-shared.js",
+        "line": 421,
+        "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L421"
+      },
+      "proposed_topic_weeks": [
+        9
+      ],
+      "relevance_assessment": "The declared Priority queues, heaps and heap sort source is relevant to the matching topic group. It is described as an earlier-term lecture transcription; alignment with 26T2 at group level does not establish identical examples, wording or coverage.",
+      "week_mapping_evidence_level": "Declared filename/label week agrees at topic-group level with the official 26T2 schedule; this does not verify the earlier-term original",
+      "week_mapping_evidence": {
+        "official_schedule_url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+        "declared_filename": "week09lec01-priority-queues.docx",
+        "declared_label": "W9 lecture",
+        "locator": {
+          "path": "assets/corpus-shared.js",
+          "line": 421,
+          "url": "https://github.com/AsgardianHunter2301/dsa_guide/blob/37ada3235c4d67f8b98c46afdb31c092b44419ed/assets/corpus-shared.js#L421"
+        }
+      },
+      "required_action": "Locate the legally accessible attributed original or authoritative current equivalent, record exact title/term/URL/pages/content digest, compare affected blocks, and correct provenance or content where evidence disagrees. If unavailable, state an evidence-specific block; never certify exactness from a repository constant alone.",
+      "review_depth": {
+        "inventory": "All 21 declarations read and mapped individually",
+        "original_file_inspection": "Not possible from this repository snapshot; original is absent",
+        "comparison": "Topic-level schedule only; no word-for-word or per-example comparison"
+      },
+      "related_findings": [
+        "AUD-13"
+      ]
+    }
+  ]
+}

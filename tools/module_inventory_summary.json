@@ -1,0 +1,179 @@
+{
+  "repository": "https://github.com/AsgardianHunter2301/dsa_guide",
+  "baseline_commit": "37ada3235c4d67f8b98c46afdb31c092b44419ed",
+  "audit_date": "2026-10-20",
+  "method": "Final MODULES registry after actual ordered loader files, independent generated-topic cross-check, default-view classification and exact UTF-8 source hashing",
+  "module_count": 68,
+  "page_count": 7,
+  "group_count": 18,
+  "source_block_occurrence_count": 131,
+  "unique_source_block_hash_count": 90,
+  "source_line_occurrences": 7915,
+  "unique_source_lines": 4362,
+  "repeated_hash_group_count": 22,
+  "additional_repeated_block_occurrences": 41,
+  "source_categories": {
+    "coverage": 2,
+    "lecture": 57,
+    "manual": 46,
+    "memorise": 26
+  },
+  "source_constant_origin_unresolved_block_count": 0,
+  "coverage_row_count": 181,
+  "coverage_modes": {
+    "core": 148,
+    "reference": 24,
+    "named": 9
+  },
+  "source_corpus_declaration_count": 21,
+  "source_corpus_original_files_available": 0,
+  "named_context_table_row_count": 9,
+  "individual_named_context_entity_count": 14,
+  "static_reference_default_module_ids": [
+    "sortprops",
+    "quickvariants",
+    "adtarch",
+    "setadt",
+    "pqcompare",
+    "namedalgos"
+  ],
+  "single_frame_parameterised_reference_ids": [
+    "coursemap"
+  ],
+  "scope_source": "live register dump: /home/claude/work/artifacts/curriculum_register.json",
+  "default_frame_total": 1987,
+  "descriptor_checks_pass": false,
+  "descriptor_mismatches": [
+    {
+      "id": "coursemap",
+      "descriptor_name_matches": false,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    },
+    {
+      "id": "graphreps",
+      "descriptor_name_matches": false,
+      "descriptor_group_matches": true,
+      "descriptor_block_count_matches": true,
+      "descriptor_line_count_matches": true,
+      "page_group_matches": true
+    }
+  ],
+  "descriptor_mismatch_interpretation": "Only the coursemap display name is abbreviated in topics.js; IDs, group/page ownership and block/line counts agree for all modules. This difference is recorded, not asserted to be a functional bug.",
+  "warnings": [],
+  "row_specific_relevance_assessments": {
+    "modules": 68,
+    "blocks": 131,
+    "coverage_rows": 181,
+    "source_corpus_rows": 21,
+    "named_table_rows": 9,
+    "individual_named_entities": 14
+  },
+  "page_effective_module_counts": {
+    "adts.html": 9,
+    "foundations.html": 7,
+    "graph-algorithms.html": 10,
+    "graphs.html": 11,
+    "hashing.html": 6,
+    "searching-sorting.html": 13,
+    "trees.html": 12
+  },
+  "scope_limits": [
+    "Every block in the 68-module loaded registry union is included. tracer-ui.js sorts that registry and filters membership to each page owned group; page-effective counts are recorded separately. Later layers do not modify underlying module/source metadata, but DOM text normalization can alter rendered math (AUD-08).",
+    "Manual conversion bridges, resource cards, recipes, external dependencies and HTML prose have separate inventories produced by the frontend audit.",
+    "Metadata and default traces do not prove every operation, all input domains, source quotation fidelity, pedagogical sufficiency or official assessment relevance.",
+    "Week assignment is topic-level inference from an independently opened official 26T2 schedule, kept separate from repository source-week assertions. Original course files are absent.",
+    "Repeated hashes identify repeated content occurrences; shared constants are not multiple copied implementations."
+  ],
+  "loader_files": [
+    {
+      "path": "assets/build.js",
+      "sha256": "03c0e1dc0ae8be31b2d264ac41523d4d6f41fdfcea19b4f70e9f7e5c56d820ec"
+    },
+    {
+      "path": "assets/tracer-core.js",
+      "sha256": "241674127eac1d899fe270d4dc1c6797bcfbf34ad54afb03e7839604346850d3"
+    },
+    {
+      "path": "assets/tracer-renderers.js",
+      "sha256": "2dd523f3fbe2b9b646940ef463e5348ff464caaad79ce29f9467900e947c550c"
+    },
+    {
+      "path": "assets/modules-registry.js",
+      "sha256": "98a5be4b4bc54cbd499d74ff309cd072f543e45893c7cd0402960832d86b68de"
+    },
+    {
+      "path": "assets/modules-sorting.js",
+      "sha256": "1ca8d073d1220d090958a7af94738791c6769b8444e6f4239f9a03d60488f460"
+    },
+    {
+      "path": "assets/modules-searching.js",
+      "sha256": "0ec30551176824f061f8389eca6a6436f876164df8883188dd2fb7b241633ef4"
+    },
+    {
+      "path": "assets/modules-adts.js",
+      "sha256": "816f5c133429c4390640cbd56945878d24dbba1a00f3d4a2456b1f8912bed383"
+    },
+    {
+      "path": "assets/modules-trees.js",
+      "sha256": "18fd5cbd183fb33e69a3a62168fd60f4cc8484357752c105294ca02a4ab52973"
+    },
+    {
+      "path": "assets/modules-hashing.js",
+      "sha256": "4296a7d720f04a49acfbc455e190d36df13ca43847fedf4bd82e82c4ecf6dfd4"
+    },
+    {
+      "path": "assets/modules-heaps-tries.js",
+      "sha256": "984c5e65b669a8785ba99d4b3be5168d7087d415f114461aa85974f1aa6ab4ef"
+    },
+    {
+      "path": "assets/modules-graphs.js",
+      "sha256": "ae9649b798005dcfd019d43599234fccb9127b7e830fa9e57803a50ea1fe9130"
+    },
+    {
+      "path": "assets/corpus-shared.js",
+      "sha256": "b66a6bfb87f9898b91b7c036bd91692df5105bd19baa12cfa27f36e33a8d57a9"
+    },
+    {
+      "path": "assets/corpus-foundations.js",
+      "sha256": "79515c5eb8c846ab2c79b76f8bb8737da45dbeb688ec1f1406a274642ea77bc4"
+    },
+    {
+      "path": "assets/corpus-sorting.js",
+      "sha256": "2412450303b3ffaa8a82b11f3febc7bfdd0f8311483bea50bca5cc00ec216d07"
+    },
+    {
+      "path": "assets/corpus-adts.js",
+      "sha256": "8e8b606c9eb425a326e8f0b87f2c23b98539f5ffaf39d20bddc9a374ce12baf0"
+    },
+    {
+      "path": "assets/corpus-trees.js",
+      "sha256": "8252510c26f88868fb40a295ba870620cbf2a63e8006409f9c29714e657a044e"
+    },
+    {
+      "path": "assets/corpus-source-data.js",
+      "sha256": "14e5e9ae9983dfd14eef3ad706698d115fcc3be496dc519517ea857e504ba39e"
+    },
+    {
+      "path": "assets/corpus-graphs.js",
+      "sha256": "617b728ab7aa0872fe177050fecbfe5ef3a5d23f129ef7c73f390decd5f3afd6"
+    },
+    {
+      "path": "assets/corpus-hashing-heaps.js",
+      "sha256": "93e01e609d43bb0d9f3c6553b19bb3b047fc691d3469466a871ee2bcf59ea237"
+    },
+    {
+      "path": "assets/corpus-named.js",
+      "sha256": "f55ea534719473378da676f3652060196ed0d03c6c29e9ca250fa0bb86625b11"
+    }
+  ],
+  "official_schedule": {
+    "url": "https://webcms3.cse.unsw.edu.au/COMP2521/26T2/resources/121287",
+    "accessed": "2026-10-20",
+    "web_reference": "turn12view0",
+    "scope": "Schedule-level topic alignment only; per-slide teaching and assessment status require additional evidence"
+  },
+  "inventory_script_sha256": "ca1aeb618b5bfb39020850ef4843f97e6732014bb75dcb98c22f081dd9b59a08"
+}

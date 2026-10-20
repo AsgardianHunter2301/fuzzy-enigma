@@ -1,0 +1,2824 @@
+==========================================================================
+memorise_graph_c/drivers/build_all.sh
+date (UTC): 2026-10-20T03:01:02Z
+compiler:   gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+uname:      Linux 6.18.44-fc-v139 x86_64
+strict:     -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror
+sanitizer:  -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
+==========================================================================
+
+LeakSanitizer positive control (a program that leaks 64 bytes):
+$ ASAN_OPTIONS=detect_leaks=1 /home/claude/work/successor/memorise_graph_c/drivers/build/.lsan_control
+  => exit 1 and 'detected memory leaks': control PASSED.
+     LeakSanitizer works here, so stage 7 is meaningful.
+  | 
+  | =================================================================
+  | ==4648==ERROR: LeakSanitizer: detected memory leaks
+  | 
+  | Direct leak of 64 byte(s) in 1 object(s) allocated from:
+  |     #0 0x7f685b2fd9c7 in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:69
+  |     #1 0x55cae89b71ec in main /home/claude/work/successor/memorise_graph_c/drivers/build/.lsan_control.c:4
+  |     #2 0x7f685ae2a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+  |     #3 0x7f685ae2a28a in __libc_start_main_impl ../csu/libc-start.c:360
+  |     #4 0x55cae89b7104 in _start (/home/claude/work/successor/memorise_graph_c/drivers/build/.lsan_control+0x1104) (BuildId: 9447a8f5aee585d105a86e83067e7fd584b15760)
+  | 
+  | SUMMARY: AddressSanitizer: 64 byte(s) leaked in 1 allocation(s).
+
+##########################################################################
+# graph_adjacency_list  (weighted=0 directed=0 loops=0 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_graph_adjacency_list.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_graph_adjacency_list.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_adjacency_list.c" -DVARIANT="graph_adjacency_list" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list
+  | variant: graph_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3:
+  |  4:
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_adjacency_list.c" -DVARIANT="graph_adjacency_list" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.ndebug
+  | variant: graph_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3:
+  |  4:
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_adjacency_list.c" -DVARIANT="graph_adjacency_list" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.san
+  | variant: graph_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3:
+  |  4:
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_adjacency_list.san
+  | variant: graph_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3:
+  |  4:
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# graph_edge_array  (weighted=0 directed=0 loops=0 edge_array=1)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_graph_edge_array.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_graph_edge_array.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_edge_array.c" -DVARIANT="graph_edge_array" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array
+  | variant: graph_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  | (1, 2)
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=10 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_edge_array.c" -DVARIANT="graph_edge_array" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.ndebug
+  | variant: graph_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  | (1, 2)
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=10 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_graph_edge_array.c" -DVARIANT="graph_edge_array" -DWEIGHTED=0 -DDIRECTED=0 -DALLOW_LOOPS=0 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.san
+  | variant: graph_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  | (1, 2)
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=10 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/graph_edge_array.san
+  | variant: graph_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=0 ALLOW_LOOPS=0 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop ignored by this variant
+  |     [ok] nE unchanged by the self-loop
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | Number of vertices: 5
+  | Number of edges: 1
+  | Edges:
+  | (1, 2)
+  | 
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=10 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | graph_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# unweighted_directed_adjacency_list  (weighted=0 directed=1 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_adjacency_list.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_adjacency_list.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_list.c" -DVARIANT="unweighted_directed_adjacency_list" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list
+  | variant: unweighted_directed_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_list.c" -DVARIANT="unweighted_directed_adjacency_list" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.ndebug
+  | variant: unweighted_directed_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_list.c" -DVARIANT="unweighted_directed_adjacency_list" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.san
+  | variant: unweighted_directed_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_list.san
+  | variant: unweighted_directed_adjacency_list
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# unweighted_directed_adjacency_matrix  (weighted=0 directed=1 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_adjacency_matrix.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_adjacency_matrix.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_matrix.c" -DVARIANT="unweighted_directed_adjacency_matrix" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix
+  | variant: unweighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_matrix.c" -DVARIANT="unweighted_directed_adjacency_matrix" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.ndebug
+  | variant: unweighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_adjacency_matrix.c" -DVARIANT="unweighted_directed_adjacency_matrix" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.san
+  | variant: unweighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_adjacency_matrix.san
+  | variant: unweighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2
+  |  2: 1
+  |  3: 3
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# unweighted_directed_edge_array  (weighted=0 directed=1 loops=1 edge_array=1)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_edge_array.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_unweighted_directed_edge_array.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_edge_array.c" -DVARIANT="unweighted_directed_edge_array" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array
+  | variant: unweighted_directed_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2)
+  | (2, 1)
+  | (3, 3)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_edge_array.c" -DVARIANT="unweighted_directed_edge_array" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.ndebug
+  | variant: unweighted_directed_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2)
+  | (2, 1)
+  | (3, 3)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_unweighted_directed_edge_array.c" -DVARIANT="unweighted_directed_edge_array" -DWEIGHTED=0 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.san
+  | variant: unweighted_directed_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2)
+  | (2, 1)
+  | (3, 3)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/unweighted_directed_edge_array.san
+  | variant: unweighted_directed_edge_array
+  | flags:   WEIGHTED=0 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] duplicate ignored, edge still there
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2)
+  | (2, 1)
+  | (3, 3)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | unweighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_directed_adjacency_list  (weighted=1 directed=1 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_adjacency_list.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_adjacency_list.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_list.c" -DVARIANT="weighted_directed_adjacency_list" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list
+  | variant: weighted_directed_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_list.c" -DVARIANT="weighted_directed_adjacency_list" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug
+  | variant: weighted_directed_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_list.c" -DVARIANT="weighted_directed_adjacency_list" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.san
+  | variant: weighted_directed_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_list.san
+  | variant: weighted_directed_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_directed_adjacency_matrix  (weighted=1 directed=1 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_adjacency_matrix.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_adjacency_matrix.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_matrix.c" -DVARIANT="weighted_directed_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix
+  | variant: weighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_matrix.c" -DVARIANT="weighted_directed_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug
+  | variant: weighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_adjacency_matrix.c" -DVARIANT="weighted_directed_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.san
+  | variant: weighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_adjacency_matrix.san
+  | variant: weighted_directed_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(4.50)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_directed_edge_array  (weighted=1 directed=1 loops=1 edge_array=1)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_edge_array.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_directed_edge_array.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_edge_array.c" -DVARIANT="weighted_directed_edge_array" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array
+  | variant: weighted_directed_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 4.50)
+  | (2, 1, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_edge_array.c" -DVARIANT="weighted_directed_edge_array" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug
+  | variant: weighted_directed_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 4.50)
+  | (2, 1, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_directed_edge_array.c" -DVARIANT="weighted_directed_edge_array" -DWEIGHTED=1 -DDIRECTED=1 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.san
+  | variant: weighted_directed_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 4.50)
+  | (2, 1, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_directed_edge_array.san
+  | variant: weighted_directed_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=1 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is NOT adjacent (directed)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 2: nE counts directed arcs, (1,2) and (2,1) are distinct
+  |     [ok] weight (1,2) still 4.50
+  |     [ok] weight (2,1) == 7.00
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 4.50)
+  | (2, 1, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) survives: it is a separate arc
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=25 maxE=32
+  |     capacity when emptied       nE=0 maxE=32
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_directed_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_undirected_adjacency_list  (weighted=1 directed=0 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_adjacency_list.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_list.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_adjacency_list.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_list.c" -DVARIANT="weighted_undirected_adjacency_list" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list
+  | variant: weighted_undirected_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_list.c" -DVARIANT="weighted_undirected_adjacency_list" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug
+  | variant: weighted_undirected_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_list.c" -DVARIANT="weighted_undirected_adjacency_list" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.san
+  | variant: weighted_undirected_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_list.san
+  | variant: weighted_undirected_adjacency_list
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_list: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_undirected_adjacency_matrix  (weighted=1 directed=0 loops=1 edge_array=0)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_adjacency_matrix.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_matrix.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_adjacency_matrix.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_matrix.c" -DVARIANT="weighted_undirected_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix
+  | variant: weighted_undirected_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_matrix.c" -DVARIANT="weighted_undirected_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug
+  | variant: weighted_undirected_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_adjacency_matrix.c" -DVARIANT="weighted_undirected_adjacency_matrix" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=0 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.san
+  | variant: weighted_undirected_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_adjacency_matrix.san
+  | variant: weighted_undirected_adjacency_matrix
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=0
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  |  0:
+  |  1: 2(7.00)
+  |  2: 1(7.00)
+  |  3: 3(1.50)
+  |  4:
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     [ok] nE back to 0 after removing every edge
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_adjacency_matrix: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+##########################################################################
+# weighted_undirected_edge_array  (weighted=1 directed=0 loops=1 edge_array=1)
+##########################################################################
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_edge_array.o
+  => exit 0 (expected 0) PASS   [strict compile]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -c /home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_edge_array.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/COMP2521_memorise_weighted_undirected_edge_array.ndebug.o
+  => exit 0 (expected 0) PASS   [strict compile -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_edge_array.c" -DVARIANT="weighted_undirected_edge_array" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array
+  => exit 0 (expected 0) PASS   [driver build]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array
+  | variant: weighted_undirected_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=15 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -DNDEBUG -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_edge_array.c" -DVARIANT="weighted_undirected_edge_array" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug
+  => exit 0 (expected 0) PASS   [driver build -DNDEBUG]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug
+  | variant: weighted_undirected_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=15 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run -DNDEBUG]
+
+$ gcc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wstrict-prototypes -Werror -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -DSOURCE_FILE="/home/claude/work/successor/memorise_graph_c/drivers/../COMP2521_memorise_weighted_undirected_edge_array.c" -DVARIANT="weighted_undirected_edge_array" -DWEIGHTED=1 -DDIRECTED=0 -DALLOW_LOOPS=1 -DEDGE_ARRAY=1 /home/claude/work/successor/memorise_graph_c/drivers/graph_driver.c -o /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.san
+  => exit 0 (expected 0) PASS   [driver build sanitized]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.san
+  | variant: weighted_undirected_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=15 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run sanitized (ASan+UBSan, leak detection OFF)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug fatal-vertex
+  | GraphIsAdjacent(g, 0, 99) must fail: 99 is outside 0..4
+  ! error: vertex 99 is outside 0..4
+  => exit 1 (expected 1) PASS   [fatal-vertex (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug fatal-null
+  | GraphNumEdges(NULL) must fail, not dereference NULL
+  ! error: graph is NULL
+  => exit 1 (expected 1) PASS   [fatal-null (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug fatal-nv
+  | GraphNew(-1) must fail, not return a broken graph
+  ! error: GraphNew: nV must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-nv (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug fatal-absent-weight
+  | GraphGetWeight(g, 0, 4) must fail: there is no such edge
+  ! error: GraphGetWeight: no edge (0, 4)
+  => exit 1 (expected 1) PASS   [fatal-absent-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (asserts)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.ndebug fatal-negative-weight
+  | GraphInsertEdge(g, 1, 2, -1.0) must fail: weights are >= 0.0
+  ! error: weight must be non-negative
+  => exit 1 (expected 1) PASS   [fatal-negative-weight (-DNDEBUG)]
+
+$ /home/claude/work/successor/memorise_graph_c/drivers/build/weighted_undirected_edge_array.san
+  | variant: weighted_undirected_edge_array
+  | flags:   WEIGHTED=1 DIRECTED=0 ALLOW_LOOPS=1 EDGE_ARRAY=1
+  |   1. GraphFree(NULL) is safe
+  |     [ok] GraphFree(NULL) returned
+  |   2. GraphNew(0) is a legal empty graph
+  |     [ok] nV == 0
+  |     [ok] nE == 0
+  |   3. GraphNew(5): vertex domain is 0..4
+  |     [ok] nV == 5
+  |     [ok] nE == 0
+  |     capacity after GraphNew     nE=0 maxE=8
+  |   4. insert (1,2) weight 2.50
+  |     [ok] (1,2) is adjacent
+  |     [ok] (2,1) is adjacent (undirected, symmetric query)
+  |     [ok] nE == 1
+  |     [ok] weight (1,2) == 2.50
+  |   5. duplicate insert (1,2) weight 4.50
+  |     [ok] nE unchanged by a duplicate
+  |     [ok] weight (1,2) updated in place to 4.50
+  |   6. reverse insert (2,1) weight 7.00 - this is what nE means
+  |     [ok] nE == 1: nE counts logical undirected edges, (2,1) is the same edge
+  |     [ok] weight (1,2) updated to 7.00 by the reverse-order insert
+  |     [ok] weight (2,1) reads the same record
+  |   7. self-loop insert (3,3) weight 1.50
+  |     [ok] self-loop accepted
+  |     [ok] self-loop counted once in nE
+  |     [ok] weight (3,3) == 1.50
+  |   8. absent-edge query (0,4)
+  |     [ok] GraphIsAdjacent is false, total, no error
+  |     GraphGetWeight(0,4) is a PRECONDITION VIOLATION, not a query:
+  |     it is demonstrated by './demo fatal-absent-weight' (exit 1).
+  |   9. GraphShow (format is per-variant, see docs/C_LIBRARY_MATRIX.md)
+  | (1, 2, 7.00)
+  | (3, 3, 1.50)
+  |  10. remove (1,2)
+  |     [ok] (1,2) gone
+  |     [ok] (2,1) gone too: one logical edge was removed
+  |     [ok] nE decremented by exactly 1
+  |  11. remove (1,2) again - absent removal is a no-op
+  |     [ok] nE unchanged
+  |  12. fill the graph, then empty it: capacity does not shrink
+  |     capacity when full          nE=15 maxE=16
+  |     capacity when emptied       nE=0 maxE=16
+  |     [ok] nE back to 0 after removing every edge
+  |     [ok] maxE grew past INITIAL_CAPACITY and was never given back: edge-array memory follows PEAK edge count, not nE
+  |  13. GraphFree releases everything it owns
+  |     [ok] GraphFree returned (run under ASan for the real verdict)
+  | weighted_undirected_edge_array: 0 contract check(s) failed
+  => exit 0 (expected 0) PASS   [driver run with LeakSanitizer ON (control-verified)]
+
+==========================================================================
+stages run: 189   stages failed: 0
+LeakSanitizer: RUN with detect_leaks=1 on all variants, after a positive
+               control confirmed it reports a known 64-byte leak here.
+Build artefacts (objects and binaries) are under /home/claude/work/successor/memorise_graph_c/drivers/build.
+Delete that directory before packaging a release; this script recreates it.
+==========================================================================

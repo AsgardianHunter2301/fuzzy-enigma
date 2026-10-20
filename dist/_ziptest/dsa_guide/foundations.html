@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foundations | COMP2521 Tracer</title>
+<link rel="canonical" href="https://asgardianhunter2301.github.io/dsa_guide/foundations.html">
+<meta name="description" content="How the course fits together, how recursion unwinds on the call stack, and how running time is analysed.">
+<meta property="og:site_name" content="COMP2521 Tracer">
+<meta property="og:title" content="Foundations | COMP2521 Tracer">
+<meta property="og:description" content="How the course fits together, how recursion unwinds on the call stack, and how running time is analysed.">
+<meta property="og:image" content="https://asgardianhunter2301.github.io/dsa_guide/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="COMP2521 Tracer: source, trace and state panes side by side">
+<meta property="og:url" content="https://asgardianhunter2301.github.io/dsa_guide/foundations.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_AU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Foundations | COMP2521 Tracer">
+<meta name="twitter:description" content="How the course fits together, how recursion unwinds on the call stack, and how running time is analysed.">
+<meta name="twitter:image" content="https://asgardianhunter2301.github.io/dsa_guide/assets/og-card.png">
+<meta name="theme-color" content="#FFA500">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%228%22 fill=%22%23FFFBF2%22/%3E%3Cpath d=%22M12 16h40M12 32h28M12 48h34%22 stroke=%22%23000000%22 stroke-width=%226%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%2248%22 cy=%2232%22 r=%227%22 fill=%22%23FFA500%22 stroke=%22%23000000%22 stroke-width=%222%22/%3E%3C/svg%3E">
+<script src="assets/theme-toggle.js"></script>
+<link rel="stylesheet" href="assets/tracer.css">
+<link rel="stylesheet" href="assets/theme-v6.css">
+<link rel="stylesheet" href="assets/manual-boundary-v62.css">
+<link rel="stylesheet" href="assets/quality-v632.css">
+<link rel="stylesheet" href="assets/quality-v633.css">
+<link rel="stylesheet" href="assets/theme-dark.css">
+</head>
+<body>
+<div class="shell">
+<header class="top">
+<a class="homelink" href="index.html" title="All topic areas">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+<span>COMP2521 Tracer</span>
+</a>
+<h1 class="area-chip" id="areaChip">Foundations</h1>
+<button aria-controls="topicDrawer" aria-expanded="false" aria-haspopup="dialog" class="btn nav-btn" id="topicsBtn" title="Browse topics. Shortcut: T" type="button">
+<svg aria-hidden="true" class="nav-ico" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>
+<span>Topics</span>
+</button>
+<nav aria-label="Breadcrumb" class="crumb" id="crumb"><ol class="crumb-list"><li class="crumb-item"><a href="index.html">Home</a></li><li class="crumb-item"><a href="foundations.html" id="crumbArea">Foundations</a></li><li class="crumb-item"><span class="crumb-g" id="crumbGroup"></span></li><li class="crumb-item crumb-current"><span class="crumb-n" id="crumbName" aria-current="page"></span></li></ol></nav>
+<div class="header-tools">
+<span class="tag" id="buildVersion"></span>
+<label class="text-scale" for="textScale">Text
+        <select aria-label="Interface text size" id="textScale">
+<option value="100">100%</option><option value="112">112%</option>
+<option value="125">125%</option><option value="140">140%</option>
+</select>
+</label>
+<button aria-controls="labDialog" aria-expanded="false" aria-haspopup="dialog" class="btn study-btn" id="labBtn" title="Open input examples and optional community references" type="button">
+<svg aria-hidden="true" class="nav-ico" viewbox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"></path></svg>
+<span>Examples</span>
+</button>
+<div class="more-wrap"><button class="btn more-btn" id="moreBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="moreMenu" aria-label="Open application tools">Tools</button><div class="more-menu" id="moreMenu" role="menu" hidden><button aria-checked="false" class="btn" id="themeBtn" role="menuitemcheckbox" type="button">Dark mode</button><button class="btn" id="themeSystemBtn" role="menuitem" type="button">Use system theme</button><button class="btn" role="menuitem" id="shareBtn" type="button" title="Copy a link to this topic with the current inputs">Copy share link</button><button class="btn" role="menuitem" id="resetLayout" title="Restore the default pane layout" type="button">Layout</button>
+<button class="btn" role="menuitem" id="sourcesBtn" title="Source and provenance policy for this build" type="button">Sources</button>
+<button class="btn help" role="menuitem" id="helpTour" title="Open the quick guide" type="button">Guide</button>
+</div></div></div>
+</header>
+<div class="toolbar">
+<div class="toolbar-fields">
+<span class="toolbar-lead" id="inputsLead">Inputs</span>
+<div class="inputs" id="inputs"></div>
+<div class="inputs-summary" id="inputsSummary" hidden><span class="is-text" id="inputsSummaryText"></span><button class="btn is-edit" id="inputsEdit" type="button">Edit inputs</button></div>
+</div>
+<div class="toolbar-actions">
+<button class="btn go" id="run" title="Generate a fresh trace from the current inputs" type="button">Run</button>
+<div class="more-wrap"><button class="btn more-btn" id="moreRunBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="moreRunMenu" aria-label="Open input tools">Input tools</button><div class="more-menu" id="moreRunMenu" role="menu" hidden><button class="btn" id="rand" title="Randomise supported inputs and run the trace" type="button">Random</button>
+<button class="btn" id="clearTrace" title="Clear trace frames but keep the current inputs" type="button">Clear</button>
+<button class="btn" id="reset" title="Restore this module's default inputs and clear its trace" type="button">Reset</button>
+</div></div><button class="btn undo" disabled="" hidden="" id="undoReset" title="Restore the inputs used immediately before Reset" type="button">Undo</button>
+</div>
+<span aria-live="polite" class="sr-only" id="status" role="status"></span>
+</div>
+<div aria-label="Choose panel" class="panetabs" id="paneTabs" role="tablist">
+<button aria-controls="paneSrc" aria-selected="false" data-pane="src" id="tab-src" role="tab" type="button">Source</button>
+<button aria-controls="paneViz" aria-selected="true" data-pane="viz" id="tab-viz" role="tab" type="button">Trace</button>
+<button aria-controls="paneState" aria-selected="false" data-pane="state" id="tab-state" role="tab" type="button">State</button>
+</div>
+<main data-pane="viz" id="panes">
+<section aria-labelledby="tab-src" class="pane pane-src" id="paneSrc" role="tabpanel">
+<h2>
+<span class="pane-title">Source</span> <em id="srcName"></em><span id="srcTag"></span>
+<span class="pane-h-spacer"></span>
+<button aria-label="Collapse the Source pane" class="pane-toggle" data-pane-toggle="src" title="Collapse the Source pane" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+</button>
+</h2>
+<div class="blockindex" hidden="" id="blockIndex"></div>
+<div class="scroll"><div class="codewrap" id="code"></div></div>
+<button aria-label="Expand the Source pane" class="rail" data-pane-toggle="src" title="Expand the Source pane" type="button"><span>Source</span></button>
+</section>
+<div aria-label="Resize the Source and Trace panes" aria-orientation="vertical" class="splitter" id="split1" role="separator" tabindex="0" title="Drag to resize; arrow keys to adjust; double-click to reset"></div>
+<section aria-labelledby="tab-viz" class="pane pane-viz" id="paneViz" role="tabpanel">
+<h2>
+<span class="pane-title">Trace</span> <em id="vizName"></em><span class="view-badge" id="viewBadge">Run to view</span>
+<span class="pane-h-spacer"></span>
+<div aria-label="Trace pan and zoom controls" class="canvas-tools" id="canvasTools" role="group">
+<button aria-describedby="zoomLockHelp" aria-pressed="true" class="canvas-tool pan-lock" id="zoomLock" title="Unlock panning; zoom remains available" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v10H5z"></path></svg><span id="zoomLockLabel">Pan locked</span></button>
+<button aria-label="Zoom out" class="canvas-tool" id="zoomOut" title="Zoom out" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 12h12"></path></svg></button>
+<button aria-describedby="zoomResetHelp" class="canvas-tool zoom-reset" id="zoomReset" title="Reset zoom" type="button"><span id="zoomLevel">Zoom 100%</span></button>
+<button aria-label="Zoom in" class="canvas-tool" id="zoomIn" title="Zoom in" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 6v12M6 12h12"></path></svg></button>
+<button aria-describedby="zoomFitHelp" class="canvas-tool fit" id="zoomFit" title="Fit visualisation in pane" type="button">Fit view</button>
+</div>
+<button aria-label="Collapse the Trace pane" class="pane-toggle" data-pane-toggle="viz" title="Collapse the Trace pane" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+</button>
+</h2>
+<div class="scroll"><div class="stage">
+<div class="note" id="note">Choose a topic, set values, and press Run.</div>
+<div class="viz" id="viz"></div>
+</div></div>
+<button aria-label="Expand the Trace pane" class="rail" data-pane-toggle="viz" title="Expand the Trace pane" type="button"><span>Trace</span></button>
+</section>
+<div aria-label="Resize the Trace and State panes" aria-orientation="vertical" class="splitter" id="split2" role="separator" tabindex="0" title="Drag to resize; arrow keys to adjust; double-click to reset"></div>
+<section aria-labelledby="tab-state" class="pane pane-state" id="paneState" role="tabpanel">
+<h2>
+<span class="pane-title">State</span>
+<span class="pane-h-spacer"></span>
+<button aria-label="Collapse the State pane" class="pane-toggle" data-pane-toggle="state" title="Collapse the State pane" type="button">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg>
+</button>
+</h2>
+<div class="scroll"><div class="state">
+<div class="sect"><h3>Variables</h3><div class="vars" id="vars"><span class="empty">none</span></div></div>
+<div class="sect"><h3>Memory</h3>
+<div class="memory-summary" id="memorySummary">No dynamic allocation state for this frame.</div>
+<div class="ledger" id="ledger"><span class="empty">nothing allocated</span></div>
+<div class="memtally" id="tally" role="status" aria-live="polite"></div>
+<div class="memev" id="memev"></div>
+</div>
+<div class="sect" id="mapSect"><h3>Pseudocode to C</h3><div class="map" id="map"></div></div>
+<div class="sect" hidden="" id="theorySect"><h3>Theory</h3><div class="theory" id="theory"></div></div>
+</div></div>
+<button aria-label="Expand the State pane" class="rail" data-pane-toggle="state" title="Expand the State pane" type="button"><span>State</span></button>
+</section>
+</main>
+<div class="transport">
+<button aria-label="First trace step" class="tbtn" id="first" title="First step (Home)" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<button aria-label="Previous trace step" class="tbtn" id="prev" title="Previous step (Left arrow)" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<button aria-label="Play trace" class="tbtn play" id="play" title="Play or pause (Space)" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<button aria-label="Stop trace playback" class="tbtn stop" disabled="" id="stopPlayback" title="Stop playback" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<button aria-label="Next trace step" class="tbtn" id="next" title="Next step (Right arrow)" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<button aria-label="Last trace step" class="tbtn" id="last" title="Last step (End)" type="button"><span aria-hidden="true" class="icon-slot"></span></button>
+<div class="scrub-wrap">
+<input aria-describedby="scrubHelp" aria-label="Trace position" class="scrub" id="scrub" max="0" min="0" title="Trace position" type="range" value="0"/>
+<div aria-hidden="true" class="scrub-marks" id="scrubMarks"></div>
+<span class="sr-only" id="scrubHelp">The trace timeline advances in exact algorithm steps. Marks are adapted from the MIT-licensed structs.sh timeline design.</span>
+</div>
+<button aria-controls="stepDialog" aria-expanded="false" aria-haspopup="dialog" class="btn steps-button" disabled="" id="stepsBtn" title="Open the complete step timeline" type="button">Steps</button>
+<span class="tick" id="tick">0 / 0</span>
+<span class="module-status" id="moduleStatus" title="Tracer build and current module"></span>
+<label class="spd" for="speed">Speed <select aria-label="Playback speed" id="speed" title="Playback speed">
+<option value="1200">slow</option>
+<option selected="" value="600">normal</option>
+<option value="260">fast</option>
+<option value="90">turbo</option>
+</select><output class="speed-status" for="speed" id="speedStatus">normal | 600 ms/step</output></label>
+</div>
+<dialog aria-labelledby="drawerTitle" class="drawer" id="topicDrawer">
+<div class="drawer-inner">
+<div class="drawer-head">
+<div class="drawer-titlerow">
+<h2 id="drawerTitle">Topics</h2>
+<button aria-label="Close the topic list" class="drawer-close" id="drawerClose" title="Close (Esc)" type="button">X</button>
+</div>
+<input aria-autocomplete="list" aria-controls="topicList" aria-expanded="false" aria-label="Search course topics" autocomplete="off" class="module-search" id="moduleSearch" placeholder="Search topics or source blocks..." role="combobox" type="search"/>
+<div class="drawer-meta">
+<span class="tag coverage-count" id="moduleCount"></span>
+<span class="drawer-hint">Up/Down to move, Enter to open</span>
+</div>
+</div>
+<div class="drawer-list" id="topicList" role="listbox"></div>
+<nav aria-label="Topic areas" class="drawer-areas" id="drawerAreas"></nav>
+<label class="sr-only" for="op">Current topic</label>
+<select class="sel" hidden="" id="op"></select>
+</div>
+</dialog>
+<dialog aria-labelledby="sourcesTitle" class="sheet" id="sourcesDialog">
+<div class="tour-card">
+<button aria-label="Close" class="tour-close" id="sourcesClose" title="Close" type="button">X</button>
+<div class="tour-kicker">Source labels</div>
+<h2 id="sourcesTitle">Sources</h2>
+<div class="tour-body"><p><b>Manual.</b> Exact C and pseudocode from the COMP2521 26T2 manual.</p>
+<p><b>Lecture.</b> Material supplied in the lecture files.</p>
+<p><b>Memorise.</b> Prerequisite C that is not printed in the manual or lecture.</p>
+<p><b>Community links.</b> Optional references. They do not replace course source.</p>
+<dl id="buildFacts"></dl></div>
+<div class="tour-actions">
+<span class="tour-spacer"></span>
+<button class="btn go" id="sourcesDone" type="button">Close</button>
+</div>
+</div>
+</dialog>
+<dialog aria-describedby="labIntro" aria-labelledby="labTitle" class="sheet study-dialog" id="labDialog">
+<div class="tour-card study-card">
+<button aria-label="Close lab recipes" class="tour-close" id="labClose" title="Close" type="button">X</button>
+<div class="tour-kicker">Course scope</div>
+<h2 id="labTitle">Examples</h2>
+<div class="course-scope-chip" id="courseScopeChip"></div>
+<p class="study-intro" id="labIntro">Choose input values. Community links are optional and are not course source.</p>
+<section aria-labelledby="labRecipesHeading" class="study-section">
+<div class="study-section-head"><h3 id="labRecipesHeading">Input examples</h3><span>values only</span></div>
+<div class="recipe-list" id="labRecipeList"></div>
+</section>
+<section aria-labelledby="labResourcesHeading" class="study-section external-reference-section">
+<div class="study-section-head"><h3 id="labResourcesHeading">Community references</h3><span>not course source</span></div>
+<p class="resource-intro">Links use reviewed repository commits and need internet access.</p>
+<div class="resource-list" id="labResourceList"></div>
+</section>
+<div class="external-boundary">External boundary: examples change input values only. No external algorithm replaces course source.</div>
+<div class="tour-actions">
+<span class="tour-spacer"></span>
+<button class="btn go" id="labDone" type="button">Close</button>
+</div>
+</div>
+</dialog>
+<dialog aria-describedby="stepIntro" aria-labelledby="stepTitle" class="sheet step-dialog" id="stepDialog">
+<div class="tour-card step-card">
+<button aria-label="Close step timeline" class="tour-close" id="stepClose" title="Close" type="button">X</button>
+<div class="tour-kicker">Real trace steps</div>
+<h2 id="stepTitle">Steps</h2>
+<p id="stepIntro">Choose a real trace step. No intermediate state is invented.</p>
+<div class="step-summary" id="stepSummary"></div>
+<div aria-label="Trace steps" class="step-list" id="stepList" role="listbox"></div>
+<div class="tour-actions">
+<button class="btn" id="stepActive" type="button">Current step</button>
+<span class="tour-spacer"></span>
+<button class="btn go" id="stepDone" type="button">Close</button>
+</div>
+</div>
+</dialog>
+<dialog aria-describedby="tourBody" aria-labelledby="tourTitle" class="tour" id="tourDialog">
+<div class="tour-card">
+<button aria-label="Close quick tour" class="tour-close" id="tourClose" title="Close" type="button">X</button>
+<div class="tour-kicker" id="tourProgress">Step 1 of 4</div>
+<h2 id="tourTitle">Find a topic</h2>
+<div class="tour-body" id="tourBody"></div>
+<div class="tour-actions">
+<label class="tour-choice"><input id="tourDontShow" type="checkbox"/> Do not open automatically</label>
+<span class="tour-spacer"></span>
+<button class="btn" id="tourBack" type="button">Back</button>
+<button class="btn go" id="tourNext" type="button">Next</button>
+</div>
+</div>
+</dialog>
+</div>
+<script src="assets/build.js"></script>
+<script src="assets/page-foundations.js"></script>
+<script src="assets/topics.js"></script>
+<script src="assets/tracer-core.js"></script>
+<script src="assets/tracer-renderers.js"></script>
+<script src="assets/modules-registry.js"></script>
+<script src="assets/modules-sorting.js"></script>
+<script src="assets/modules-searching.js"></script>
+<script src="assets/modules-adts.js"></script>
+<script src="assets/modules-trees.js"></script>
+<script src="assets/modules-hashing.js"></script>
+<script src="assets/modules-heaps-tries.js"></script>
+<script src="assets/modules-graphs.js"></script>
+<script src="assets/corpus-shared.js"></script>
+<script src="assets/corpus-foundations.js"></script>
+<script src="assets/corpus-sorting.js"></script>
+<script src="assets/corpus-adts.js"></script>
+<script src="assets/corpus-trees.js"></script>
+<script src="assets/corpus-source-data.js"></script>
+<script src="assets/corpus-graphs.js"></script>
+<script src="assets/corpus-hashing-heaps.js"></script>
+<script src="assets/corpus-named.js"></script>
+<script src="assets/tracer-ui.js"></script>
+<script src="assets/course-resource-data.js"></script>
+<script src="assets/course-enhancements.js"></script>
+<script src="assets/ui-v6.js"></script>
+<script src="assets/manual-boundary-data.js"></script>
+<script src="assets/manual-boundary-v62.js"></script>
+<script src="assets/quality-v632.js"></script>
+<script src="assets/quality-v633.js"></script>
+<script src="assets/corpus-theory.js"></script>
+<script src="assets/corpus-theory-foundations.js"></script>
+<script src="assets/corpus-theory-adts.js"></script>
+<script src="assets/corpus-theory-trees.js"></script>
+<script src="assets/corpus-theory-graphs.js"></script>
+<script src="assets/theory-panel.js"></script>
+</body>
+</html>
